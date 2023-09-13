@@ -1,7 +1,15 @@
 <script setup lang="ts">
 
-let fetchedCards = ref([]);
+let fetchedCards = ref<Card[]>([]);
 let name = ref('')
+
+interface Card {
+  id: string;
+  name: string;
+  card_images: {
+    image_url: string;
+  }[];
+}
 
 const attributes = useAttributes()
 const monsterTypes = useMonsterTypes()
@@ -37,8 +45,10 @@ onMounted(() => {
 
 <Filters v-model="attr" />
 <button @click="searchForCards(name, attributes, cardLevels, cardRaces, monsterTypes)" >Szukaj kart</button>
-<div>
-  <p v-for="card in fetchedCards.slice(0,10)">{{ card }}</p>
+<div v-for="card in fetchedCards.slice(0, 10)">
+  <p>{{ card }}</p>
+  <img :src="card.card_images[0].image_url" />
+  
 </div>
 
 </template>
