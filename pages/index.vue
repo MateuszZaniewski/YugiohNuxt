@@ -1,54 +1,39 @@
-<script setup lang="ts">
+<script setup>
 
-let fetchedCards = ref<Card[]>([]);
-let name = ref('')
+const menuOpen = ref(false);
+const openAndCloseMenu = () => {
+    menuOpen.value = !menuOpen.value
+};
 
-interface Card {
-  id: string;
-  name: string;
-  card_images: {
-    image_url: string;
-  }[];
-}
-
-const attributes = useAttributes()
-const monsterTypes = useMonsterTypes()
-const cardRaces = useCardRaces()
-const cardLevels = useCardLevels()
-
-let attr = ref(attributes.value)
-
-console.log(attributes.value)
-
-
-const searchForCards = async (name:String, attribute:Array<String>, level:Array<String>, race:Array<String>,type:Array<String>) => {
-  try {
-    const apiFetch = await connectToYugiohApi(name,attribute,level,race,type)
-    fetchedCards.value = apiFetch
-    console.log(fetchedCards.value)
-  } catch (error) {
-    console.log(error)
-    
-  }
-}
-
-onMounted(() => {
-  searchForCards(name.value, attributes.value, cardLevels.value, cardRaces.value, monsterTypes.value)
-});
-
+const openedMenu = '/hamburger.png';
+const closedMenu = '/close.png';
 
 </script>
 
+
 <template>
 
-{{ attr }}
-
-<Filters v-model="attr" />
-<button @click="searchForCards(name, attributes, cardLevels, cardRaces, monsterTypes)" >Szukaj kart</button>
-<div v-for="card in fetchedCards.slice(0, 10)">
-  <p>{{ card }}</p>
-  <img :src="card.card_images[0].image_url" />
-  
-</div>
+    <nav class="h-[20.833vw] bg-[#D9D9D9] max-h-[100px] flex justify-between items-center md:justify-center md:gap-14 lg:justify-center">
+        <div class=" flex md:justify-around md:w-[100%]">
+            <span class="hidden md:block md:text-lg hover:text-[#9B59B6]">My Account</span>
+            <span class="hidden md:block md:text-lg hover:text-[#9B59B6]">Search Cards</span>
+            <span class="hidden md:block md:text-lg hover:text-[#9B59B6]">Deck Builder</span>
+        </div>
+        
+        <NuxtImg src="/user.png" class=" w-9 h-9 md:hidden" />
+        <span class=" text-3xl md:w-[33%] text-center">Yu-Gi-OH</span>
+        <NuxtImg :src="menuOpen ? openedMenu : closedMenu" class=" w-9 h-9 md:hidden" @click="openAndCloseMenu"/>
+        <div class=" flex md:justify-around md:w-[100%]">
+            <span class="hidden md:block md:text-lg hover:text-[#9B59B6]">Favourites</span>
+            <span class="hidden md:block md:text-lg hover:text-[#9B59B6]">Login/SignIn</span>
+        </div>
+        
+    </nav>
 
 </template>
+
+
+<style scoped>
+
+
+</style>

@@ -8,8 +8,10 @@ export default defineNuxtConfig({
   modules: [
     // ...
     '@pinia/nuxt',
+    '@nuxt/image',
   ],
-  css: ['~/main.css'],
+  css: [
+    '~/main.css'],
   postcss: {
     plugins: {
       tailwindcss: {},
