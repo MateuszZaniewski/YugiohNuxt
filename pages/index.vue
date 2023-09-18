@@ -1,34 +1,29 @@
 <script setup>
 
-const menuOpen = ref(false);
-const openAndCloseMenu = () => {
-    menuOpen.value = !menuOpen.value
-};
-
-const openedMenu = '/hamburger.png';
-const closedMenu = '/close.png';
-
 </script>
 
 
 <template>
 
-    <nav class="h-[20.833vw] bg-[#D9D9D9] max-h-[100px] flex justify-between items-center md:justify-center md:gap-14 lg:justify-center">
-        <div class=" flex md:justify-around md:w-[100%]">
-            <span class="hidden md:block md:text-lg hover:text-[#9B59B6]">My Account</span>
-            <span class="hidden md:block md:text-lg hover:text-[#9B59B6]">Search Cards</span>
-            <span class="hidden md:block md:text-lg hover:text-[#9B59B6]">Deck Builder</span>
-        </div>
-        
-        <NuxtImg src="/user.png" class=" w-9 h-9 md:hidden" />
-        <span class=" text-3xl md:w-[33%] text-center">Yu-Gi-OH</span>
-        <NuxtImg :src="menuOpen ? openedMenu : closedMenu" class=" w-9 h-9 md:hidden" @click="openAndCloseMenu"/>
-        <div class=" flex md:justify-around md:w-[100%]">
-            <span class="hidden md:block md:text-lg hover:text-[#9B59B6]">Favourites</span>
-            <span class="hidden md:block md:text-lg hover:text-[#9B59B6]">Login/SignIn</span>
-        </div>
-        
-    </nav>
+    <Navbar />
+    <div class="w-[90%] mx-auto">
+        <h1 class=" text-3xl text-center pt-7">Welcome to Your Ultimate Yu-Gi-Oh Fan Destination</h1>
+
+        <p class=" text-base text-center pt-10">Explore card searches, Craft decks, Share strategies, and cherish Your favorites cards</p>
+    </div>
+
+    <div class="flex justify-center gap-5 pt-12">
+        <Button class="bg-[#3498DB] text-base" text="Create an Account"/>
+        <Button class="bg-[#9B59B6] text-base" text="Login"/>
+    </div>
+    
+    <div class=" pt-20 flex justify-center flex-col items-center gap-5">
+        <NuxtImg class=" cursor-pointer" src="Cards.png" height="135" width="150"/>
+        <NuxtImg src="arrowUp.png" height="54" width="54" />
+    </div>
+
+    <p class=" pt-5 text-center">Click on cards to see what’s Your lucky Card</p>
+    
 
 </template>
 
