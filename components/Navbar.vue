@@ -21,8 +21,8 @@ const links = ['My Account','Search Cards','Deck Builder','Favourites','Login/Si
         </div>
         
         <NuxtImg src="/user.png" class=" w-9 h-9 md:hidden" />
-        <span class=" text-3xl md:w-[33%] text-center">Yu-Gi-OH</span>
-        <NuxtImg :src="menuOpen ? '/close.png' : '/hamburger.png'" class=" w-9 h-9 md:hidden" @click="openAndCloseMenu"/>
+        <span class=" text-3xl md:w-[33%] text-center cursor-pointer">Yu-Gi-OH</span>
+        <NuxtImg :src="menuOpen ? '/close.png' : '/hamburger.png'" class=" w-6 h-6 md:hidden" @click="openAndCloseMenu"/>
         <div class=" flex md:justify-around md:w-[100%]">
             <span class="hidden md:block md:text-lg hover:text-[#9B59B6] cursor-pointer">Favourites</span>
             <span class="hidden md:block md:text-lg hover:text-[#9B59B6] cursor-pointer">Login/SignIn</span>
