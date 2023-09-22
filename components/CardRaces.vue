@@ -2,6 +2,7 @@
 
 const cardRaces = useCardRaces()
 const cardRacesArray = ['Spellcaster', 'Dragon', 'Zombie', 'Warrior', 'Beast-Warrior', 'Beast', 'Winged Beast', 'Fiend', 'Fairy', 'Insect', 'Dinosaur', 'Reptile' , 'Fish', 'Sea Serpent' , 'Aqua' , 'Pyro' , 'Thunder' , 'Rock' , 'Plant' , 'Machine' , 'Psychic', 'Divine-Beast', 'Wyrm', 'Cyberse', 'Creator-God','Equip', 'Field', 'Quick-Play', 'Ritual', 'Continuous', 'Normal','Counter'];
+const expanded = ref(false)
 
 
 const addMonsterRace = () => {
@@ -20,11 +21,9 @@ const addMonsterRace = () => {
 
 
 <template>
-
-<div>
-      Monster Race
-    <br/>
-    <div v-for="monsterRace in cardRacesArray">
+<span @click="expanded = !expanded">Monster Races</span>
+<div class="flex flex-row flex-wrap gap-2" v-if="expanded">
+    <div v-for="monsterRace in cardRacesArray" class="flex gap-1">
       <input type="checkbox" @click="addMonsterRace" :id="monsterRace" :value="monsterRace"  />
       <label  :for="monsterRace">{{ monsterRace }}</label>
     </div>

@@ -24,7 +24,7 @@ Explanation about params : {
 
 export const connectToYugiohApi = async function(fname, attribute, level, race, type ) {
   try {
-    const params = useSearchParams(attribute,level,race,type)
+    const params = useSearchParams(fname,attribute,level,race,type)
 
     if (Array.isArray(attribute) && attribute.length > 0) {
       params.attribute = attribute.join(',');

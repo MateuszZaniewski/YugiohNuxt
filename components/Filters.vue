@@ -4,7 +4,7 @@
 
 <template>
 
-<div>
+<div class="flex-col gap-2 py-6">
     <Attributes />
     <CardRaces />
     <Levels />
