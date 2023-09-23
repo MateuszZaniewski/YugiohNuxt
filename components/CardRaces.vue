@@ -21,10 +21,13 @@ const addMonsterRace = () => {
 
 
 <template>
-<span @click="expanded = !expanded">Monster Races</span>
+<div class="flex pt-4 gap-5">
+    <span class="w-28" @click="expanded = !expanded">Monster Races</span>
+    <NuxtImg src="/bottomArrow.png" />
+</div>
 <div class="flex flex-row flex-wrap gap-2" v-if="expanded">
     <div v-for="monsterRace in cardRacesArray" class="flex gap-1">
-      <input type="checkbox" @click="addMonsterRace" :id="monsterRace" :value="monsterRace"  />
+      <input :checked="cardRaces.includes(monsterRace)" type="checkbox" @click="addMonsterRace" :id="monsterRace" :value="monsterRace"  />
       <label  :for="monsterRace">{{ monsterRace }}</label>
     </div>
     </div>

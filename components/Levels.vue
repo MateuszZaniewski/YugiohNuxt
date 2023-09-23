@@ -20,10 +20,13 @@ const addLevels = () => {
 
 
 <template>
-<span @click="expanded = !expanded">Levels</span>
+<div class="flex pt-4 gap-5">
+    <span class="w-28" @click="expanded = !expanded">Levels</span>
+    <NuxtImg src="/bottomArrow.png" />
+</div>
 <div class="flex flex-row flex-wrap gap-2" v-if="expanded">
     <div  v-for="level in levelsArray" class="flex gap-1">
-      <input type="checkbox" @click="addLevels" :id="level" :value="level"  />
+      <input :checked="cardLevels.includes(level)" type="checkbox" @click="addLevels" :id="level" :value="level"  />
       <label  :for="level">{{ level }}</label>
     </div>
     </div>

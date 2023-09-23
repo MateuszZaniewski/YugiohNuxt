@@ -6,3 +6,5 @@ export const useCardLevels = () => useState<Array<String>>('levels', () => [])
 export const useSpellTypes = () => useState<Array<String>>('spells', () => [])
 export const useTrapTypes = () => useState<Array<String>>('traps', () => [])
 export const useFnameParam = () => useState<String>('fname', () => '')
+
+export const useMonsterTypesChecked = () => useState<Array<String>>('monsterTypes', () => [])

@@ -19,11 +19,15 @@ const addAttribute = () => {
 
 
 <template>
-<span @click="expanded = !expanded">Attributes</span>
+<div class="flex pt-4 gap-5">
+    <span class="w-28" @click="expanded = !expanded">Attributes</span>
+    <NuxtImg src="/bottomArrow.png" />
+</div>
+
 <div class="flex flex-row flex-wrap gap-2" v-if="expanded">
     <div v-for="attribute in attributesArray" class="flex gap-1">
-      <input type="checkbox" @click="addAttribute" :id="attribute" :value="attribute"  />
-      <label  :for="attribute">{{ attribute }}</label>
+      <input :checked="attributes.includes(attribute)" type="checkbox" @click="addAttribute" :id="attribute" :value="attribute"  />
+      <label :for="attribute">{{ attribute }}</label>
     </div>
     </div>
 

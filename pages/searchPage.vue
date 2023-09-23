@@ -42,7 +42,7 @@ const searchForCards = async (name:String, attribute:Array<String>, level:Array<
 }
 
 onMounted( () => {
-  searchForCards(name.value, attributes.value, cardLevels.value, cardRaces.value, monsterTypes.value)
+  searchForCards(fname.value, attributes.value, cardLevels.value, cardRaces.value, monsterTypes.value)
 });
 
 
@@ -74,11 +74,11 @@ onMounted( () => {
 
 <Filters v-model="attr" :class="filtersExpanded ? 'flex' : 'hidden'"/>
 
-<div v-if="fetchedCards.length > 0 && !filtersExpanded" class="pt-6">
+<div v-if="fetchedCards.length > 0 && !filtersExpanded" class="pt-6 flex flex-wrap justify-center gap-6 mx-auto w-[90%] max-w-3xl">
 
-    <div v-for="card in fetchedCards.slice(0, 10)">
+    <div v-for="card in fetchedCards.slice(0, 10)" class="w-[35vw] flex justify-center">
   <!-- <p>{{ card }}</p> -->
-  <NuxtImg :src="card.card_images[0].image_url"  ></NuxtImg>
+  <NuxtImg sizes="100vw sm:40vw md:200px" :src="card.card_images[0].image_url"  ></NuxtImg>
   
 </div>
 
