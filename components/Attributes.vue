@@ -29,7 +29,7 @@ const addAttribute = () => {
       <input :checked="attributes.includes(attribute)" type="checkbox" @click="addAttribute" :id="attribute" :value="attribute"  />
       <label :for="attribute">{{ attribute }}</label>
     </div>
-    </div>
+</div>
 
 </template>
 

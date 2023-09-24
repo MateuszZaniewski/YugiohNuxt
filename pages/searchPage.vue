@@ -17,17 +17,24 @@ const attributes = useAttributes()
 const monsterTypes = useMonsterTypes()
 const cardRaces = useCardRaces()
 const cardLevels = useCardLevels()
+const sort = useSort()
 const fname = useFnameParam()
+const order = useSortMethod()
 
 let attr = ref(attributes.value)
 
 
 
-const searchForCards = async (name:String, attribute:Array<String>, level:Array<String>, race:Array<String>,type:Array<String>) => {
+const searchForCards = async (name:String, attribute:Array<String>, level:Array<String>, race:Array<String>,type:Array<String>, sort:String) => {
     try {
-    const apiFetch = await connectToYugiohApi(name, attribute, level, race, type);
+    const apiFetch = await connectToYugiohApi(name, attribute, level, race, type, sort);
     if (apiFetch) {
       fetchedCards.value = apiFetch;
+      if(order.value === 'Descending'){
+        fetchedCards.value = fetchedCards.value.reverse()
+      } else {
+        fetchedCards.value = fetchedCards.value
+      }
       console.log(fetchedCards.value);
     } else {
       // Handle the case when no cards are found
@@ -42,7 +49,7 @@ const searchForCards = async (name:String, attribute:Array<String>, level:Array<
 }
 
 onMounted( () => {
-  searchForCards(fname.value, attributes.value, cardLevels.value, cardRaces.value, monsterTypes.value)
+  searchForCards(fname.value, attributes.value, cardLevels.value, cardRaces.value, monsterTypes.value, sort.value)
 });
 
 
@@ -55,7 +62,7 @@ onMounted( () => {
 
 <section class="searchBar w-[90%] mx-auto pt-5 flex items-center">
     <input v-model="fname" type="search" placeholder="Search" class="search border-2 h-11 w-[80%] mx-auto rounded-l-3xl rounded-bl-3xl pl-[10%] text-base border-[#2D61AF]">
-    <button @click="searchForCards(fname, attributes, cardLevels, cardRaces, monsterTypes), filtersExpanded = false" class="h-11 w-[20%] border-2 rounded-r-3xl rounded-br-3xl border-[#2D61AF] bg-[url('/glass.png')] bg-no-repeat bg-[#2D61AF] bg-center"></button>
+    <button @click="searchForCards(fname, attributes, cardLevels, cardRaces, monsterTypes, sort), filtersExpanded = false" class="h-11 w-[20%] border-2 rounded-r-3xl rounded-br-3xl border-[#2D61AF] bg-[url('/glass.png')] bg-no-repeat bg-[#2D61AF] bg-center"></button>
 </section>
 
 <div class=" pt-5 w-[90%] mx-auto flex justify-between items-center">
@@ -77,10 +84,8 @@ onMounted( () => {
 <div v-if="fetchedCards.length > 0 && !filtersExpanded" class="pt-6 flex flex-wrap justify-center gap-6 mx-auto w-[90%] max-w-3xl">
 
     <div v-for="card in fetchedCards.slice(0, 10)" class="w-[35vw] flex justify-center">
-  <!-- <p>{{ card }}</p> -->
-  <NuxtImg sizes="100vw sm:40vw md:200px" :src="card.card_images[0].image_url"  ></NuxtImg>
-  
-</div>
+      <NuxtImg sizes="100vw sm:40vw md:200px" :src="card.card_images[0].image_url"  ></NuxtImg>
+    </div>
 
 </div>
 

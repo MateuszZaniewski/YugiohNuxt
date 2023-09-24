@@ -1,5 +1,5 @@
-export function useSearchParams(fname: string | string[] | undefined, attribute: string | string[] | undefined, level: string | string[] | undefined, race: string | string[] | undefined, type: string | string[] | undefined) {
-    const params: {fname?: string, attribute?: string; level?: string, race?: string, type?: string } = {};
+export function useSearchParams(fname: string | string[] | undefined, attribute: string | string[] | undefined, level: string | string[] | undefined, race: string | string[] | undefined, type: string | string[] | undefined, sort: string | string[] | undefined, order: string | string[] | undefined) {
+    const params: {fname?: string, attribute?: string; level?: string, race?: string, type?: string, sort?: string} = {};
   
     if (Array.isArray(attribute) && attribute.length > 0) {
       params.attribute = attribute.join(',');

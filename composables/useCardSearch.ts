@@ -14,6 +14,7 @@ export interface CardSearchOptions {
   levels: Array<String>;
   races: Array<String>;
   types: Array<String>;
+  sort: Ref<string>;
 }
 
 export function useCardSearch(options: CardSearchOptions) {
@@ -26,7 +27,8 @@ export function useCardSearch(options: CardSearchOptions) {
         options.attributes,
         options.levels,
         options.races,
-        options.types
+        options.types,
+        options.sort.value
       );
       fetchedCards.value = apiFetch;
     } catch (error) {

@@ -22,9 +22,9 @@ Explanation about params : {
 */
 
 
-export const connectToYugiohApi = async function(fname, attribute, level, race, type ) {
+export const connectToYugiohApi = async function(fname, attribute, level, race, type, sort ) {
   try {
-    const params = useSearchParams(fname,attribute,level,race,type)
+    const params = useSearchParams(fname,attribute,level,race,type,sort)
 
     if (Array.isArray(attribute) && attribute.length > 0) {
       params.attribute = attribute.join(',');
@@ -57,9 +57,11 @@ export const connectToYugiohApi = async function(fname, attribute, level, race, 
     const response = await axios.get('https://db.ygoprodeck.com/api/v7/cardinfo.php', {
       params: {
         fname : fname,
+        sort : sort,
         ...params
       }
     });
+    console.log(params)
     const fetchedCards = response.data.data;
     return fetchedCards
     
