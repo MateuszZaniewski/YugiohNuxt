@@ -1,9 +1,10 @@
 @font-face {
-    font-family: 'yugioh';
-    src: local("yugioh"),
-     url(~assets/yu-gi-oh-matrix.ttf) format("truetype");
-  }
+  font-family: "yugioh";
+  src:
+    local("yugioh"),
+    url(~assets/yu-gi-oh-matrix.ttf) format("truetype");
+}
 
-  html {
-    font-family: "yugioh";
+html {
+  font-family: "yugioh";
 }

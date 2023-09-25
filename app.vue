@@ -6,7 +6,6 @@
   </div>
 </template>
 
-
 <!-- @mixin yugiohFont() {
   @font-face {
     font-family: 'yugioh';

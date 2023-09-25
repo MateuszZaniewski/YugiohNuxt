@@ -1,31 +1,6 @@
 <script setup lang="ts">
 const cardRaces = useCardRaces();
 const cardRacesArray = [
-  "Spellcaster",
-  "Dragon",
-  "Zombie",
-  "Warrior",
-  "Beast-Warrior",
-  "Beast",
-  "Winged Beast",
-  "Fiend",
-  "Fairy",
-  "Insect",
-  "Dinosaur",
-  "Reptile",
-  "Fish",
-  "Sea Serpent",
-  "Aqua",
-  "Pyro",
-  "Thunder",
-  "Rock",
-  "Plant",
-  "Machine",
-  "Psychic",
-  "Divine-Beast",
-  "Wyrm",
-  "Cyberse",
-  "Creator-God",
   "Equip",
   "Field",
   "Quick-Play",
@@ -50,9 +25,9 @@ const addMonsterRace = () => {
 </script>
 
 <template>
-  <section class="pb-2 border-b-2">
+  <section>
     <div class="flex pt-4 gap-5">
-      <span class="w-28" @click="expanded = !expanded">Monster Races</span>
+      <span class="w-28" @click="expanded = !expanded">Spell & Trap Types</span>
       <NuxtImg src="/bottomArrow.png" />
     </div>
     <div class="flex flex-row flex-wrap gap-2" v-if="expanded">

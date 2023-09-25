@@ -1,18 +1,7 @@
-<script setup>
-
-
-</script>
-
+<script setup></script>
 
 <template>
-
-<Register />
-
+  <Register />
 </template>
 
-
-
-<style scoped>
-
-
-</style>
+<style scoped></style>

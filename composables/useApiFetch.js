@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 
 /*
 Explanation about params : {
@@ -21,53 +21,55 @@ Explanation about params : {
 
 */
 
-
-export const connectToYugiohApi = async function(fname, attribute, level, race, type, sort ) {
+export const connectToYugiohApi = async function (
+  fname,
+  attribute,
+  level,
+  race,
+  type,
+  sort,
+) {
   try {
-    const params = useSearchParams(fname,attribute,level,race,type,sort)
+    const params = useSearchParams(fname, attribute, level, race, type, sort);
 
     if (Array.isArray(attribute) && attribute.length > 0) {
-      params.attribute = attribute.join(',');
-    } else if (typeof attribute === 'string') {
+      params.attribute = attribute.join(",");
+    } else if (typeof attribute === "string") {
       params.attribute = attribute;
     }
 
     if (Array.isArray(level) && level.length > 0) {
-      params.level = level.join(',');
-    } else if (typeof level === 'string') {
+      params.level = level.join(",");
+    } else if (typeof level === "string") {
       params.level = level;
     }
 
     if (Array.isArray(race) && race.length > 0) {
-      params.race = race.join(',');
-    } else if (typeof race === 'string') {
+      params.race = race.join(",");
+    } else if (typeof race === "string") {
       params.race = race;
     }
 
     if (Array.isArray(type) && type.length > 0) {
-      params.type = type.join(',');
-    } else if (typeof type === 'string') {
+      params.type = type.join(",");
+    } else if (typeof type === "string") {
       params.type = type;
     }
 
-
-
-
-
-    const response = await axios.get('https://db.ygoprodeck.com/api/v7/cardinfo.php', {
-      params: {
-        fname : fname,
-        sort : sort,
-        ...params
-      }
-    });
-    console.log(params)
+    const response = await axios.get(
+      "https://db.ygoprodeck.com/api/v7/cardinfo.php",
+      {
+        params: {
+          fname: fname,
+          sort: sort,
+          ...params,
+        },
+      },
+    );
+    console.log(params);
     const fetchedCards = response.data.data;
-    return fetchedCards
-    
-
+    return fetchedCards;
+  } catch (error) {
+    console.log(error);
   }
-  catch (error) {
-    console.log(error)
-  }
-}
+};

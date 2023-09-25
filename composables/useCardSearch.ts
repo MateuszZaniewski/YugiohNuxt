@@ -1,4 +1,4 @@
-import { ref, Ref, onMounted } from 'vue';
+import { ref, Ref, onMounted } from "vue";
 
 interface Card {
   id: string;
@@ -28,7 +28,7 @@ export function useCardSearch(options: CardSearchOptions) {
         options.levels,
         options.races,
         options.types,
-        options.sort.value
+        options.sort.value,
       );
       fetchedCards.value = apiFetch;
     } catch (error) {
