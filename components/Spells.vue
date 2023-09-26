@@ -25,12 +25,12 @@ const addMonsterRace = () => {
 </script>
 
 <template>
-  <section>
-    <div class="flex pt-4 gap-5">
-      <span class="w-28" @click="expanded = !expanded">Spell & Trap Types</span>
-      <NuxtImg src="/bottomArrow.png" />
+  <section class="pb-2 border-b-2">
+    <div class="flex pt-4 gap-5 justify-between pr-5">
+      <span class="w-40" @click="expanded = !expanded">Spell & Trap Types</span>
+      <NuxtImg :src="expanded ? '/upArrow.png' : '/arrowDown.png'" height="20" width="20" />
     </div>
-    <div class="flex flex-row flex-wrap gap-2" v-if="expanded">
+    <div class="flex flex-row flex-wrap gap-2 pt-4" v-if="expanded">
       <div v-for="monsterRace in cardRacesArray" class="flex gap-1">
         <input
           :checked="cardRaces.includes(monsterRace)"

@@ -37,13 +37,13 @@ const addMethodSort = () => {
 
 <template>
   <section class="pb-2 border-b-2">
-    <div class="flex pt-4 gap-5">
-      <span class="w-28" @click="expanded = !expanded">SORT BY</span>
-      <NuxtImg src="/bottomArrow.png" />
+    <div @click="expanded = !expanded" class="flex pt-4 gap-5 justify-between pr-5">
+      <span>Sort by</span>
+      <NuxtImg :src="expanded ? '/upArrow.png' : '/arrowDown.png'" height="20" width="20"/>
     </div>
 
     <span v-if="expanded">Order</span>
-    <div class="flex flex-row flex-wrap gap-2" v-if="expanded">
+    <div class="flex flex-row flex-wrap gap-2 pt-2 pb-2" v-if="expanded">
       <div v-for="element in methodArray" class="flex gap-1">
         <input
           :checked="method === element"
@@ -61,7 +61,7 @@ const addMethodSort = () => {
       </div>
     </div>
     <span v-if="expanded">Parameters</span>
-    <div class="flex flex-row flex-wrap gap-2" v-if="expanded">
+    <div class="flex flex-row flex-wrap gap-2 pt-2 pb-2" v-if="expanded">
       <div v-for="element in sortArray" class="flex gap-1">
         <input
           :checked="sort === element"

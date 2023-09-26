@@ -25,13 +25,20 @@ const addAttribute = () => {
 </script>
 
 <template>
-  <section>
-    <div class="flex pt-4 gap-5">
-      <span class="w-28" @click="expanded = !expanded">ATTRIBUTE</span>
-      <NuxtImg src="/bottomArrow.png" />
+  <section class="pb-2 border-b-2 ">
+    <div @click="expanded = !expanded" class="flex pt-4 gap-5 justify-between pr-5">
+      <div class="flex gap-4">
+        <span>Attribute</span>
+        <div class="flex items-center justify-center border border-[#2D61AF] rounded-3xl px-3 text-white bg-[#2D61AF] gap-1" v-if="attributes.length > 0" @click="attributes = []">
+          <span>{{ attributes.length }}</span>
+          <span>x</span>
+        </div>
+      </div>
+      
+      <NuxtImg :src="expanded ? '/upArrow.png' : '/arrowDown.png'" height="20" width="20" class="transition-transform" />
     </div>
 
-    <div class="flex flex-row flex-wrap gap-2" v-if="expanded">
+    <div class="flex flex-row flex-wrap gap-2 pt-4" v-if="expanded">
       <div v-for="attribute in attributesArray" class="flex gap-1">
         <input
           :checked="attributes.includes(attribute)"

@@ -6,6 +6,8 @@ const monsterTypes = useMonsterTypes();
 const sort = useSort();
 const order = useSortMethod();
 
+
+
 const clearAllFilters = () => {
   attributes.value = [];
   cardRaces.value = [];
@@ -17,7 +19,10 @@ const clearAllFilters = () => {
 
 <template>
   <div class="flex-col gap-2 py-6 w-[90%] mx-auto">
-    <button @click="clearAllFilters">Clear All Filters</button>
+    <div class="flex justify-end">
+      <button class="border rounded-3xl px-2 py-1" @click="clearAllFilters">Clear All Filters</button>
+    </div>
+    
     <Sort />
     <Attributes />
     <CardRaces />
