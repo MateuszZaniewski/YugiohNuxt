@@ -33,16 +33,27 @@ const addLevels = () => {
 
 <template>
   <section class="pb-2 border-b-2">
-    <div @click="expanded = !expanded" class="flex pt-4 gap-5 justify-between pr-5">
+    <div
+      @click="expanded = !expanded"
+      class="flex pt-4 gap-5 justify-between pr-5"
+    >
       <div class="flex gap-4">
         <span>Levels</span>
-        <div class="flex items-center justify-center border border-[#2D61AF] rounded-3xl px-3 text-white bg-[#2D61AF] gap-1" v-if="cardLevels.length > 0" @click="cardLevels = []">
+        <div
+          class="flex items-center justify-center border border-[#2D61AF] rounded-3xl px-3 text-white bg-[#2D61AF] gap-1"
+          v-if="cardLevels.length > 0"
+          @click="cardLevels = []"
+        >
           <span>{{ cardLevels.length }}</span>
           <span>x</span>
         </div>
       </div>
 
-      <NuxtImg :src="expanded ? '/upArrow.png' : '/arrowDown.png'" height="20" width="20" />
+      <NuxtImg
+        :src="expanded ? '/upArrow.png' : '/arrowDown.png'"
+        height="20"
+        width="20"
+      />
     </div>
     <div class="flex flex-row flex-wrap gap-2 pt-4" v-if="expanded">
       <div v-for="level in levelsArray" class="flex gap-1">

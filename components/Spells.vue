@@ -28,7 +28,11 @@ const addMonsterRace = () => {
   <section class="pb-2 border-b-2">
     <div class="flex pt-4 gap-5 justify-between pr-5">
       <span class="w-40" @click="expanded = !expanded">Spell & Trap Types</span>
-      <NuxtImg :src="expanded ? '/upArrow.png' : '/arrowDown.png'" height="20" width="20" />
+      <NuxtImg
+        :src="expanded ? '/upArrow.png' : '/arrowDown.png'"
+        height="20"
+        width="20"
+      />
     </div>
     <div class="flex flex-row flex-wrap gap-2 pt-4" v-if="expanded">
       <div v-for="monsterRace in cardRacesArray" class="flex gap-1">

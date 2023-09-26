@@ -37,9 +37,16 @@ const addMethodSort = () => {
 
 <template>
   <section class="pb-2 border-b-2">
-    <div @click="expanded = !expanded" class="flex pt-4 gap-5 justify-between pr-5">
+    <div
+      @click="expanded = !expanded"
+      class="flex pt-4 gap-5 justify-between pr-5"
+    >
       <span>Sort by</span>
-      <NuxtImg :src="expanded ? '/upArrow.png' : '/arrowDown.png'" height="20" width="20"/>
+      <NuxtImg
+        :src="expanded ? '/upArrow.png' : '/arrowDown.png'"
+        height="20"
+        width="20"
+      />
     </div>
 
     <span v-if="expanded">Order</span>

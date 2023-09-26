@@ -74,7 +74,9 @@ onMounted(() => {
 <template>
   <Navbar />
 
-  <section class="searchBar w-[90%] mx-auto pt-5 flex items-center max-w-[730px]">
+  <section
+    class="searchBar w-[90%] mx-auto pt-5 flex items-center max-w-[730px]"
+  >
     <input
       v-model="fname"
       type="search"
@@ -97,15 +99,38 @@ onMounted(() => {
     ></button>
   </section>
 
-  <div class="pt-5 w-[90%] mx-auto flex justify-between items-center max-w-[730px]">
+  <div
+    class="pt-5 w-[90%] mx-auto flex justify-between items-center max-w-[730px]"
+  >
     <div
       class="flex justify-center w-fit border-2 rounded-3xl border-black py-1 px-5 gap-2"
     >
-      <NuxtImg v-if="!filtersExpanded" src="/filter.png" height="20" width="20" />
-      <span @click="filtersExpanded = !filtersExpanded">{{!filtersExpanded ? 'Filers' : 'Close'}}</span>
-      
-          <span v-if="!filtersExpanded && (monsterTypes.length + attributes.length + cardRaces.length + cardLevels.length) != 0">{{ monsterTypes.length + attributes.length + cardRaces.length + cardLevels.length }}</span>
-    
+      <NuxtImg
+        v-if="!filtersExpanded"
+        src="/filter.png"
+        height="20"
+        width="20"
+      />
+      <span @click="filtersExpanded = !filtersExpanded">{{
+        !filtersExpanded ? "Filers" : "Close"
+      }}</span>
+
+      <span
+        v-if="
+          !filtersExpanded &&
+          monsterTypes.length +
+            attributes.length +
+            cardRaces.length +
+            cardLevels.length !=
+            0
+        "
+        >{{
+          monsterTypes.length +
+          attributes.length +
+          cardRaces.length +
+          cardLevels.length
+        }}</span
+      >
     </div>
 
     <div v-if="!filtersExpanded">
@@ -124,7 +149,11 @@ onMounted(() => {
     </div>
   </div>
 
-  <Filters v-model="attr" :class="filtersExpanded ? 'flex' : 'hidden'" class="max-w-[730px]" />
+  <Filters
+    v-model="attr"
+    :class="filtersExpanded ? 'flex' : 'hidden'"
+    class="max-w-[730px]"
+  />
 
   <div
     v-if="fetchedCards.length > 0 && !filtersExpanded"
