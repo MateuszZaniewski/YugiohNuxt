@@ -44,8 +44,7 @@ const addMethodSort = () => {
       <span>Sort by</span>
       <NuxtImg
         :src="expanded ? '/upArrow.png' : '/arrowDown.png'"
-        height="20"
-        width="20"
+        class="w-5 h-5"
       />
     </div>
 

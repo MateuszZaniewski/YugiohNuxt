@@ -1,8 +1,13 @@
 <script setup lang="ts">
 let galleryActive = ref(true);
 let filtersExpanded = ref(false);
+let clickedCard = ref()
 
 let fetchedCards = ref<Card[]>([]);
+
+const makeCardDetails = (card:Object) => {
+    clickedCard.value = card
+};
 
 interface Card {
   id: string;
@@ -69,6 +74,7 @@ onMounted(() => {
     sort.value,
   );
 });
+
 </script>
 
 <template>
@@ -139,11 +145,13 @@ onMounted(() => {
           height="30"
           width="30"
           :src="galleryActive ? '/galleryActive.png' : '/galleryInactive.png'"
+          @click="galleryActive = true"
         />
         <NuxtImg
           height="30"
           width="30"
           :src="galleryActive ? '/listInactive.png' : '/listActive.png'"
+          @click="galleryActive = false"
         />
       </div>
     </div>
@@ -154,21 +162,58 @@ onMounted(() => {
     :class="filtersExpanded ? 'flex' : 'hidden'"
     class="max-w-[730px]"
   />
-
-  <div
+  <div class="flex justify-center gap-5 pt-5">
+    <div class="hidden lg:block lg:w-[30vw] border lg:ml-8" v-if="!filtersExpanded && clickedCard">
+      <div class="flex flex-col w-[90%] mx-auto">
+        <NuxtImg :src="clickedCard.card_images[0].image_url" class="max-w-[350px] max-h-[500px]" />
+        <span>{{ clickedCard.name }}</span>
+        <div v-if="clickedCard.attribute">
+          <span>Attribute</span>
+          <span>{{ clickedCard.attribute }}</span>
+        </div>
+        <div>
+          <span>Card race</span>
+          <span>{{ clickedCard.race }}</span>
+        </div>
+        <div>
+          <span>Card Type</span>
+          <span>{{ clickedCard.type }}</span>
+        </div>
+        <div v-if="clickedCard.level">
+          <span>Level</span>
+          <span>{{ clickedCard.level }}</span>
+        </div>
+        <div v-if="clickedCard.atk">
+          <span>Attack</span>
+          <span>{{ clickedCard.atk }}</span>
+        </div>
+        <div v-if="clickedCard.def">
+          <span>Defence</span>
+          <span>{{ clickedCard.def }}</span>
+        </div>
+        <div>
+          {{ clickedCard.desc }}
+        </div>
+        
+      </div>
+    </div>
+    <div
     v-if="fetchedCards.length > 0 && !filtersExpanded"
-    class="pt-6 flex flex-wrap justify-center gap-6 mx-auto w-[90%] max-w-3xl"
+    class="flex flex-wrap gap-6 mx-auto w-[90%] max-w-3xl lg:w-[50vw]"
   >
     <div
-      v-for="card in fetchedCards.slice(0, 10)"
-      class="w-[35vw] flex justify-center"
+      v-for="card in fetchedCards.slice(0, 12)"
+      class="flex justify-center w-fit"
     >
       <NuxtImg
-        sizes="100vw sm:40vw md:200px"
         :src="card.card_images[0].image_url"
-      ></NuxtImg>
+        class="h-[200px] w-[140px]"
+        @click="makeCardDetails(card)"
+      />
     </div>
   </div>
+  </div>
+  
 
   <div v-if="fetchedCards.length === 0 && !filtersExpanded">
     <p>No card matching your query was found.</p>

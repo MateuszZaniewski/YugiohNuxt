@@ -30,8 +30,7 @@ const addMonsterRace = () => {
       <span class="w-40" @click="expanded = !expanded">Spell & Trap Types</span>
       <NuxtImg
         :src="expanded ? '/upArrow.png' : '/arrowDown.png'"
-        height="20"
-        width="20"
+        class="w-5 h-5"
       />
     </div>
     <div class="flex flex-row flex-wrap gap-2 pt-4" v-if="expanded">

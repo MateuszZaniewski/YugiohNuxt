@@ -44,9 +44,7 @@ const addAttribute = () => {
 
       <NuxtImg
         :src="expanded ? '/upArrow.png' : '/arrowDown.png'"
-        height="20"
-        width="20"
-        class="transition-transform"
+        class="w-5 h-5"
       />
     </div>
 
