@@ -1,12 +1,14 @@
 <script setup lang="ts">
 let galleryActive = ref(true);
 let filtersExpanded = ref(false);
-let clickedCard = ref()
+let clickedCard = ref();
 
 let fetchedCards = ref<Card[]>([]);
 
-const makeCardDetails = (card:Object) => {
-    clickedCard.value = card
+const emmits = defineEmits(["active"]);
+
+const makeCardDetails = (card: Object) => {
+  clickedCard.value = card;
 };
 
 interface Card {
@@ -74,7 +76,6 @@ onMounted(() => {
     sort.value,
   );
 });
-
 </script>
 
 <template>
@@ -162,10 +163,16 @@ onMounted(() => {
     :class="filtersExpanded ? 'flex' : 'hidden'"
     class="max-w-[730px]"
   />
-  <div class="flex justify-center gap-5 pt-5">
-    <div class="hidden lg:block lg:w-[30vw] border lg:ml-8" v-if="!filtersExpanded && clickedCard">
+  <div class="flex gap-5 pt-5 lg:max-h-[700px] lg:max-w-[1400px] mx-auto">
+    <div
+      class="hidden lg:block lg:w-[30vw] border lg:ml-8 overflow-scroll"
+      v-if="!filtersExpanded && clickedCard"
+    >
       <div class="flex flex-col w-[90%] mx-auto">
-        <NuxtImg :src="clickedCard.card_images[0].image_url" class="max-w-[350px] max-h-[500px]" />
+        <NuxtImg
+          :src="clickedCard.card_images[0].image_url"
+          class="max-w-[350px] max-h-[500px]"
+        />
         <span>{{ clickedCard.name }}</span>
         <div v-if="clickedCard.attribute">
           <span>Attribute</span>
@@ -194,30 +201,30 @@ onMounted(() => {
         <div>
           {{ clickedCard.desc }}
         </div>
-        
       </div>
     </div>
     <div
-    v-if="fetchedCards.length > 0 && !filtersExpanded"
-    class="flex flex-wrap gap-6 mx-auto w-[90%] max-w-3xl lg:w-[50vw]"
-  >
-    <div
-      v-for="card in fetchedCards.slice(0, 12)"
-      class="flex justify-center w-fit"
+      v-if="fetchedCards.length > 0 && !filtersExpanded"
+      class="flex flex-wrap justify-center ;g:max-h-[700px] gap-6 mx-auto w-[90%] max-w-3xl lg:w-[50vw]"
     >
-      <NuxtImg
-        :src="card.card_images[0].image_url"
-        class="h-[200px] w-[140px]"
-        @click="makeCardDetails(card)"
-      />
+      <div
+        v-for="card in fetchedCards.slice(0, 12)"
+        class="flex justify-center w-fit"
+      >
+        <NuxtImg
+          :src="card.card_images[0].image_url"
+          class="h-[200px] w-[140px]"
+          @click="makeCardDetails(card)"
+        />
+      </div>
     </div>
   </div>
-  </div>
-  
 
   <div v-if="fetchedCards.length === 0 && !filtersExpanded">
     <p>No card matching your query was found.</p>
   </div>
+
+  <Pagination :activePage="1" :cardsLimit="fetchedCards.length" />
 </template>
 
 <style scoped>
