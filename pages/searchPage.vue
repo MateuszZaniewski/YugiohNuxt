@@ -5,8 +5,6 @@ let clickedCard = ref();
 
 let fetchedCards = ref<Card[]>([]);
 
-const emmits = defineEmits(["active"]);
-
 const makeCardDetails = (card: Object) => {
   clickedCard.value = card;
 };
@@ -28,6 +26,20 @@ const fname = useFnameParam();
 const order = useSortMethod();
 
 let attr = ref(attributes.value);
+
+const handlePageChange = (newPage:number) => {
+  activePage.value = newPage
+};
+
+
+const activePage = ref(1)
+const cardsPerPage = ref(12)
+
+const visibleCards = computed(() => {
+  const startIndex = ( activePage.value - 1 ) * cardsPerPage.value;
+  const endIndex = startIndex + cardsPerPage.value
+  return fetchedCards.value.slice(startIndex, endIndex)
+});
 
 const searchForCards = async (
   name: String,
@@ -208,7 +220,7 @@ onMounted(() => {
       class="flex flex-wrap justify-center ;g:max-h-[700px] gap-6 mx-auto w-[90%] max-w-3xl lg:w-[50vw]"
     >
       <div
-        v-for="card in fetchedCards.slice(0, 12)"
+        v-for="card in visibleCards"
         class="flex justify-center w-fit"
       >
         <NuxtImg
@@ -224,7 +236,7 @@ onMounted(() => {
     <p>No card matching your query was found.</p>
   </div>
 
-  <Pagination :activePage="1" :cardsLimit="fetchedCards.length" />
+  <Pagination @page-change="handlePageChange"/>
 </template>
 
 <style scoped>
