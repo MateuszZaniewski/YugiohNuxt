@@ -2,6 +2,9 @@
 let galleryActive = ref(true);
 let filtersExpanded = ref(false);
 let clickedCard = ref();
+const activePage = ref(1)
+const cardsPerPage = ref(12)
+const maxPageLimit = ref(0)
 
 let fetchedCards = ref<Card[]>([]);
 
@@ -27,18 +30,19 @@ const order = useSortMethod();
 
 let attr = ref(attributes.value);
 
-const handlePageChange = (newPage:number) => {
+const handlePageChange = (newPage:number, PageLimit:number) => {
   activePage.value = newPage
+  maxPageLimit.value = PageLimit
 };
 
 
-const activePage = ref(1)
-const cardsPerPage = ref(12)
-
 const visibleCards = computed(() => {
+  console.log(fetchedCards.value.length)
   const startIndex = ( activePage.value - 1 ) * cardsPerPage.value;
   const endIndex = startIndex + cardsPerPage.value
-  return fetchedCards.value.slice(startIndex, endIndex)
+    return fetchedCards.value.slice(startIndex, endIndex)
+  
+  
 });
 
 const searchForCards = async (
@@ -216,7 +220,7 @@ onMounted(() => {
       </div>
     </div>
     <div
-      v-if="fetchedCards.length > 0 && !filtersExpanded"
+      v-if="visibleCards.length > 0 && !filtersExpanded"
       class="flex flex-wrap justify-center ;g:max-h-[700px] gap-6 mx-auto w-[90%] max-w-3xl lg:w-[50vw]"
     >
       <div
@@ -236,7 +240,7 @@ onMounted(() => {
     <p>No card matching your query was found.</p>
   </div>
 
-  <Pagination @page-change="handlePageChange"/>
+  <Pagination @page-change="handlePageChange" :active-page="1" :max-page-limit="fetchedCards.length/12"/>
 </template>
 
 <style scoped>

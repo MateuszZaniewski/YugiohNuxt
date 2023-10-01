@@ -1,33 +1,58 @@
 <script setup lang="ts">
 
-const activePage = ref(1);
+const props = defineProps({
+  startFrom: Number,
+  endTo: Number,
+  activePage: Number,
+  maxPageLimit: Number,
+  allCards : Array
+})
+
+const activePageRef = ref(props.activePage || 1)
+let maxPageLimitRef = ref(props.maxPageLimit || 1056)
+
+
 const emits = defineEmits(['page-change']);
 
+
 const goToFirstPage = () => {
-  activePage.value = 1;
-  emits('page-change', activePage.value);
+  activePageRef.value = 1
+  emits('page-change', activePageRef.value, maxPageLimitRef.value);
 };
 
 const goToPreviousPage = () => {
-    activePage.value--;
-  emits('page-change', activePage.value);
+  if(activePageRef.value > 1 ){
+    activePageRef.value--
+  }
+  emits('page-change', activePageRef.value, maxPageLimitRef.value);
 };
 
 const goToNextPage = () => {
-  
-  emits('page-change', activePage.value);
+  if(activePageRef.value < maxPageLimitRef.value)
+  activePageRef.value++
+  emits('page-change', activePageRef.value, maxPageLimitRef.value);
+  console.log(props.allCards)
 };
 
 const goToLastPage = () => {
-  
-  emits('page-change', activePage.value);
+  activePageRef.value = maxPageLimitRef.value
+  emits('page-change', activePageRef.value, maxPageLimitRef.value);
 };
 
 
 watch(
-  () => activePage,
+  () => activePageRef.value, 
   (newValue) => {
-    emits('page-change', activePage.value); // Emit the event with the new page value
+    console.log(newValue)
+    emits('page-change', activePageRef.value); // Emit the event with the new page value
+  }
+);
+
+watch(
+  () => maxPageLimitRef.value,
+  (newValue) => {
+    console.log(newValue),
+    emits('page-change', maxPageLimitRef.value)
   }
 );
 
@@ -42,7 +67,7 @@ watch(
       <NuxtImg src="/previousPage.png" />
     </div>
     <div class="border border-gray-400 px-5 py-2 rounded-3xl">
-      {{ activePage }}
+      {{ activePageRef }}
     </div>
     <div @click="goToNextPage" class="border border-gray-400 px-5 py-2 rounded-3xl">
       <NuxtImg src="/nextPage.png" />
