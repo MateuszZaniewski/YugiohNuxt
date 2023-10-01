@@ -1,10 +1,6 @@
 <script setup lang="ts">
-let galleryActive = ref(true);
-let filtersExpanded = ref(false);
 let clickedCard = ref();
-const activePage = ref(1)
 const cardsPerPage = ref(12)
-const maxPageLimit = ref(0)
 
 let fetchedCards = ref<Card[]>([]);
 
@@ -27,22 +23,19 @@ const cardLevels = useCardLevels();
 const sort = useSort();
 const fname = useFnameParam();
 const order = useSortMethod();
+const maxLength = usePagesLength();
+const currentPage = useCurrentPage();
+const filtersExpanded = useFiltersOpen();
 
 let attr = ref(attributes.value);
 
-const handlePageChange = (newPage:number, PageLimit:number) => {
-  activePage.value = newPage
-  maxPageLimit.value = PageLimit
-};
-
-
 const visibleCards = computed(() => {
-  console.log(fetchedCards.value.length)
-  const startIndex = ( activePage.value - 1 ) * cardsPerPage.value;
+  maxLength.value = Math.ceil(fetchedCards.value.length/12)
+  const startIndex = ( currentPage.value - 1 ) * cardsPerPage.value;
   const endIndex = startIndex + cardsPerPage.value
     return fetchedCards.value.slice(startIndex, endIndex)
   
-  
+    
 });
 
 const searchForCards = async (
@@ -92,6 +85,13 @@ onMounted(() => {
     sort.value,
   );
 });
+
+watch(
+  () => fname.value,
+  (newValue) => {
+    currentPage.value = 1
+  }
+);
 </script>
 
 <template>
@@ -100,6 +100,9 @@ onMounted(() => {
   <section
     class="searchBar w-[90%] mx-auto pt-5 flex items-center max-w-[730px]"
   >
+  <div>
+    
+  </div>
     <input
       v-model="fname"
       type="search"
@@ -115,18 +118,17 @@ onMounted(() => {
           cardRaces,
           monsterTypes,
           sort,
-        ),
-          (filtersExpanded = false)
+        )
       "
       class="h-11 w-[20%] border-2 rounded-r-3xl rounded-br-3xl border-[#2D61AF] bg-[url('/glass.png')] bg-no-repeat bg-[#2D61AF] bg-center"
     ></button>
   </section>
 
-  <div
+  <div 
     class="pt-5 w-[90%] mx-auto flex justify-between items-center max-w-[730px]"
   >
-    <div
-      class="flex justify-center w-fit border-2 rounded-3xl border-black py-1 px-5 gap-2"
+    <div @click="filtersExpanded = !filtersExpanded"
+      class="flex justify-center w-fit border-2 rounded-3xl border-black py-1 px-5 gap-2 cursor-pointer"
     >
       <NuxtImg
         v-if="!filtersExpanded"
@@ -134,7 +136,7 @@ onMounted(() => {
         height="20"
         width="20"
       />
-      <span @click="filtersExpanded = !filtersExpanded">{{
+      <span>{{
         !filtersExpanded ? "Filers" : "Close"
       }}</span>
 
@@ -154,23 +156,6 @@ onMounted(() => {
           cardLevels.length
         }}</span
       >
-    </div>
-
-    <div v-if="!filtersExpanded">
-      <div class="flex gap-5 items-center">
-        <NuxtImg
-          height="30"
-          width="30"
-          :src="galleryActive ? '/galleryActive.png' : '/galleryInactive.png'"
-          @click="galleryActive = true"
-        />
-        <NuxtImg
-          height="30"
-          width="30"
-          :src="galleryActive ? '/listInactive.png' : '/listActive.png'"
-          @click="galleryActive = false"
-        />
-      </div>
     </div>
   </div>
 
@@ -221,7 +206,7 @@ onMounted(() => {
     </div>
     <div
       v-if="visibleCards.length > 0 && !filtersExpanded"
-      class="flex flex-wrap justify-center ;g:max-h-[700px] gap-6 mx-auto w-[90%] max-w-3xl lg:w-[50vw]"
+      class="flex flex-wrap justify-center lg:max-h-[700px] gap-6 mx-auto w-[90%] max-w-3xl lg:w-[50vw]"
     >
       <div
         v-for="card in visibleCards"
@@ -235,12 +220,13 @@ onMounted(() => {
       </div>
     </div>
   </div>
+  <Pagination v-if="!filtersExpanded" />
 
   <div v-if="fetchedCards.length === 0 && !filtersExpanded">
     <p>No card matching your query was found.</p>
   </div>
 
-  <Pagination @page-change="handlePageChange" :active-page="1" :max-page-limit="fetchedCards.length/12"/>
+  
 </template>
 
 <style scoped>
