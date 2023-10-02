@@ -1,6 +1,6 @@
 <script setup lang="ts">
 let clickedCard = ref();
-const cardsPerPage = ref(12)
+const cardsPerPage = ref(12);
 
 let fetchedCards = ref<Card[]>([]);
 
@@ -30,12 +30,10 @@ const filtersExpanded = useFiltersOpen();
 let attr = ref(attributes.value);
 
 const visibleCards = computed(() => {
-  maxLength.value = Math.ceil(fetchedCards.value.length/12)
-  const startIndex = ( currentPage.value - 1 ) * cardsPerPage.value;
-  const endIndex = startIndex + cardsPerPage.value
-    return fetchedCards.value.slice(startIndex, endIndex)
-  
-    
+  maxLength.value = Math.ceil(fetchedCards.value.length / 12);
+  const startIndex = (currentPage.value - 1) * cardsPerPage.value;
+  const endIndex = startIndex + cardsPerPage.value;
+  return fetchedCards.value.slice(startIndex, endIndex);
 });
 
 const searchForCards = async (
@@ -89,8 +87,8 @@ onMounted(() => {
 watch(
   () => fname.value,
   (newValue) => {
-    currentPage.value = 1
-  }
+    currentPage.value = 1;
+  },
 );
 </script>
 
@@ -100,9 +98,7 @@ watch(
   <section
     class="searchBar w-[90%] mx-auto pt-5 flex items-center max-w-[730px]"
   >
-  <div>
-    
-  </div>
+    <div></div>
     <input
       v-model="fname"
       type="search"
@@ -124,10 +120,11 @@ watch(
     ></button>
   </section>
 
-  <div 
+  <div
     class="pt-5 w-[90%] mx-auto flex justify-between items-center max-w-[730px]"
   >
-    <div @click="filtersExpanded = !filtersExpanded"
+    <div
+      @click="filtersExpanded = !filtersExpanded"
       class="flex justify-center w-fit border-2 rounded-3xl border-black py-1 px-5 gap-2 cursor-pointer"
     >
       <NuxtImg
@@ -136,9 +133,7 @@ watch(
         height="20"
         width="20"
       />
-      <span>{{
-        !filtersExpanded ? "Filers" : "Close"
-      }}</span>
+      <span>{{ !filtersExpanded ? "Filers" : "Close" }}</span>
 
       <span
         v-if="
@@ -164,9 +159,9 @@ watch(
     :class="filtersExpanded ? 'flex' : 'hidden'"
     class="max-w-[730px]"
   />
-  <div class="flex gap-5 pt-5 lg:max-h-[700px] lg:max-w-[1400px] mx-auto">
+  <div class="flex gap-5 pt-5 lg:max-w-[1400px] mx-auto">
     <div
-      class="hidden lg:block lg:w-[30vw] border lg:ml-8 overflow-scroll"
+      class="hidden lg:block lg:w-[30vw] lg:max-h-[700px] border lg:ml-8 overflow-scroll"
       v-if="!filtersExpanded && clickedCard"
     >
       <div class="flex flex-col w-[90%] mx-auto">
@@ -204,29 +199,35 @@ watch(
         </div>
       </div>
     </div>
-    <div
-      v-if="visibleCards.length > 0 && !filtersExpanded"
-      class="flex flex-wrap justify-center lg:max-h-[700px] gap-6 mx-auto w-[90%] max-w-3xl lg:w-[50vw]"
-    >
+    <div>
       <div
-        v-for="card in visibleCards"
-        class="flex justify-center w-fit"
+        v-if="visibleCards.length > 0 && !filtersExpanded"
+        class="flex flex-wrap justify-center gap-6 mx-auto w-[90%] max-w-3xl lg:w-[50vw]"
       >
-        <NuxtImg
-          :src="card.card_images[0].image_url"
-          class="h-[200px] w-[140px]"
-          @click="makeCardDetails(card)"
-        />
+        <div v-for="card in visibleCards" class="flex justify-center w-fit">
+          <NuxtLink
+            :src="card.card_images[0].image_url"
+            class="h-[200px] w-[140px]"
+            @click="makeCardDetails(card)"
+            :to="`card/${card.name}`"
+          >
+            <NuxtImg
+              :src="card.card_images[0].image_url"
+              class="h-[200px] w-[140px]"
+              @click="makeCardDetails(card)"
+            />
+          </NuxtLink>
+        </div>
+      </div>
+      <div>
+        <Pagination v-if="!filtersExpanded" />
       </div>
     </div>
   </div>
-  <Pagination v-if="!filtersExpanded" />
 
   <div v-if="fetchedCards.length === 0 && !filtersExpanded">
-    <p>No card matching your query was found.</p>
+    <p>Tymczasowy tekst ładowania kart</p>
   </div>
-
-  
 </template>
 
 <style scoped>

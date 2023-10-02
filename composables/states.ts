@@ -14,6 +14,7 @@ export const useSort = () => useState<String>("sort", () => "Name");
 export const useSortMethod = () =>
   useState<String>("sortMethod", () => "Ascending");
 
-export const usePagesLength = () => useState<number>('maxlength', () => 1056)
-export const useCurrentPage = () => useState<number>('currentPage', () => 1)
-export const useFiltersOpen = () => useState<boolean>('filtersOpen', () => false)
+export const usePagesLength = () => useState<number>("maxlength", () => 1056);
+export const useCurrentPage = () => useState<number>("currentPage", () => 1);
+export const useFiltersOpen = () =>
+  useState<boolean>("filtersOpen", () => false);
