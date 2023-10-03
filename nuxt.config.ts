@@ -17,5 +17,10 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
-  spaLoadingTemplate: false,
+  ssr: false,
+  router: {
+    options: {
+      hashMode: true
+    }
+  }
 });

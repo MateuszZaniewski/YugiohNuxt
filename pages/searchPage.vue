@@ -26,6 +26,7 @@ const order = useSortMethod();
 const maxLength = usePagesLength();
 const currentPage = useCurrentPage();
 const filtersExpanded = useFiltersOpen();
+const innerWidth = ref(window.innerWidth)
 
 let attr = ref(attributes.value);
 
@@ -159,7 +160,7 @@ watch(
     :class="filtersExpanded ? 'flex' : 'hidden'"
     class="max-w-[730px]"
   />
-  <div class="flex gap-5 pt-5 lg:max-w-[1400px] mx-auto">
+  <div class="flex gap-5 pt-5 lg:max-w-[1400px] mx-auto justify-center">
     <div
       class="hidden lg:block lg:w-[30vw] lg:max-h-[700px] border lg:ml-8 overflow-scroll"
       v-if="!filtersExpanded && clickedCard"
@@ -204,19 +205,21 @@ watch(
         v-if="visibleCards.length > 0 && !filtersExpanded"
         class="flex flex-wrap justify-center gap-6 mx-auto w-[90%] max-w-3xl lg:w-[50vw]"
       >
-        <div v-for="card in visibleCards" class="flex justify-center w-fit">
+        <div v-for="card in visibleCards" class="flex justify-center w-fit mx-auto">
           <NuxtLink
             :src="card.card_images[0].image_url"
             class="h-[200px] w-[140px]"
-            @click="makeCardDetails(card)"
+            :class="innerWidth > 1024 ? 'block' : 'hidden'"
             :to="`card/${card.name}`"
           >
+          <!-- rework this :class to hide it -->
             <NuxtImg
               :src="card.card_images[0].image_url"
               class="h-[200px] w-[140px]"
               @click="makeCardDetails(card)"
             />
           </NuxtLink>
+          
         </div>
       </div>
       <div>
@@ -225,7 +228,7 @@ watch(
     </div>
   </div>
 
-  <div v-if="fetchedCards.length === 0 && !filtersExpanded">
+  <div class="flex justify-center" v-if="fetchedCards.length === 0 && !filtersExpanded">
     <p>Tymczasowy tekst ładowania kart</p>
   </div>
 </template>
