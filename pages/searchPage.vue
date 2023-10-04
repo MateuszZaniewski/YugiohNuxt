@@ -26,9 +26,47 @@ const order = useSortMethod();
 const maxLength = usePagesLength();
 const currentPage = useCurrentPage();
 const filtersExpanded = useFiltersOpen();
-const innerWidth = ref(window.innerWidth)
+const innerWidth = ref(window.innerWidth);
 
 let attr = ref(attributes.value);
+
+const setAttribute = (card: any) => {
+  return card.attribute === "DARK"
+    ? "./Attributes/DARK.png"
+    : card.attribute === "LIGHT"
+    ? "./Attributes/LIGHT.png"
+    : card.attribute === "EARTH"
+    ? "./Attributes/EARTH.png"
+    : card.attribute === "WATER"
+    ? "./Attributes/WATER.png"
+    : card.attribute === "FIRE"
+    ? "./Attributes/FIRE.png"
+    : card.attribute === "WIND"
+    ? "./Attributes/WIND.png"
+    : card.attribute === "DIVINE"
+    ? "./Attributes/DIVINE.png"
+    : card.type === "Spell Card"
+    ? "./Attributes/SPELL.svg"
+    : card.type === "Trap Card"
+    ? "./Attributes/TRAP.svg"
+    : "xD";
+};
+
+const setCardType = (card: any) => {
+  return card.race === "Continuous"
+    ? "./CardTypes/Continuous.png"
+    : card.race === "Counter"
+    ? "./CardTypes/Counter.png"
+    : card.race === "Equip"
+    ? "./CardTypes/Equip.png"
+    : card.race === "Field"
+    ? "./CardTypes/Field.png"
+    : card.race === "Normal"
+    ? "./CardTypes/Normal.png"
+    : card.race === "Quick-Play"
+    ? "./CardTypes/Quick-Play.png"
+    : "./CardTypes/Ritual.png";
+};
 
 const visibleCards = computed(() => {
   maxLength.value = Math.ceil(fetchedCards.value.length / 12);
@@ -168,35 +206,59 @@ watch(
       <div class="flex flex-col w-[90%] mx-auto">
         <NuxtImg
           :src="clickedCard.card_images[0].image_url"
-          class="max-w-[350px] max-h-[500px]"
+          class="max-w-[350px] max-h-[500px] pt-4"
         />
-        <span>{{ clickedCard.name }}</span>
-        <div v-if="clickedCard.attribute">
-          <span>Attribute</span>
-          <span>{{ clickedCard.attribute }}</span>
+        <span class="text-2xl text-center pt-2">{{ clickedCard.name }}</span>
+
+        <div class="flex justify-center items-center gap-5 pt-4">
+          <div class="flex gap-2 items-center">
+            <NuxtImg
+              :src="setAttribute(clickedCard)"
+              height="30px"
+              width="30px"
+            />
+            <span v-if="clickedCard.attribute">{{
+              clickedCard.attribute
+            }}</span>
+            <span v-else>{{ clickedCard.type }}</span>
+          </div>
+          <div v-if="clickedCard.level" class="flex gap-2 items-center">
+            <NuxtImg src="/level.webp" height="30px" width="30px" />
+            <span>{{ clickedCard.level }}</span>
+          </div>
+          <div v-if="!clickedCard.level" class="flex gap-2 items-center">
+            <NuxtImg
+              :src="setCardType(clickedCard)"
+              height="30px"
+              width="30px"
+            />
+            <span>{{ clickedCard.race }}</span>
+          </div>
         </div>
-        <div>
-          <span>Card race</span>
-          <span>{{ clickedCard.race }}</span>
+
+        <div v-if="clickedCard.atk >= 0" class="pt-2">
+          <!-- [ Beast / Effect / Tuner ] -->
+          <span class="font-bold">
+            [<span>{{ clickedCard.race }} </span>
+            <span v-if="clickedCard.type != 'Normal Monster'"
+              >/ {{ clickedCard.type }}</span
+            >]</span
+          >
         </div>
-        <div>
-          <span>Card Type</span>
-          <span>{{ clickedCard.type }}</span>
+
+        <div class="pt-2 pb-4">
+          <p>{{ clickedCard.desc }}</p>
         </div>
-        <div v-if="clickedCard.level">
-          <span>Level</span>
-          <span>{{ clickedCard.level }}</span>
-        </div>
-        <div v-if="clickedCard.atk">
-          <span>Attack</span>
-          <span>{{ clickedCard.atk }}</span>
-        </div>
-        <div v-if="clickedCard.def">
-          <span>Defence</span>
-          <span>{{ clickedCard.def }}</span>
-        </div>
-        <div>
-          {{ clickedCard.desc }}
+
+        <div v-if="clickedCard.atk >= 0" class="flex gap-4 pb-4">
+          <div class="flex gap-1">
+            <span class="font-bold">ATK/</span>
+            <span>{{ clickedCard.atk }}</span>
+          </div>
+          <div class="flex gap-1">
+            <span class="font-bold">DEF/</span>
+            <span>{{ clickedCard.def }}</span>
+          </div>
         </div>
       </div>
     </div>
@@ -205,21 +267,41 @@ watch(
         v-if="visibleCards.length > 0 && !filtersExpanded"
         class="flex flex-wrap justify-center gap-6 mx-auto w-[90%] max-w-3xl lg:w-[50vw]"
       >
-        <div v-for="card in visibleCards" class="flex justify-center w-fit mx-auto">
+        <div
+          v-for="card in visibleCards"
+          class="justify-center w-fit mx-auto"
+          :class="innerWidth <= 1024 ? 'flex' : 'hidden'"
+        >
           <NuxtLink
             :src="card.card_images[0].image_url"
             class="h-[200px] w-[140px]"
-            :class="innerWidth > 1024 ? 'block' : 'hidden'"
             :to="`card/${card.name}`"
           >
-          <!-- rework this :class to hide it -->
+            <!-- rework this :class to hide it -->
             <NuxtImg
               :src="card.card_images[0].image_url"
               class="h-[200px] w-[140px]"
               @click="makeCardDetails(card)"
             />
           </NuxtLink>
-          
+        </div>
+
+        <div
+          v-for="card in visibleCards"
+          class="justify-center w-fit mx-auto"
+          :class="innerWidth > 1024 ? 'flex' : 'hidden'"
+        >
+          <NuxtLink
+            :src="card.card_images[0].image_url"
+            class="h-[200px] w-[140px]"
+          >
+            <!-- rework this :class to hide it -->
+            <NuxtImg
+              :src="card.card_images[0].image_url"
+              class="h-[200px] w-[140px]"
+              @click="makeCardDetails(card)"
+            />
+          </NuxtLink>
         </div>
       </div>
       <div>
@@ -228,7 +310,10 @@ watch(
     </div>
   </div>
 
-  <div class="flex justify-center" v-if="fetchedCards.length === 0 && !filtersExpanded">
+  <div
+    class="flex justify-center"
+    v-if="fetchedCards.length === 0 && !filtersExpanded"
+  >
     <p>Tymczasowy tekst ładowania kart</p>
   </div>
 </template>
