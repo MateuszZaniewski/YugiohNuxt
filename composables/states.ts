@@ -18,3 +18,4 @@ export const usePagesLength = () => useState<number>("maxlength", () => 1056);
 export const useCurrentPage = () => useState<number>("currentPage", () => 1);
 export const useFiltersOpen = () =>
   useState<boolean>("filtersOpen", () => false);
+

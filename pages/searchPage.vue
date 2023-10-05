@@ -27,6 +27,7 @@ const maxLength = usePagesLength();
 const currentPage = useCurrentPage();
 const filtersExpanded = useFiltersOpen();
 const innerWidth = ref(window.innerWidth);
+const fav = ref(false)
 
 let attr = ref(attributes.value);
 
@@ -137,7 +138,7 @@ watch(
   <section
     class="searchBar w-[90%] mx-auto pt-5 flex items-center max-w-[730px]"
   >
-    <div></div>
+    
     <input
       v-model="fname"
       type="search"
@@ -153,7 +154,7 @@ watch(
           cardRaces,
           monsterTypes,
           sort,
-        )
+        ), filtersExpanded = false
       "
       class="h-11 w-[20%] border-2 rounded-r-3xl rounded-br-3xl border-[#2D61AF] bg-[url('/glass.png')] bg-no-repeat bg-[#2D61AF] bg-center"
     ></button>
@@ -211,6 +212,10 @@ watch(
         <span class="text-2xl text-center pt-2">{{ clickedCard.name }}</span>
 
         <div class="flex justify-center items-center gap-5 pt-4">
+          <div class="flex gap-4">
+                  <NuxtImg @click="fav = !fav" :src='fav ? "/fullHeart.png" : "/emptyHeart.png"' height="30px" width="30px" alt="Add to favourites"/>
+                  <NuxtImg src="/add.png" height="30px" width="30px" alt="Add to deck" />
+          </div>
           <div class="flex gap-2 items-center">
             <NuxtImg
               :src="setAttribute(clickedCard)"
@@ -234,6 +239,7 @@ watch(
             />
             <span>{{ clickedCard.race }}</span>
           </div>
+          
         </div>
 
         <div v-if="clickedCard.atk >= 0" class="pt-2">
