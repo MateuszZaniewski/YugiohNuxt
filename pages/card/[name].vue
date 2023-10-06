@@ -2,44 +2,10 @@
 import axios from "axios";
 
 const card = ref([])
+const fav = useFavs()
+const { useSetAttribute, useSetCardType } = useUtils()
 
-const setAttribute = (card) => {
-  return card.attribute === "DARK"
-    ? "./Attributes/DARK.png"
-    : card.attribute === "LIGHT"
-    ? "./Attributes/LIGHT.png"
-    : card.attribute === "EARTH"
-    ? "./Attributes/EARTH.png"
-    : card.attribute === "WATER"
-    ? "./Attributes/WATER.png"
-    : card.attribute === "FIRE"
-    ? "./Attributes/FIRE.png"
-    : card.attribute === "WIND"
-    ? "./Attributes/WIND.png"
-    : card.attribute === "DIVINE"
-    ? "./Attributes/DIVINE.png"
-    : card.type === "Spell Card"
-    ? "./Attributes/SPELL.svg"
-    : card.type === "Trap Card"
-    ? "./Attributes/TRAP.svg"
-    : "xD";
-};
 
-const setCardType = (card) => {
-  return card.race === "Continuous"
-    ? "./CardTypes/Continuous.png"
-    : card.race === "Counter"
-    ? "./CardTypes/Counter.png"
-    : card.race === "Equip"
-    ? "./CardTypes/Equip.png"
-    : card.race === "Field"
-    ? "./CardTypes/Field.png"
-    : card.race === "Normal"
-    ? "./CardTypes/Normal.png"
-    : card.race === "Quick-Play"
-    ? "./CardTypes/Quick-Play.png"
-    : "./CardTypes/Ritual.png";
-};
 
 const route = useRoute();
 
@@ -67,40 +33,75 @@ onMounted(() => {
 </script>
 
 <template>
-  <section v-if="card.length > 0">
+  <section v-if="card.length > 0" class="flex flex-col items-center justify-center">
+    <div class="flex justify-start w-full pt-4 pl-6" >
+      <NuxtImg src="/backArrow.png" height="30px" width="30px" @click="$router.go(-1)"/>
+    </div>
+    
 
-    <h1>{{ card[0].name}}</h1>
+  <NuxtImg class="w-full max-w-[300px] py-5 rounded-lg " :src="card[0].card_images[0].image_url" />
 
-  <NuxtImg :src="card[0].card_images[0].image_url" />
+  <h1 class="text-3xl text-center">{{ card[0].name}}</h1>
 
-  <div class=" bg-emerald-900 h-28 w-28 flex ">
+  <div class="flex w-[50%] mx-auto pt-2 justify-around">
+                  <NuxtImg @click="fav = !fav" :src='fav ? "/fullHeart.png" : "/emptyHeart.png"' height="30px" width="30px" alt="Add to favourites"/>
+                  <NuxtImg src="/add.png" height="30px" width="30px" alt="Add to deck" />
+  </div>
 
+  <div class="bg-[#142D45] text-white w-[90%] mx-auto rounded-t-xl py-2 px-2 mt-2">
+    <div class="flex gap-4 justify-center pb-2 pt-2 ">
     <div class="flex gap-2 items-center">
             <NuxtImg
-              :src="setAttribute(card[0])"
-              height="30px"
-              width="30px"
+              :src="useSetAttribute(card[0])"
+              height="20px"
+              width="20px"
             />
-            <span v-if="card.attribute">{{
-              card.attribute
+            <span v-if="card[0].attribute">{{
+              card[0].attribute
             }}</span>
-            <span v-else>{{ card.type }}</span>
-          </div>
-          <div v-if="card.level" class="flex gap-2 items-center">
-            <NuxtImg src="/level.webp" height="30px" width="30px" />
-            <span>{{ card.level }}</span>
-          </div>
-          <div v-if="!card.level" class="flex gap-2 items-center">
+            <span v-else>{{ card[0].type }}</span>
+    </div>
+    <div v-if="card[0].level" class="flex gap-2 items-center">
+            <NuxtImg src="/level.webp" height="20px" width="20px" />
+            <span>{{ card[0].level }}</span>
+    </div>
+    <div v-if="!card[0].level" class="flex gap-2 items-center">
             <NuxtImg
-              :src="setCardType(card[0])"
-              height="30px"
-              width="30px"
+              :src="useSetCardType(card[0])"
+              height="20px"
+              width="20px"
             />
-            <span>{{ card.race }}</span>
-          </div>
-
-
+            <span>{{ card[0].race }}</span>
+    </div>
   </div>
+  <div v-if="card[0].atk >= 0" class="flex gap-4 pb-2 justify-center">
+          <div class="flex gap-1">
+            <span class="font-bold">ATK/</span>
+            <span>{{ card[0].atk }}</span>
+          </div>
+          <div class="flex gap-1">
+            <span class="font-bold">DEF/</span>
+            <span>{{ card[0].def }}</span>
+          </div>
+  </div>
+  <div v-if="card[0].atk >= 0" class="flex justify-center">
+          <!-- [ Beast / Effect / Tuner ] -->
+          <span class="font-bold">
+            [<span>{{ card[0].race }} </span>
+            <span v-if="card[0].type != 'Normal Monster'"
+              >/ {{ card[0].type }}</span
+            >]</span
+          >
+    </div>
+    <div class="pt-4 pb-4 w-[90%] mx-auto text-left">
+          <p class="whitespace-pre-line">{{ card[0].desc}}</p>
+    </div>
+  </div>
+
+  
+    
+
+
   </section>
   
 </template>

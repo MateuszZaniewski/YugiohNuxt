@@ -1,0 +1,21 @@
+export const useSetAttribute = (card) => {
+  return card.attribute === "DARK"
+    ? "./Attributes/DARK.png"
+    : card.attribute === "LIGHT"
+    ? "./Attributes/LIGHT.png"  
+    : card.attribute === "EARTH"
+    ? "./Attributes/EARTH.png"
+    : card.attribute === "WATER"
+    ? "./Attributes/WATER.png"
+    : card.attribute === "FIRE"
+    ? "./Attributes/FIRE.png"
+    : card.attribute === "WIND"
+    ? "./Attributes/WIND.png"
+    : card.attribute === "DIVINE"
+    ? "./Attributes/DIVINE.png"
+    : card.type === "Spell Card"
+    ? "./Attributes/SPELL.svg"
+    : card.type === "Trap Card"
+    ? "./Attributes/TRAP.svg"
+    : "xD";
+};

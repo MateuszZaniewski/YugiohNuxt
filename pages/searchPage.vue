@@ -15,7 +15,7 @@ interface Card {
     image_url: string;
   }[];
 }
-
+const { useSetAttribute, useSetCardType } = useUtils()
 const attributes = useAttributes();
 const monsterTypes = useMonsterTypes();
 const cardRaces = useCardRaces();
@@ -27,47 +27,9 @@ const maxLength = usePagesLength();
 const currentPage = useCurrentPage();
 const filtersExpanded = useFiltersOpen();
 const innerWidth = ref(window.innerWidth);
-const fav = ref(false)
+const fav = useFavs()
 
 let attr = ref(attributes.value);
-
-const setAttribute = (card: any) => {
-  return card.attribute === "DARK"
-    ? "./Attributes/DARK.png"
-    : card.attribute === "LIGHT"
-    ? "./Attributes/LIGHT.png"
-    : card.attribute === "EARTH"
-    ? "./Attributes/EARTH.png"
-    : card.attribute === "WATER"
-    ? "./Attributes/WATER.png"
-    : card.attribute === "FIRE"
-    ? "./Attributes/FIRE.png"
-    : card.attribute === "WIND"
-    ? "./Attributes/WIND.png"
-    : card.attribute === "DIVINE"
-    ? "./Attributes/DIVINE.png"
-    : card.type === "Spell Card"
-    ? "./Attributes/SPELL.svg"
-    : card.type === "Trap Card"
-    ? "./Attributes/TRAP.svg"
-    : "xD";
-};
-
-const setCardType = (card: any) => {
-  return card.race === "Continuous"
-    ? "./CardTypes/Continuous.png"
-    : card.race === "Counter"
-    ? "./CardTypes/Counter.png"
-    : card.race === "Equip"
-    ? "./CardTypes/Equip.png"
-    : card.race === "Field"
-    ? "./CardTypes/Field.png"
-    : card.race === "Normal"
-    ? "./CardTypes/Normal.png"
-    : card.race === "Quick-Play"
-    ? "./CardTypes/Quick-Play.png"
-    : "./CardTypes/Ritual.png";
-};
 
 const visibleCards = computed(() => {
   maxLength.value = Math.ceil(fetchedCards.value.length / 12);
@@ -173,7 +135,7 @@ watch(
         height="20"
         width="20"
       />
-      <span>{{ !filtersExpanded ? "Filers" : "Close" }}</span>
+      <span>{{ !filtersExpanded ? "Filters" : "Close" }}</span>
 
       <span
         v-if="
@@ -218,7 +180,7 @@ watch(
           </div>
           <div class="flex gap-2 items-center">
             <NuxtImg
-              :src="setAttribute(clickedCard)"
+              :src="useSetAttribute(clickedCard)"
               height="30px"
               width="30px"
             />
@@ -233,7 +195,7 @@ watch(
           </div>
           <div v-if="!clickedCard.level" class="flex gap-2 items-center">
             <NuxtImg
-              :src="setCardType(clickedCard)"
+              :src="useSetCardType(clickedCard)"
               height="30px"
               width="30px"
             />
