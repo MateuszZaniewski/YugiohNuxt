@@ -1,7 +1,30 @@
-<script setup></script>
+<script setup>
+
+const allCards = ref(null)
+
+async function fetchCards() {
+  try {
+    const one = await $fetch('/api/queryall')
+    allCards.value = one
+    console.log(allCards.value.cards.data)
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+computed(() => {
+
+});
+
+</script>
 
 <template>
   <Navbar />
+  <p v-if="allCards">
+    {{ allCards.cards.data[0] }}
+  </p>
+  
+  <button @click="fetchCards">Connect to /api/queryall</button>
   <div class="flex pl-5 pt-5 gap-1">
     <NuxtImg class="" src="/backArrow.png" />
     <NuxtLink to="/">Back</NuxtLink>

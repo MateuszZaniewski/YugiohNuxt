@@ -4,6 +4,7 @@ const cardsPerPage = ref(12);
 
 let fetchedCards = ref<Card[]>([]);
 
+
 const makeCardDetails = (card: Object) => {
   clickedCard.value = card;
 };
@@ -76,7 +77,8 @@ const searchForCards = async (
 };
 
 onMounted(() => {
-  searchForCards(
+  if(fetchedCards.value.length < 1){
+    searchForCards(
     fname.value,
     attributes.value,
     cardLevels.value,
@@ -84,6 +86,8 @@ onMounted(() => {
     monsterTypes.value,
     sort.value,
   );
+  }
+  
 });
 
 watch(

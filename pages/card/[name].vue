@@ -2,6 +2,7 @@
 import axios from "axios";
 
 const card = ref([])
+const cardi = {}
 const fav = useFavs()
 const { useSetAttribute, useSetCardType } = useUtils()
 
@@ -25,6 +26,7 @@ const fetchCards = async () => {
     console.log(error);
   }
 };
+
 
 onMounted(() => {
     fetchCards();
