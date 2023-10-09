@@ -2,15 +2,15 @@
 
 const allCards = ref(null)
 
-async function fetchCards() {
-  try {
-    const one = await $fetch('/api/queryall')
-    allCards.value = one
-    console.log(allCards.value.cards.data)
-  } catch (err) {
-    console.log(err)
-  }
-}
+// async function fetchCards() {
+//   try {
+//     const one = await $fetch('/api/queryall')
+//     allCards.value = one
+//     console.log(allCards.value.cards.data)
+//   } catch (err) {
+//     console.log(err)
+//   }
+// }
 
 computed(() => {
 
@@ -19,34 +19,45 @@ computed(() => {
 </script>
 
 <template>
-  <Navbar />
-  <p v-if="allCards">
-    {{ allCards.cards.data[0] }}
-  </p>
-  
-  <button @click="fetchCards">Connect to /api/queryall</button>
+
+<section class="bg-[#008F78] h-[100vh] relative">
   <div class="flex pl-5 pt-5 gap-1">
-    <NuxtImg class="" src="/backArrow.png" />
-    <NuxtLink to="/">Back</NuxtLink>
+    
+    <NuxtLink to="/">
+      <NuxtImg class="h-10 w-10 relative z-20" src="/backArrow.png" />
+    </NuxtLink>
   </div>
 
-  <h1 class="text-4xl mx-auto text-center">Yu-Gi-OH</h1>
-
-  <div class="flex justify-center flex-col w-[90%] mx-auto">
-    <input placeholder="EMAIL" class="border-2" />
-    <input placeholder="PASSWORD" class="border-2" />
-    <button class="border-2">Log in</button>
-  </div>
+  <h1 class="text-xl mx-auto text-center pb-8 pt-24 text-white">Welcome back duelist</h1>
 
   <div class="flex justify-center flex-col w-[90%] mx-auto">
-    <button class="google border-2">Continue with Google</button>
-    <button class="facebook border-2">Continue with Facebook</button>
-    <p class="text-center">Forgot password?</p>
+    <input type="email" placeholder="EMAIL" class="border rounded-lg border-black px-3 py-2 placeholder:text-black mb-4" />
+    <input type="password" placeholder="PASSWORD" class="border rounded-lg border-black px-3 py-2 placeholder:text-black mb-4 " />
+    <button class="border border-[#2D61AF] rounded-lg px-3 py-2 bg-[#2D61AF] text-white">Log in</button>
   </div>
 
-  <div class="flex justify-center">
-    <button class="w-[90%] border-2">Create new Account</button>
+  <p class="text-center text-white pt-6 pb-10">Forgot password?</p>
+
+  <div class="flex justify-center gap-10 pb-12 relative z-20">
+    <button class="px-5 py-3 bg-white rounded-full">
+      <NuxtImg src="/google.svg" height="40px" width="40px"  />
+    </button>
+    <button class="px-5 py-3 bg-white rounded-full">
+      <NuxtImg src="/facebook.svg" height="40px" width="40px"  />
+    </button> 
   </div>
+
+  <div class="flex justify-center relative z-20">
+    <button class="border border-[#2D61AF] bg-white text-black rounded-3xl px-3 py-2">Create new Account</button>
+  </div>
+  
+
+  <NuxtImg src="/blob1.svg" class="absolute top-0 left-0 z-1 h-40"/>
+  <NuxtImg src="/blob2.svg" class="absolute bottom-0 right-0 z-1 h-56"/>
+  
+
+</section>
+  
 </template>
 
 <style scoped>

@@ -77,7 +77,6 @@ const searchForCards = async (
 };
 
 onMounted(() => {
-  if(fetchedCards.value.length < 1){
     searchForCards(
     fname.value,
     attributes.value,
@@ -86,8 +85,6 @@ onMounted(() => {
     monsterTypes.value,
     sort.value,
   );
-  }
-  
 });
 
 watch(
