@@ -1,4 +1,35 @@
-<script setup>
+<script setup lang="ts">
+
+const { auth } = useFirebase();
+import { signOut, onAuthStateChanged } from 'firebase/auth';
+
+let user: any | null;
+
+const fetchCurrentUser = async () => {
+  user = await useCurrentFIrebaseUser();
+};
+
+// Fetch the current user when the component is mounted
+onMounted(() => {
+  fetchCurrentUser();
+});
+
+const currentUser = auth.currentUser;
+console.log(currentUser)
+
+const logoutCurrentUser = () => {
+  if(user){
+    signOut(auth)
+  .then(() => {
+    console.log('User has been successfully logged out.');
+  })
+  .catch((error) => {
+    console.error('Error logging out user:', error);
+  });
+  }
+  
+}
+
 const menuOpen = ref(false);
 const openAndCloseMenu = () => {
   menuOpen.value = !menuOpen.value;
@@ -34,7 +65,8 @@ const adress = ["", "/searchPage", "", "", "/loginPage"];
       >
     </div>
 
-    <NuxtImg src="/user.png" class="w-9 h-9 md:hidden" />
+    <NuxtImg :src="currentUser ? '/logout.png' : '/user.png' " class="w-9 h-9 md:hidden" />
+    <span @click="logoutCurrentUser">{{ currentUser ? currentUser.email : 'Logout' }}</span>
     <NuxtLink to="/" class="text-3xl md:w-[33%] text-center cursor-pointer"
       >Yu-Gi-OH</NuxtLink
     >
