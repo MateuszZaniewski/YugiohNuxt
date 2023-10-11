@@ -1,40 +1,9 @@
 <script setup lang="ts">
-
-const { auth } = useFirebase();
 import { signOut, onAuthStateChanged } from 'firebase/auth';
 
-let user: any | null;
-
-const fetchCurrentUser = async () => {
-  user = await useCurrentFIrebaseUser();
-};
-
-// Fetch the current user when the component is mounted
-onMounted(() => {
-  fetchCurrentUser();
-});
-
-const currentUser = auth.currentUser;
-console.log(currentUser)
-
-const logoutCurrentUser = () => {
-  if(user){
-    signOut(auth)
-  .then(() => {
-    console.log('User has been successfully logged out.');
-  })
-  .catch((error) => {
-    console.error('Error logging out user:', error);
-  });
-  }
-  
-}
-
+const currentUser = ref()
 const menuOpen = ref(false);
-const openAndCloseMenu = () => {
-  menuOpen.value = !menuOpen.value;
-};
-
+const { auth } = useFirebase();
 const links = [
   "My Account",
   "Search Cards",
@@ -43,6 +12,36 @@ const links = [
   "Login/SignIn",
 ];
 const adress = ["", "/searchPage", "", "", "/loginPage"];
+
+const logoutCurrentUser = () => {
+  if(currentUser.value) {
+    signOut(auth).then(() => {
+      console.log('User sign out')
+      currentUser.value = null
+      window.location.reload()
+  }).catch((error) => {
+      console.log(error)
+});
+  } else {
+    currentUser.value = currentUser.value
+    console.log('Brak użytkownika do wylogowania')
+  }
+}
+
+const openAndCloseMenu = () => {
+  menuOpen.value = !menuOpen.value;
+};
+
+onMounted(() => {
+  onAuthStateChanged(auth, (user) => {
+  if (user) {
+    currentUser.value = user
+    console.log(user.email)
+  } else {
+    currentUser.value = null
+  }
+});
+});
 </script>
 
 <template>
@@ -65,16 +64,28 @@ const adress = ["", "/searchPage", "", "", "/loginPage"];
       >
     </div>
 
-    <NuxtImg :src="currentUser ? '/logout.png' : '/user.png' " class="w-9 h-9 md:hidden" />
-    <span @click="logoutCurrentUser">{{ currentUser ? currentUser.email : 'Logout' }}</span>
-    <NuxtLink to="/" class="text-3xl md:w-[33%] text-center cursor-pointer"
-      >Yu-Gi-OH</NuxtLink
-    >
-    <NuxtImg
+    <div>
+      <NuxtLink to="/userProfile">
+        <NuxtImg  src='/user.png' class="w-9 h-9 md:hidden" />
+      </NuxtLink>
+      <!-- @click="logoutCurrentUser" -->
+      
+    </div>
+    
+      <NuxtLink to="/" class="text-3xl md:w-[33%] text-center cursor-pointer"
+      >Yu-Gi-OH
+      </NuxtLink>
+    
+    <div>
+      <NuxtImg
       :src="menuOpen ? '/close.png' : '/hamburger.png'"
       class="w-6 h-6 md:hidden"
       @click="openAndCloseMenu"
-    />
+      />
+    </div>
+    
+    
+    
     <div class="flex md:justify-around md:w-[100%]">
       <NuxtLink
         class="hidden md:block md:text-lg hover:text-[#9B59B6] cursor-pointer"

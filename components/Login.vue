@@ -13,7 +13,11 @@ const signInUser = () => {
     // Signed in 
     console.log(userCredential)
     console.log('Zostałeś pomyślnie zalogowany')
-    const user = userCredential.user;
+    const email = userCredential.user.email
+    if(email){
+      localStorage.setItem('userEmail',email.toString())
+    }
+    
     navigateTo('/')
     // ...  
   })

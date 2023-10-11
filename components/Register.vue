@@ -20,7 +20,7 @@ const createUser = () => useCreateUser(auth, email.value, password.value)
     </NuxtLink>
   </div>
 
-  <h1 class="text-xl mx-auto text-center pb-8 pt-40 text-white">Welcome back duelist</h1>
+  <h1 class="text-xl mx-auto text-center pb-8 pt-16 text-white relative z-20">Welcome back duelist</h1>
 
   <div class="flex justify-center flex-col w-[90%] mx-auto">
     <input v-model="email" type="email" placeholder="EMAIL" class="border rounded-lg border-black px-3 py-2 placeholder:text-black mb-4" />
