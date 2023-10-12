@@ -29,7 +29,7 @@ const createUser = () => useCreateUser(auth, email.value, password.value)
     <button @click="createUser" class="border border-[#2D61AF] rounded-lg px-3 py-2 bg-[#2D61AF] text-white">Create an account</button>
   </div>
 
-  <p class="text-center text-white pt-6 pb-10">Already registered?</p>
+  <p @click="navigateTo('/LoginPage');" class="text-center text-white pt-6 pb-10">Already registered?</p>
   
 
   <NuxtImg src="/blob1.svg" class="absolute top-0 left-0 z-1 h-40"/>

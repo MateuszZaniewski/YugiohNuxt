@@ -1,31 +1,73 @@
 <script setup lang="ts">
 
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithRedirect, getRedirectResult, FacebookAuthProvider, onAuthStateChanged } from "firebase/auth";
+import { initializeApp, getApps } from "firebase/app";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAxwpXvwH1-CWaWyc7N4tKMHpCN2ZbEc20",
+  authDomain: "nuxt3-yugioh.firebaseapp.com",
+  projectId: "nuxt3-yugioh",
+  storageBucket: "nuxt3-yugioh.appspot.com",
+  messagingSenderId: "28457974785",
+  appId: "1:28457974785:web:a058d2bc3d5a99e9485400",
+  measurementId: "G-1ZSEZ1SG5X"
+};
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
 
 const email = ref('')
 const password = ref('')
 
-const auth = getAuth();
 
-const signInUser = () => {
-  signInWithEmailAndPassword(auth, email.value, password.value)
-  .then((userCredential) => {
-    // Signed in 
-    console.log(userCredential)
-    console.log('Zostałeś pomyślnie zalogowany')
-    const email = userCredential.user.email
-    if(email){
-      localStorage.setItem('userEmail',email.toString())
-    }
+
+const signInUser = async () => {
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email.value, password.value);
+    console.log('Zostałeś pomyślnie zalogowany');
+    const emailAdress = userCredential.user.email;
     
-    navigateTo('/')
-    // ...  
-  })
+    if (emailAdress) {
+      localStorage.setItem('userEmail', emailAdress.toString());
+    }
+    navigateTo('/');
+  } catch (error) {
+    console.log(error)
+  }
+};
+
+const signInWithGoogle = async () => {
+  const provider = new GoogleAuthProvider();
+
+  try {
+    await signInWithRedirect(auth, provider)
+  }
+  catch (error) {
+    console.error(error);
+  }
+}
+
+const signInWithFacebook = async () => {
+  const provider = new FacebookAuthProvider();
+
+  signInWithRedirect(auth, provider)
+
   .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
+    console.log(error)
   });
 }
+
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    console.log('Current user : ',user.email)
+  } else {
+  }
+});
+
+onMounted(() => {
+
+});
 
 </script>
 
@@ -50,16 +92,16 @@ const signInUser = () => {
   <p class="text-center text-white pt-6 pb-10">Forgot password?</p>
 
   <div class="flex justify-center gap-10 pb-12 relative z-20">
-    <button class="px-5 py-3 bg-white rounded-full">
+    <button @click="signInWithGoogle" class="px-5 py-3 bg-white rounded-full">
       <NuxtImg src="/google.svg" height="40px" width="40px"  />
     </button>
-    <button class="px-5 py-3 bg-white rounded-full">
+    <button @click="signInWithFacebook" class="px-5 py-3 bg-white rounded-full">
       <NuxtImg src="/facebook.svg" height="40px" width="40px"  />
     </button> 
   </div>
 
   <div class="flex justify-center relative z-20">
-    <button class="border border-[#2D61AF] bg-white text-black rounded-3xl px-3 py-2">Create new Account</button>
+    <button @click="navigateTo('/RegisterPage');" class="border border-[#2D61AF] bg-white text-black rounded-3xl px-3 py-2">Create new Account</button>
   </div>
   
 
@@ -72,13 +114,4 @@ const signInUser = () => {
 </template>
 
 <style scoped>
-.google {
-  background-image: url("../public/google.png");
-  background-repeat: no-repeat;
-}
-
-.facebook {
-  background-image: url("../public/facebook.png");
-  background-repeat: no-repeat;
-}
 </style>

@@ -1,5 +1,5 @@
 <script setup>
-
+import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithRedirect, getRedirectResult, FacebookAuthProvider, onAuthStateChanged } from "firebase/auth";
 
 </script>
 
