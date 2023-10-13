@@ -11,7 +11,7 @@ const links = [
   "Favourites",
   "Login/SignIn",
 ];
-const adress = ["", "/searchPage", "", "", "/loginPage"];
+const adress = ["/userProfile", "/searchPage", "", "", "/loginPage"];
 
 const logoutCurrentUser = () => {
   if(currentUser.value) {
@@ -36,7 +36,7 @@ onMounted(() => {
   onAuthStateChanged(auth, (user) => {
   if (user) {
     currentUser.value = user
-    console.log(user.email)
+    console.log(user)
   } else {
     currentUser.value = null
   }
@@ -49,7 +49,7 @@ onMounted(() => {
     class="h-[20.833vw] bg-[#2D61AF] max-h-[100px] flex justify-between items-center md:justify-center md:gap-14 lg:justify-center text-white"
   >
     <div class="flex md:justify-around md:w-[100%]">
-      <NuxtLink
+      <NuxtLink to="/userProfile"
         class="hidden md:block md:text-lg hover:text-[#9B59B6] cursor-pointer"
         >My Account</NuxtLink
       >
@@ -103,7 +103,7 @@ onMounted(() => {
       class="w-[100vw] absolute top-[20.833vw] left-0 bg-inherit pb-5"
     >
       <ul class="flex flex-col">
-        <NuxtLink
+        <NuxtLink 
           class="pt-5 pl-5 hover:text-[#9B59B6] text-white"
           v-for="(link, index) in links"
           :key="link"

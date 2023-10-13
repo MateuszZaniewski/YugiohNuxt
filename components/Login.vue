@@ -2,36 +2,44 @@
 
 import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithRedirect, getRedirectResult, FacebookAuthProvider, onAuthStateChanged } from "firebase/auth";
 import { initializeApp, getApps } from "firebase/app";
+import { getFirestore, collection, addDoc } from "firebase/firestore";
+
+const runtimeConfig = useRuntimeConfig()
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAxwpXvwH1-CWaWyc7N4tKMHpCN2ZbEc20",
-  authDomain: "nuxt3-yugioh.firebaseapp.com",
-  projectId: "nuxt3-yugioh",
-  storageBucket: "nuxt3-yugioh.appspot.com",
-  messagingSenderId: "28457974785",
-  appId: "1:28457974785:web:a058d2bc3d5a99e9485400",
-  measurementId: "G-1ZSEZ1SG5X"
+  apiKey: runtimeConfig.public.API_KEY,
+  authDomain: runtimeConfig.public.AUTH_DOMAIN,
+  projectId: runtimeConfig.public.PROJECT_ID,
+  storageBucket: runtimeConfig.public.STORAGE_BUCKET,
+  messagingSenderId: runtimeConfig.public.MESSAGING_SENDER_ID,
+  appId: runtimeConfig.public.APP_ID,
+  measurementId: runtimeConfig.public.MEASUREMENT_ID
 };
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getFirestore(app)
 
 
 const email = ref('')
 const password = ref('')
-
-
+const name = ref('')
+const currentUser = ref()
 
 const signInUser = async () => {
   try {
     const userCredential = await signInWithEmailAndPassword(auth, email.value, password.value);
     console.log('Zostałeś pomyślnie zalogowany');
     const emailAdress = userCredential.user.email;
+    const docRef = await addDoc(collection(db, "users"), {
+    Name: name.value,
+    Email: email.value
+  });
     
     if (emailAdress) {
       localStorage.setItem('userEmail', emailAdress.toString());
     }
-    navigateTo('/');
+    navigateTo('/searchPage');
   } catch (error) {
     console.log(error)
   }
@@ -58,15 +66,13 @@ const signInWithFacebook = async () => {
   });
 }
 
-onAuthStateChanged(auth, (user) => {
+onMounted(() => {
+  onAuthStateChanged(auth, (user) => {
   if (user) {
     console.log('Current user : ',user.email)
-  } else {
-  }
+    navigateTo('/searchPage');
+  } 
 });
-
-onMounted(() => {
-
 });
 
 </script>
@@ -77,18 +83,19 @@ onMounted(() => {
   <div class="flex pl-5 pt-5 gap-1">
     
     <NuxtLink to="/">
-      <NuxtImg class="h-10 w-10 relative z-20" src="/backArrow.png" />
+      <NuxtImg class="h-10 w-10 relative z-20 mb-8" src="/backArrow.png" />
     </NuxtLink>
   </div>
 
   <h1 class="text-xl mx-auto text-center pb-8 pt-24 text-white">Welcome back duelist</h1>
 
   <div class="flex justify-center flex-col w-[90%] mx-auto">
+    <input v-model="name" type="text" placeholder="NAME" class="border rounded-lg border-black px-3 py-2 placeholder:text-black mb-4" />
     <input v-model="email" type="email" placeholder="EMAIL" class="border rounded-lg border-black px-3 py-2 placeholder:text-black mb-4" />
     <input v-model="password" type="password" placeholder="PASSWORD" class="border rounded-lg border-black px-3 py-2 placeholder:text-black mb-4 " />
     <button @click="signInUser" class="border border-[#2D61AF] rounded-lg px-3 py-2 bg-[#2D61AF] text-white">Log in</button>
   </div>
-
+  
   <p class="text-center text-white pt-6 pb-10">Forgot password?</p>
 
   <div class="flex justify-center gap-10 pb-12 relative z-20">
