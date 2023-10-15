@@ -24,14 +24,18 @@ export const signInWithGoogle = async () => {
 }
 
 
-export const initUser = async () => {
-    const auth = getAuth();
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-          console.log('Current user : ',user)
-        } else {
-            console.log('Current user : ',user)
-        } 
+export const initUser = () => {
+    return new Promise((resolve, reject) => {
+        const auth = getAuth();
+        onAuthStateChanged(auth, (user) => {
+          if (user) {
+            console.log('Current user : ', user);
+            resolve(user);
+          } else {
+            console.log('No user is currently logged in');
+            resolve(null);
+          }
+        });
       });
 };
 

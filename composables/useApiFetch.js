@@ -66,7 +66,6 @@ export const connectToYugiohApi = async function (
         },
       },
     );
-    console.log(params);
     const fetchedCards = response.data.data;
     return fetchedCards;
   } catch (error) {
