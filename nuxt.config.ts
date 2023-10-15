@@ -18,11 +18,6 @@ export default defineNuxtConfig({
     },
   },
   ssr: false,
-  router: {
-    options: {
-      hashMode: true,
-    },
-  },
   runtimeConfig: {
     public: {
       API_KEY : process.env.API_KEY,
