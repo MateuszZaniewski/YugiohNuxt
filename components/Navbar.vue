@@ -3,7 +3,6 @@ import { signOut, onAuthStateChanged } from 'firebase/auth';
 
 const currentUser = ref()
 const menuOpen = ref(false);
-const { auth } = useFirebase();
 const links = [
   "My Account",
   "Search Cards",
@@ -13,34 +12,12 @@ const links = [
 ];
 const adress = ["/userProfile", "/searchPage", "", "", "/loginPage"];
 
-const logoutCurrentUser = () => {
-  if(currentUser.value) {
-    signOut(auth).then(() => {
-      console.log('User sign out')
-      currentUser.value = null
-      window.location.reload()
-  }).catch((error) => {
-      console.log(error)
-});
-  } else {
-    currentUser.value = currentUser.value
-    console.log('Brak użytkownika do wylogowania')
-  }
-}
 
 const openAndCloseMenu = () => {
   menuOpen.value = !menuOpen.value;
 };
 
 onMounted(() => {
-  onAuthStateChanged(auth, (user) => {
-  if (user) {
-    currentUser.value = user
-    console.log(user)
-  } else {
-    currentUser.value = null
-  }
-});
 });
 </script>
 

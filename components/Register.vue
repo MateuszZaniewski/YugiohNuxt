@@ -1,13 +1,12 @@
 <script setup lang="ts">
 
-const { auth } = useFirebase();
-
-
 const email = ref('')
 const password = ref('')
 
-
-const createUser = () => useCreateUser(auth, email.value, password.value)
+const createNewUser = async () => {
+  const credentials = await createUser(email.value, password.value)
+  console.log(credentials)
+}
 
 </script>
 
@@ -26,7 +25,7 @@ const createUser = () => useCreateUser(auth, email.value, password.value)
     <input v-model="email" type="email" placeholder="EMAIL" class="border rounded-lg border-black px-3 py-2 placeholder:text-black mb-4" />
     <input v-model="password" type="password" placeholder="PASSWORD" class="border rounded-lg border-black px-3 py-2 placeholder:text-black mb-4 " />
     <input type="password" placeholder="PASSWORD" class="border rounded-lg border-black px-3 py-2 placeholder:text-black mb-4 " />
-    <button @click="createUser" class="border border-[#2D61AF] rounded-lg px-3 py-2 bg-[#2D61AF] text-white">Create an account</button>
+    <button @click="createNewUser" class="border border-[#2D61AF] rounded-lg px-3 py-2 bg-[#2D61AF] text-white">Create an account</button>
   </div>
 
   <p @click="navigateTo('/LoginPage');" class="text-center text-white pt-6 pb-10">Already registered?</p>
