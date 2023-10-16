@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 
-export default defineNuxtPlugin(nuxtApp => {
+export const useCloudFirebase = () => {
     const runtimeConfig = useRuntimeConfig()
     const firebaseConfig = {
         apiKey: runtimeConfig.public.API_KEY,
@@ -15,13 +15,7 @@ export default defineNuxtPlugin(nuxtApp => {
 
       const app = initializeApp(firebaseConfig);
       const db = getFirestore(app)
-      
 
-      initUser()
+      return { db }
+}
 
-      return {
-        provide: {
-            db
-        }
-    }
-})

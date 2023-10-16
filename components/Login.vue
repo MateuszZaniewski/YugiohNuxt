@@ -1,5 +1,9 @@
 <script setup lang="ts">
 
+import { collection, addDoc } from "firebase/firestore";
+
+const { $db } = useNuxtApp()
+
 const email = ref('')
 const password = ref('')
 const name = ref('')
@@ -14,15 +18,8 @@ const googleSignIn = async () => {
   })
 }
 
-const logout = async () => {
-  logoutUser()
-}
-
-const showCurrentUser = async () => {
-  initUser()
-}
 onMounted(() => {
-  
+  redirectFromGoogle()
 });
 
 </script>
@@ -30,23 +27,23 @@ onMounted(() => {
 <template>
 
 <section class="bg-[#008F78] h-[100vh] relative">
-  <div class="flex pl-5 pt-5 gap-1">
+  <div class="flex pl-5 pt-5 gap-1 relative z-20">
     
     <NuxtLink to="/">
       <NuxtImg class="h-10 w-10 relative z-20 mb-8" src="/backArrow.png" />
     </NuxtLink>
   </div>
 
-  <h1 class="text-xl mx-auto text-center pb-8 pt-24 text-white">Welcome back duelist</h1>
+  <h1 class="text-xl mx-auto text-center pb-8 pt-24 text-white relative z-20">Welcome back duelist</h1>
 
-  <div class="flex justify-center flex-col w-[90%] mx-auto">
+  <div class="flex justify-center flex-col w-[90%] mx-auto relative z-20">
     <input v-model="name" type="text" placeholder="NAME" class="border rounded-lg border-black px-3 py-2 placeholder:text-black mb-4" />
     <input v-model="email" type="email" placeholder="EMAIL" class="border rounded-lg border-black px-3 py-2 placeholder:text-black mb-4" />
     <input v-model="password" type="password" placeholder="PASSWORD" class="border rounded-lg border-black px-3 py-2 placeholder:text-black mb-4 " />
     <button @click="loginUser" class="border border-[#2D61AF] rounded-lg px-3 py-2 bg-[#2D61AF] text-white">Log in</button>
   </div>
   
-  <p class="text-center text-white pt-6 pb-10">Forgot password?</p>
+  <p class="text-center text-white pt-6 pb-10 relative z-20">Forgot password?</p>
 
   <div class="flex justify-center gap-10 pb-12 relative z-20">
     <button @click="googleSignIn" class="px-5 py-3 bg-white rounded-full">
@@ -61,12 +58,8 @@ onMounted(() => {
     <button @click="navigateTo('/RegisterPage');" class="border border-[#2D61AF] bg-white text-black rounded-3xl px-3 py-2">Create new Account</button>
   </div>
 
-  <button @click="logout">Logout</button>
-  <button @click="showCurrentUser">Show current User</button>
-  
-
-  <NuxtImg src="/blob1.svg" class="absolute top-0 left-0 z-1 h-40"/>
-  <NuxtImg src="/blob2.svg" class="absolute bottom-0 right-0 z-1 h-56"/>
+  <NuxtImg src="/blob1.svg" class="absolute z-10 top-0 left-0 z-1 h-40"/>
+  <NuxtImg src="/blob2.svg" class="absolute z-10 bottom-0 right-0 z-1 h-56"/>
   
 
 </section>

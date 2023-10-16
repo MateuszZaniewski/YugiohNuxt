@@ -73,6 +73,7 @@ declare global {
   const proxyRefs: typeof import('vue')['proxyRefs']
   const reactive: typeof import('vue')['reactive']
   const readonly: typeof import('vue')['readonly']
+  const redirectFromGoogle: typeof import('../../composables/useFirebase')['redirectFromGoogle']
   const ref: typeof import('vue')['ref']
   const refreshNuxtData: typeof import('../../node_modules/nuxt/dist/app')['refreshNuxtData']
   const reloadNuxtApp: typeof import('../../node_modules/nuxt/dist/app')['reloadNuxtApp']
@@ -100,6 +101,7 @@ declare global {
   const useCardRaces: typeof import('../../composables/states')['useCardRaces']
   const useCardSearch: typeof import('../../composables/useCardSearch')['useCardSearch']
   const useCardTypes: typeof import('../../composables/states')['useCardTypes']
+  const useCloudFirebase: typeof import('../../composables/useCloudFirebase')['useCloudFirebase']
   const useCookie: typeof import('../../node_modules/nuxt/dist/app')['useCookie']
   const useCssModule: typeof import('vue')['useCssModule']
   const useCssVars: typeof import('vue')['useCssVars']
@@ -119,6 +121,7 @@ declare global {
   const useMonsterTypes: typeof import('../../composables/states')['useMonsterTypes']
   const useNuxtApp: typeof import('../../node_modules/nuxt/dist/app')['useNuxtApp']
   const useNuxtData: typeof import('../../node_modules/nuxt/dist/app')['useNuxtData']
+  const useNuxtDevTools: typeof import('../../node_modules/@nuxt/devtools/dist/runtime/use-nuxt-devtools')['useNuxtDevTools']
   const usePagesLength: typeof import('../../composables/states')['usePagesLength']
   const usePinia: typeof import('../../node_modules/@pinia/nuxt/dist/runtime/composables')['usePinia']
   const useRequestEvent: typeof import('../../node_modules/nuxt/dist/app')['useRequestEvent']
@@ -236,6 +239,7 @@ declare module 'vue' {
     readonly proxyRefs: UnwrapRef<typeof import('vue')['proxyRefs']>
     readonly reactive: UnwrapRef<typeof import('vue')['reactive']>
     readonly readonly: UnwrapRef<typeof import('vue')['readonly']>
+    readonly redirectFromGoogle: UnwrapRef<typeof import('../../composables/useFirebase')['redirectFromGoogle']>
     readonly ref: UnwrapRef<typeof import('vue')['ref']>
     readonly refreshNuxtData: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['refreshNuxtData']>
     readonly reloadNuxtApp: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['reloadNuxtApp']>
@@ -263,6 +267,7 @@ declare module 'vue' {
     readonly useCardRaces: UnwrapRef<typeof import('../../composables/states')['useCardRaces']>
     readonly useCardSearch: UnwrapRef<typeof import('../../composables/useCardSearch')['useCardSearch']>
     readonly useCardTypes: UnwrapRef<typeof import('../../composables/states')['useCardTypes']>
+    readonly useCloudFirebase: UnwrapRef<typeof import('../../composables/useCloudFirebase')['useCloudFirebase']>
     readonly useCookie: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['useCookie']>
     readonly useCssModule: UnwrapRef<typeof import('vue')['useCssModule']>
     readonly useCssVars: UnwrapRef<typeof import('vue')['useCssVars']>
@@ -282,6 +287,7 @@ declare module 'vue' {
     readonly useMonsterTypes: UnwrapRef<typeof import('../../composables/states')['useMonsterTypes']>
     readonly useNuxtApp: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['useNuxtApp']>
     readonly useNuxtData: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['useNuxtData']>
+    readonly useNuxtDevTools: UnwrapRef<typeof import('../../node_modules/@nuxt/devtools/dist/runtime/use-nuxt-devtools')['useNuxtDevTools']>
     readonly usePagesLength: UnwrapRef<typeof import('../../composables/states')['usePagesLength']>
     readonly usePinia: UnwrapRef<typeof import('../../node_modules/@pinia/nuxt/dist/runtime/composables')['usePinia']>
     readonly useRequestEvent: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['useRequestEvent']>
@@ -391,6 +397,7 @@ declare module '@vue/runtime-core' {
     readonly proxyRefs: UnwrapRef<typeof import('vue')['proxyRefs']>
     readonly reactive: UnwrapRef<typeof import('vue')['reactive']>
     readonly readonly: UnwrapRef<typeof import('vue')['readonly']>
+    readonly redirectFromGoogle: UnwrapRef<typeof import('../../composables/useFirebase')['redirectFromGoogle']>
     readonly ref: UnwrapRef<typeof import('vue')['ref']>
     readonly refreshNuxtData: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['refreshNuxtData']>
     readonly reloadNuxtApp: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['reloadNuxtApp']>
@@ -418,6 +425,7 @@ declare module '@vue/runtime-core' {
     readonly useCardRaces: UnwrapRef<typeof import('../../composables/states')['useCardRaces']>
     readonly useCardSearch: UnwrapRef<typeof import('../../composables/useCardSearch')['useCardSearch']>
     readonly useCardTypes: UnwrapRef<typeof import('../../composables/states')['useCardTypes']>
+    readonly useCloudFirebase: UnwrapRef<typeof import('../../composables/useCloudFirebase')['useCloudFirebase']>
     readonly useCookie: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['useCookie']>
     readonly useCssModule: UnwrapRef<typeof import('vue')['useCssModule']>
     readonly useCssVars: UnwrapRef<typeof import('vue')['useCssVars']>
@@ -437,6 +445,7 @@ declare module '@vue/runtime-core' {
     readonly useMonsterTypes: UnwrapRef<typeof import('../../composables/states')['useMonsterTypes']>
     readonly useNuxtApp: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['useNuxtApp']>
     readonly useNuxtData: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['useNuxtData']>
+    readonly useNuxtDevTools: UnwrapRef<typeof import('../../node_modules/@nuxt/devtools/dist/runtime/use-nuxt-devtools')['useNuxtDevTools']>
     readonly usePagesLength: UnwrapRef<typeof import('../../composables/states')['usePagesLength']>
     readonly usePinia: UnwrapRef<typeof import('../../node_modules/@pinia/nuxt/dist/runtime/composables')['usePinia']>
     readonly useRequestEvent: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['useRequestEvent']>

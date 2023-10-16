@@ -1,11 +1,18 @@
 <script setup lang="ts">
+import { collection, addDoc } from "firebase/firestore";
 
+const { $db } = useNuxtApp()
 const email = ref('')
 const password = ref('')
 
 const createNewUser = async () => {
   const credentials = await createUser(email.value, password.value)
-  console.log(credentials)
+  if(credentials) {
+    const docRef = await addDoc(collection($db, "users"), {
+    email: email.value,
+    password: password.value
+  });
+  }
 }
 
 </script>

@@ -7,9 +7,11 @@ export { useAttributes, useCardTypes, useMonsterTypes, useCardRaces, useCardLeve
 export { connectToYugiohApi } from '../composables/useApiFetch';
 export { useSetAttribute } from '../composables/useAttributes';
 export { useCardSearch, CardSearchOptions } from '../composables/useCardSearch';
-export { createUser, signInUser, signInWithGoogle, initUser, logoutUser } from '../composables/useFirebase';
+export { useCloudFirebase } from '../composables/useCloudFirebase';
+export { createUser, signInUser, signInWithGoogle, redirectFromGoogle, initUser, logoutUser } from '../composables/useFirebase';
 export { useSearchParams } from '../composables/useSearchParams';
 export { useUtils } from '../composables/useUtils';
 export { usePinia } from '../node_modules/@pinia/nuxt/dist/runtime/composables';
 export { useImage } from '../node_modules/@nuxt/image/dist/runtime/composables';
+export { useNuxtDevTools } from '../node_modules/@nuxt/devtools/dist/runtime/use-nuxt-devtools';
 export { definePageMeta } from '../node_modules/nuxt/dist/pages/runtime/composables';
