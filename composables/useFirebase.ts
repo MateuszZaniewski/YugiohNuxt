@@ -1,4 +1,3 @@
-import { credential } from 'firebase-admin';
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signInWithRedirect, signOut, GoogleAuthProvider, getRedirectResult } from 'firebase/auth';
 
 export const createUser = async (email:string, password:string) => {

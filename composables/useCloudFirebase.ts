@@ -16,6 +16,6 @@ export const useCloudFirebase = () => {
       const app = initializeApp(firebaseConfig);
       const db = getFirestore(app)
 
-      return { db }
+      return { app, db }
 }
 

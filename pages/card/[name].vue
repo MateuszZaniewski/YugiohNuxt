@@ -1,11 +1,11 @@
 <script setup>
 import axios from "axios";
-
+const user = ref()
 const card = ref([])
-const cardi = {}
 const fav = useFavs()
 const { useSetAttribute, useSetCardType } = useUtils()
-
+const { $db } = useNuxtApp()
+import { collection, addDoc, doc, getDoc, updateDoc } from "firebase/firestore";
 
 
 const route = useRoute();
@@ -27,10 +27,38 @@ const fetchCards = async () => {
   }
 };
 
+// const addCardToFavourites = async (card) => {
+//   const userDocRef = doc($db, 'users', user.uid);
+//   const docSnap = await getDoc(userDocRef);
 
-onMounted(() => {
+//   if (docSnap.exists()) {
+//     const userData = docSnap.data();
+//     const favouritesArray = userData.favourites;
+
+//     // Check if the card already exists in the favourites array
+//     if (!favouritesArray.includes(card.name)) {
+//       favouritesArray.push(card);
+//       await updateDoc(userDocRef, {
+//         favourites: favouritesArray
+//       });
+//       console.log('Card added to favourites.');
+//     } else {
+//       console.log('Card already exists in favourites.');
+//     }
+//   } else {
+//     console.log('User document does not exist.');
+//   }
+// };
+
+
+onMounted(async () => {
+  try {
     fetchCards();
-  });
+    user.value = await initUser();
+  } catch (error) {
+    console.error(error);
+  }
+});
 
 </script>
 
@@ -46,7 +74,7 @@ onMounted(() => {
   <h1 class="text-3xl text-center">{{ card[0].name}}</h1>
 
   <div class="flex w-[50%] mx-auto pt-2 justify-around">
-                  <NuxtImg @click="fav = !fav" :src='fav ? "/fullHeart.png" : "/emptyHeart.png"' height="30px" width="30px" alt="Add to favourites"/>
+                  <NuxtImg @click="addCardToFavourites" :src='fav ? "/fullHeart.png" : "/emptyHeart.png"' height="30px" width="30px" alt="Add to favourites"/>
                   <NuxtImg src="/add.png" height="30px" width="30px" alt="Add to deck" />
   </div>
 
