@@ -5,7 +5,7 @@ import { join } from 'node:path';
 import { mkdirSync } from 'node:fs';
 import { parentPort, threadId } from 'node:worker_threads';
 import { defineEventHandler, handleCacheHeaders, createEvent, eventHandler, setHeaders, sendRedirect, proxyRequest, setResponseStatus, getRequestHeader, setResponseHeader, getRequestHeaders, createApp, createRouter as createRouter$1, toNodeListener, fetchWithEvent, lazyEventHandler, getQuery as getQuery$1, createError } from 'file://C:/Users/mateu/Desktop/nuxt/tutorial/node_modules/h3/dist/index.mjs';
-import axios from 'file://C:/Users/mateu/Desktop/nuxt/tutorial/node_modules/axios/index.js';
+import { collection, query, where, getDocs, addDoc, deleteDoc } from 'file://C:/Users/mateu/Desktop/nuxt/tutorial/node_modules/firebase/firestore/dist/index.mjs';
 import { createRenderer } from 'file://C:/Users/mateu/Desktop/nuxt/tutorial/node_modules/vue-bundle-renderer/dist/runtime.mjs';
 import { stringify, uneval } from 'file://C:/Users/mateu/Desktop/nuxt/tutorial/node_modules/devalue/index.js';
 import { createFetch as createFetch$1, Headers } from 'file://C:/Users/mateu/Desktop/nuxt/tutorial/node_modules/ofetch/dist/node.mjs';
@@ -587,15 +587,15 @@ const errorHandler = (async function errorhandler(error, event) {
 
 const _lazy_NQoDE9 = () => Promise.resolve().then(function () { return add_post; });
 const _lazy_caw2Zi = () => Promise.resolve().then(function () { return delete_get; });
+const _lazy_5KEdov = () => Promise.resolve().then(function () { return favourites_post$1; });
 const _lazy_lWsB8R = () => Promise.resolve().then(function () { return login$1; });
-const _lazy_3HFDuL = () => Promise.resolve().then(function () { return queryall_get$1; });
 const _lazy_I1BnWg = () => Promise.resolve().then(function () { return renderer$1; });
 
 const handlers = [
   { route: '/api/add', handler: _lazy_NQoDE9, lazy: true, middleware: false, method: "post" },
   { route: '/api/delete', handler: _lazy_caw2Zi, lazy: true, middleware: false, method: "get" },
+  { route: '/api/favourites', handler: _lazy_5KEdov, lazy: true, middleware: false, method: "post" },
   { route: '/api/login', handler: _lazy_lWsB8R, lazy: true, middleware: false, method: undefined },
-  { route: '/api/queryall', handler: _lazy_3HFDuL, lazy: true, middleware: false, method: "get" },
   { route: '/__nuxt_error', handler: _lazy_I1BnWg, lazy: true, middleware: false, method: undefined },
   { route: '/**', handler: _lazy_I1BnWg, lazy: true, middleware: false, method: undefined }
 ];
@@ -734,30 +734,37 @@ const delete_get = /*#__PURE__*/Object.freeze({
       __proto__: null
 });
 
+const favourites_post = defineEventHandler(async (event) => {
+  try {
+    const favouritesCollectionRef = collection($db, "favourites");
+    const q = query(favouritesCollectionRef, where(username, "==", favCard));
+    const querySnapshot = await getDocs(q);
+    if (querySnapshot.empty) {
+      await addDoc(favouritesCollectionRef, {
+        [username]: favCard
+      });
+      console.log("Data added to favourites collection.");
+    } else {
+      const docToDelete = querySnapshot.docs[0];
+      await deleteDoc(docToDelete.ref);
+      console.log("Data removed from favourites collection.");
+    }
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+const favourites_post$1 = /*#__PURE__*/Object.freeze({
+      __proto__: null,
+      default: favourites_post
+});
+
 const login = defineEventHandler((event) => {
 });
 
 const login$1 = /*#__PURE__*/Object.freeze({
       __proto__: null,
       default: login
-});
-
-const queryall_get = defineEventHandler(async (event) => {
-  try {
-    const response = await axios.get(
-      `https://db.ygoprodeck.com/api/v7/cardinfo.php`
-    );
-    console.log(response.data);
-    const cards = response.data;
-    return { cards };
-  } catch (err) {
-    console.log(err);
-  }
-});
-
-const queryall_get$1 = /*#__PURE__*/Object.freeze({
-      __proto__: null,
-      default: queryall_get
 });
 
 const appRootId = "__nuxt";

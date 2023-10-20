@@ -9,11 +9,11 @@ declare module 'nitropack' {
     '/api/delete': {
       'get': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/delete.get').default>>>>
     }
+    '/api/favourites': {
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/favourites.post').default>>>>
+    }
     '/api/login': {
       'default': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/login').default>>>>
-    }
-    '/api/queryall': {
-      'get': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/queryall.get').default>>>>
     }
     '/__nuxt_error': {
       'default': Simplify<Serialize<Awaited<ReturnType<typeof import('../../node_modules/nuxt/dist/core/runtime/nitro/renderer').default>>>>

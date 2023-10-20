@@ -27,29 +27,6 @@ const fetchCards = async () => {
   }
 };
 
-// const addCardToFavourites = async (card) => {
-//   const userDocRef = doc($db, 'users', user.uid);
-//   const docSnap = await getDoc(userDocRef);
-
-//   if (docSnap.exists()) {
-//     const userData = docSnap.data();
-//     const favouritesArray = userData.favourites;
-
-//     // Check if the card already exists in the favourites array
-//     if (!favouritesArray.includes(card.name)) {
-//       favouritesArray.push(card);
-//       await updateDoc(userDocRef, {
-//         favourites: favouritesArray
-//       });
-//       console.log('Card added to favourites.');
-//     } else {
-//       console.log('Card already exists in favourites.');
-//     }
-//   } else {
-//     console.log('User document does not exist.');
-//   }
-// };
-
 
 onMounted(async () => {
   try {
