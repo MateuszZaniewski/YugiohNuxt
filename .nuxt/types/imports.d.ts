@@ -110,6 +110,7 @@ declare global {
   const useFavs: typeof import('../../composables/states')['useFavs']
   const useFetch: typeof import('../../node_modules/nuxt/dist/app')['useFetch']
   const useFiltersOpen: typeof import('../../composables/states')['useFiltersOpen']
+  const useFirestoreUtils: typeof import('../../composables/useFirestoreUtils')['useFirestoreUtils']
   const useFnameParam: typeof import('../../composables/states')['useFnameParam']
   const useHead: typeof import('@unhead/vue')['useHead']
   const useHeadSafe: typeof import('@unhead/vue')['useHeadSafe']
@@ -276,6 +277,7 @@ declare module 'vue' {
     readonly useFavs: UnwrapRef<typeof import('../../composables/states')['useFavs']>
     readonly useFetch: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['useFetch']>
     readonly useFiltersOpen: UnwrapRef<typeof import('../../composables/states')['useFiltersOpen']>
+    readonly useFirestoreUtils: UnwrapRef<typeof import('../../composables/useFirestoreUtils')['useFirestoreUtils']>
     readonly useFnameParam: UnwrapRef<typeof import('../../composables/states')['useFnameParam']>
     readonly useHead: UnwrapRef<typeof import('@unhead/vue')['useHead']>
     readonly useHeadSafe: UnwrapRef<typeof import('@unhead/vue')['useHeadSafe']>
@@ -434,6 +436,7 @@ declare module '@vue/runtime-core' {
     readonly useFavs: UnwrapRef<typeof import('../../composables/states')['useFavs']>
     readonly useFetch: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['useFetch']>
     readonly useFiltersOpen: UnwrapRef<typeof import('../../composables/states')['useFiltersOpen']>
+    readonly useFirestoreUtils: UnwrapRef<typeof import('../../composables/useFirestoreUtils')['useFirestoreUtils']>
     readonly useFnameParam: UnwrapRef<typeof import('../../composables/states')['useFnameParam']>
     readonly useHead: UnwrapRef<typeof import('@unhead/vue')['useHead']>
     readonly useHeadSafe: UnwrapRef<typeof import('@unhead/vue')['useHeadSafe']>

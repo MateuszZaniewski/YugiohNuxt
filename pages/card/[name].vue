@@ -5,13 +5,13 @@ const card = ref([])
 const fav = useFavs()
 const { useSetAttribute, useSetCardType } = useUtils()
 const { $db } = useNuxtApp()
-import { collection, addDoc, doc, getDoc, updateDoc } from "firebase/firestore";
+const fetchedFavouriteCards = ref([]);
+import { collection, addDoc, doc, getDocs, updateDoc, query, where } from "firebase/firestore";
+
+const { getFavouriteCards } = useFirestoreUtils()
 
 
 const route = useRoute();
-
-console.log(route.params.name)
-
 
 const fetchCards = async () => {
   try {
@@ -20,10 +20,18 @@ const fetchCards = async () => {
     );
     const fetchedCards = response.data.data;
     card.value = fetchedCards;
-    console.log(card.value)
 
   } catch (error) {
     console.log(error);
+  }
+};
+
+const fetchFavoriteCards = async () => {
+  try {
+    const favorites = await getFavouriteCards(user.value.email);
+    fetchedFavouriteCards.value = favorites;
+  } catch (error) {
+    console.error(error);
   }
 };
 
@@ -32,6 +40,7 @@ onMounted(async () => {
   try {
     fetchCards();
     user.value = await initUser();
+    fetchFavoriteCards();
   } catch (error) {
     console.error(error);
   }
@@ -40,6 +49,13 @@ onMounted(async () => {
 </script>
 
 <template>
+
+  <div>
+    <div v-for="fav in fetchedFavouriteCards" :key="fav.id">
+      {{ fav }}
+    </div>
+  </div>
+
   <section v-if="card.length > 0" class="flex flex-col items-center justify-center">
     <div class="flex justify-start w-full pt-4 pl-6" >
       <NuxtImg src="/backArrow.png" height="30px" width="30px" @click="$router.go(-1)"/>
@@ -51,7 +67,7 @@ onMounted(async () => {
   <h1 class="text-3xl text-center">{{ card[0].name}}</h1>
 
   <div class="flex w-[50%] mx-auto pt-2 justify-around">
-                  <NuxtImg @click="addCardToFavourites" :src='fav ? "/fullHeart.png" : "/emptyHeart.png"' height="30px" width="30px" alt="Add to favourites"/>
+                  <NuxtImg :src='fav ? "/fullHeart.png" : "/emptyHeart.png"' height="30px" width="30px" alt="Add to favourites"/>
                   <NuxtImg src="/add.png" height="30px" width="30px" alt="Add to deck" />
   </div>
 

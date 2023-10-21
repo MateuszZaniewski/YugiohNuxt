@@ -9,6 +9,7 @@ export { useSetAttribute } from '../composables/useAttributes';
 export { useCardSearch, CardSearchOptions } from '../composables/useCardSearch';
 export { useCloudFirebase } from '../composables/useCloudFirebase';
 export { createUser, signInUser, signInWithGoogle, redirectFromGoogle, initUser, logoutUser } from '../composables/useFirebase';
+export { useFirestoreUtils } from '../composables/useFirestoreUtils';
 export { useSearchParams } from '../composables/useSearchParams';
 export { useUtils } from '../composables/useUtils';
 export { usePinia } from '../node_modules/@pinia/nuxt/dist/runtime/composables';
