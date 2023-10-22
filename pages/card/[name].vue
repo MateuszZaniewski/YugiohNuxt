@@ -1,14 +1,12 @@
 <script setup>
 import axios from "axios";
-const user = ref()
+const user = ref(null)
 const card = ref([])
-const fav = useFavs()
 const { useSetAttribute, useSetCardType } = useUtils()
-const { $db } = useNuxtApp()
 const fetchedFavouriteCards = ref([]);
-import { collection, addDoc, doc, getDocs, updateDoc, query, where } from "firebase/firestore";
+const isFavourite = ref(false)
 
-const { getFavouriteCards } = useFirestoreUtils()
+const { getFavouriteCards, addFavouriteCard } = useFirestoreUtils()
 
 
 const route = useRoute();
@@ -30,10 +28,18 @@ const fetchFavoriteCards = async () => {
   try {
     const favorites = await getFavouriteCards(user.value.email);
     fetchedFavouriteCards.value = favorites;
+    console.log(fetchedFavouriteCards.value)
   } catch (error) {
     console.error(error);
   }
 };
+
+const containsCard = computed(() => {
+  return () => {
+    return fetchedFavouriteCards.value.some(obj => obj.card === route.params.name);
+  };
+});
+    
 
 
 onMounted(async () => {
@@ -49,13 +55,6 @@ onMounted(async () => {
 </script>
 
 <template>
-
-  <div>
-    <div v-for="fav in fetchedFavouriteCards" :key="fav.id">
-      {{ fav }}
-    </div>
-  </div>
-
   <section v-if="card.length > 0" class="flex flex-col items-center justify-center">
     <div class="flex justify-start w-full pt-4 pl-6" >
       <NuxtImg src="/backArrow.png" height="30px" width="30px" @click="$router.go(-1)"/>
@@ -67,7 +66,7 @@ onMounted(async () => {
   <h1 class="text-3xl text-center">{{ card[0].name}}</h1>
 
   <div class="flex w-[50%] mx-auto pt-2 justify-around">
-                  <NuxtImg :src='fav ? "/fullHeart.png" : "/emptyHeart.png"' height="30px" width="30px" alt="Add to favourites"/>
+                  <NuxtImg @click="addFavouriteCard(card[0].name, user.email )" :src='containsCard() ? "/fullHeart.png" : "/emptyHeart.png"' height="30px" width="30px" alt="Add to favourites"/>
                   <NuxtImg src="/add.png" height="30px" width="30px" alt="Add to deck" />
   </div>
 
