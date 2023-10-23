@@ -3,8 +3,14 @@ import { CollectionReference, collection, addDoc, getDocs, query, where, deleteD
 export const useFirestoreUtils = () => {
   const getFavouriteCards = async (username) => {
     try {
-      const { $db } = useNuxtApp();
+      const { $db, $userek } = useNuxtApp();
 
+      // MAKE THIS A USER AVAIBLE EVERYWHERE !!!!
+
+      // const o = await $userek
+      // console.log(o)
+
+      ////
       const colRef = collection($db, 'favourites');
       const q = query(colRef, where('author', '==', username));
 
@@ -20,37 +26,37 @@ export const useFirestoreUtils = () => {
     }
   };
 
-  const addFavouriteCard = async (card, username) => {
+  const addFavouriteCard = async (card, username, image) => {
 
     try {
       const { $db } = useNuxtApp();
       const colRef = collection($db, 'favourites');
+      const userCards = await getFavouriteCards(username)
+      const setId = `${username}-${card}`
 
       const containsCard = (arr, cardValue) => {
         return arr.some(obj => obj.card === cardValue);
       };
 
-      const userCards = await getFavouriteCards(username)
-
       if(!containsCard(userCards, card)){
-        addDoc(colRef, {
+        await setDoc(doc($db, "favourites", setId), {
           author: username, 
-          card: card
-        })
+          card: card,
+          image: image
+        });
+        console.log('Card added')
+      } else {
+        const docRef = doc($db, 'favourites', setId);
+        await deleteDoc(docRef);
+        console.log('Card deleted')
       }
-
     } catch (error) {
       console.log(error)
     }
-  }  
+  };
 
   return {
     getFavouriteCards,
-    addFavouriteCard
+    addFavouriteCard,
   };
 };
-
-// addDoc(colRef, {
-//   author: username, 
-//   card: card
-// })

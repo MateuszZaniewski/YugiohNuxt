@@ -1,10 +1,26 @@
-<script setup lang="ts">
+<script setup>
 
-const user = ref()
+const { getFavouriteCards, addFavouriteCard } = useFirestoreUtils()
+const fetchedFavouriteCards = ref([]);
+const user = ref(null)
+
+
+
+const fetchFavoriteCards = async () => {
+  try {
+    const favorites = await getFavouriteCards(user.value.email);
+    fetchedFavouriteCards.value = favorites;
+    console.log(fetchedFavouriteCards.value)
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 
 onMounted(async () => {
    const response = await initUser()
    user.value = response
+   fetchFavoriteCards()
 });
 
 const activeBox = ref('favourites')
@@ -17,6 +33,7 @@ const friends = ['RollMopsik','Ernestozol','Łukasz']
 </script>
 
 <template>
+
     <NuxtImg @click="$router.go(-1)" src="/backArrowBlack.png" height="30px" width="30px"  class=" mt-8 ml-8"/>
 
     <section v-if="user">
@@ -55,9 +72,9 @@ const friends = ['RollMopsik','Ernestozol','Łukasz']
 
     <section v-if="activeBox === 'favourites'" class="favourites">
         <div class="flex flex-col gap-5 w-[90%] mx-auto">
-            <div v-for="fav in favourites" :key="fav" class="px-4 py-2 bg-[#cbd5e1] rounded-xl">
-                <NuxtLink :to="`card/${fav}`">
-                    <span class="text-xl">{{ fav }}</span>
+            <div v-for="fav in fetchedFavouriteCards" :key="fav" class="px-4 py-2 bg-[#cbd5e1] rounded-xl">
+                <NuxtLink :to="`card/${fav.card}`">
+                    <span class="text-xl">{{ fav.card }}</span>
                 </NuxtLink>
             </div>
         </div>
