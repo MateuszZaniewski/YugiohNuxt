@@ -2,13 +2,15 @@
 
 const { getFavouriteCards, addFavouriteCard } = useFirestoreUtils()
 const fetchedFavouriteCards = ref([]);
-const user = ref(null)
+const { $firestoreUser } = useNuxtApp();
+const user = await $firestoreUser
+console.log(user)
 
 
 
 const fetchFavoriteCards = async () => {
   try {
-    const favorites = await getFavouriteCards(user.value.email);
+    const favorites = await getFavouriteCards(user.email);
     fetchedFavouriteCards.value = favorites;
     console.log(fetchedFavouriteCards.value)
   } catch (error) {
@@ -18,8 +20,6 @@ const fetchFavoriteCards = async () => {
 
 
 onMounted(async () => {
-   const response = await initUser()
-   user.value = response
    fetchFavoriteCards()
 });
 
@@ -28,7 +28,7 @@ const activeBox = ref('favourites')
 // here will be a database query to retrive a favourite cards, decks, friends and settings of desired user
 const favourites = ['Dark Magician Girl', 'Dark Magician', 'Blue-Eyes White Dragon', 'Monster Reborn', 'Evenly Matched'];
 const decks = ['Dark Magicians', 'Ultimate Blue Eyes Deck', 'Melffys Combo Deck'];
-const friends = ['RollMopsik','Ernestozol','Łukasz']
+const friends = ['RollMopsik','Ernestozol','Łukasz'];
 
 </script>
 
@@ -36,7 +36,7 @@ const friends = ['RollMopsik','Ernestozol','Łukasz']
 
     <NuxtImg @click="$router.go(-1)" src="/backArrowBlack.png" height="30px" width="30px"  class=" mt-8 ml-8"/>
 
-    <section v-if="user">
+    <section v-if="user" class=" max-w-3xl mx-auto">
         <div class="flex justify-center">
             <NuxtImg :src="user.photoURL ? user.photoURL : '/userTemplate.jpg'" height="100px" width="100px" class="rounded-full"/>
         </div>
@@ -47,7 +47,7 @@ const friends = ['RollMopsik','Ernestozol','Łukasz']
         </div>
     </section>
 
-    <section class="flex justify-around py-8">
+    <section class="flex justify-around py-8 max-w-xl mx-auto">
         <div>
             <div @click="activeBox = 'favourites'" class="px-4 py-3 rounded-2xl" :class="activeBox === 'favourites' ? 'bg-[#2D61AF]' : 'bg-[#cbd5e1]'">
                <NuxtImg :src="activeBox === 'favourites' ? '/user/starWhite.svg' : '/user/starBlack.svg' " height="30px" width="30px" /> 
@@ -70,7 +70,7 @@ const friends = ['RollMopsik','Ernestozol','Łukasz']
         </div>
     </section>
 
-    <section v-if="activeBox === 'favourites'" class="favourites">
+    <section v-if="activeBox === 'favourites'" class="favourites max-w-2xl mx-auto">
         <div class="flex flex-col gap-5 w-[90%] mx-auto">
             <div v-for="fav in fetchedFavouriteCards" :key="fav" class="px-4 py-2 bg-[#cbd5e1] rounded-xl">
                 <NuxtLink :to="`card/${fav.card}`">
@@ -80,7 +80,7 @@ const friends = ['RollMopsik','Ernestozol','Łukasz']
         </div>
     </section>
 
-    <section v-if="activeBox === 'decks'" class="decks">
+    <section v-if="activeBox === 'decks'" class="decks max-w-2xl mx-auto">
         <div class="flex flex-col gap-5 w-[90%] mx-auto">
             <div v-for="deck in decks" :key="deck" class="px-4 py-2 bg-[#cbd5e1] rounded-xl flex justify-between gap-6">
                 <div class="w-[50%]">
@@ -97,7 +97,7 @@ const friends = ['RollMopsik','Ernestozol','Łukasz']
         </div>
     </section>
 
-    <section v-if="activeBox === 'friends'" class="friends">
+    <section v-if="activeBox === 'friends'" class="friends max-w-2xl mx-auto">
         <div class="flex flex-col gap-5 w-[90%] mx-auto">
             <div v-for="friend in friends" :key="friend" class="px-4 py-2 bg-[#cbd5e1] rounded-xl">
                 <NuxtLink :to="`card/${friend}`">
@@ -107,7 +107,7 @@ const friends = ['RollMopsik','Ernestozol','Łukasz']
         </div>
     </section>
 
-    <section v-if="activeBox === 'settings'" class="settings">
+    <section v-if="activeBox === 'settings'" class="settings max-w-2xl mx-auto">
         <div>
             <div class="w-[90%] mx-auto">
                 <div class="flex justify-between">

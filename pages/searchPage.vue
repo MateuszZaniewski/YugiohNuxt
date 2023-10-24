@@ -1,6 +1,8 @@
 <script setup lang="ts">
 let clickedCard = ref();
 const cardsPerPage = ref(12);
+const { $firestoreUser } = useNuxtApp();
+const user = await $firestoreUser
 
 let fetchedCards = ref<Card[]>([]);
 
@@ -237,7 +239,7 @@ watch(
         class="flex flex-wrap justify-center gap-6 mx-auto w-[90%] max-w-3xl lg:w-[50vw]"
       >
         <div
-          v-for="card in visibleCards"
+          v-for="card in visibleCards" :key="card.id"
           class="justify-center w-fit mx-auto"
           :class="innerWidth <= 1024 ? 'flex' : 'hidden'"
         >

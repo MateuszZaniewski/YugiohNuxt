@@ -10,7 +10,7 @@ const links = [
   "Favourites",
   "Login/SignIn",
 ];
-const adress = ["/userProfile", "/searchPage", "", "", "/loginPage"];
+const adress = ["/userProfile", "/searchPage", "/deckBuilder", "/favourites", "/loginPage"];
 
 
 const openAndCloseMenu = () => {

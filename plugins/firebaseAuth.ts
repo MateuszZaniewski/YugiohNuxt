@@ -15,14 +15,14 @@ export default defineNuxtPlugin(nuxtApp => {
 
       const app = initializeApp(firebaseConfig);
       const db = getFirestore();
-      const userek = initUser();
+      const firestoreUser = initUser();
 
 
       return {
         provide: {
             app,
             db,
-            userek
+            firestoreUser
         }
     }
 })

@@ -3,7 +3,7 @@ import { CollectionReference, collection, addDoc, getDocs, query, where, deleteD
 export const useFirestoreUtils = () => {
   const getFavouriteCards = async (username) => {
     try {
-      const { $db, $userek } = useNuxtApp();
+      const { $db, $firestoreUser } = useNuxtApp();
 
       // MAKE THIS A USER AVAIBLE EVERYWHERE !!!!
 

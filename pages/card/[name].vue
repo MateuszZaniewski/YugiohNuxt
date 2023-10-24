@@ -1,6 +1,7 @@
 <script setup>
 import axios from "axios";
-const user = ref(null)
+const { $firestoreUser } = useNuxtApp();
+const user = await $firestoreUser
 const card = ref([])
 const { useSetAttribute, useSetCardType } = useUtils()
 const fetchedFavouriteCards = ref([]);
@@ -26,7 +27,7 @@ const fetchCards = async () => {
 
 const fetchFavoriteCards = async () => {
   try {
-    const favorites = await getFavouriteCards(user.value.email);
+    const favorites = await getFavouriteCards(user.email);
     fetchedFavouriteCards.value = favorites;
     console.log(fetchedFavouriteCards.value)
     if(fetchedFavouriteCards.value.some(obj => obj.card === route.params.name)){
@@ -42,7 +43,6 @@ const fetchFavoriteCards = async () => {
 onMounted(async () => {
   try {
     fetchCards();
-    user.value = await initUser();
     fetchFavoriteCards();
   } catch (error) {
     console.error(error);
@@ -53,9 +53,9 @@ onMounted(async () => {
 </script>
 
 <template>
-  <section v-if="card.length > 0" class="flex flex-col items-center justify-center">
+  <section v-if="card.length > 0" class="flex flex-col items-center justify-center max-w-xl mx-auto">
     <div class="flex justify-start w-full pt-4 pl-6" >
-      <NuxtImg src="/backArrow.png" height="30px" width="30px" @click="$router.go(-1)"/>
+      <NuxtImg src="/backArrowBlack.png" height="30px" width="30px" @click="$router.go(-1)"/>
     </div>
     
 

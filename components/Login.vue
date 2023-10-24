@@ -1,7 +1,6 @@
 <script setup lang="ts">
-
-import { collection, addDoc } from "firebase/firestore";
-
+const { $firestoreUser } = useNuxtApp();
+const user = await $firestoreUser
 const { $db } = useNuxtApp()
 
 const email = ref('')
