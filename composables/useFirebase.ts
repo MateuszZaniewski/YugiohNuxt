@@ -15,9 +15,6 @@ export const signInUser = async (email:string, password:string) => {
     return credentials
 };
 
-export const listAllUsers = (nextPageToken?: string): void => {
-  
-};
 
 export const signInWithGoogle = async () => {
     const auth = getAuth();

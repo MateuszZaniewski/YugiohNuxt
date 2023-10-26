@@ -1,9 +1,10 @@
 <script setup>
 
-const { getFavouriteCards, addFavouriteCard } = useFirestoreUtils()
+const { getFavouriteCards, addFavouriteCard, fetchAllUsers } = useFirestoreUtils()
 const fetchedFavouriteCards = ref([]);
 const { $firestoreUser } = useNuxtApp();
 const user = await $firestoreUser
+const allUsers = ref(null)
 console.log(user)
 
 
@@ -18,11 +19,20 @@ const fetchFavoriteCards = async () => {
   }
 };
 
-listAllUsers()
+const fetchUsers = async () => {
+    try {
+        const users = await fetchAllUsers(user.displayName)
+        allUsers.value = users
+        console.log(allUsers.value)
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 
 onMounted(async () => {
    fetchFavoriteCards()
+   fetchUsers()
 });
 
 const activeBox = ref('favourites')
@@ -35,6 +45,8 @@ const friends = ['user1','user2','user3'];
 </script>
 
 <template>
+
+    <button>Show all users</button>
 
     <NuxtImg @click="$router.go(-1)" src="/backArrowBlack.png" height="30px" width="30px"  class=" mt-8 ml-8"/>
 
@@ -101,9 +113,9 @@ const friends = ['user1','user2','user3'];
 
     <section v-if="activeBox === 'friends'" class="friends max-w-2xl mx-auto">
         <div class="flex flex-col gap-5 w-[90%] mx-auto">
-            <div v-for="friend in friends" :key="friend" class="px-4 py-2 bg-[#cbd5e1] rounded-xl">
-                <NuxtLink :to="`card/${friend}`">
-                    <span class="text-xl">{{ friend }}</span>
+            <div v-for="user in allUsers" :key="user" class="px-4 py-2 bg-[#cbd5e1] rounded-xl">
+                <NuxtLink :to="`card/${user}`">
+                    <span class="text-xl">{{ user }}</span>
                 </NuxtLink>
             </div>
         </div>

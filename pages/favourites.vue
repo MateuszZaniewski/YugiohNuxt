@@ -8,7 +8,7 @@ const { useSetAttribute, useSetCardType } = useUtils()
 
 const fetchFavoriteCards = async () => {
   try {
-    const favorites = await getFavouriteCards(user.email);
+    const favorites = await getFavouriteCards(user.displayName);
     fetchedFavouriteCards.value = favorites;
     console.log(fetchedFavouriteCards.value)
   } catch (error) {

@@ -68,11 +68,33 @@ export const useFirestoreUtils = () => {
     } catch (error) {
       console.log(error)
     }
+  };
+
+  const fetchAllUsers = async(username) => {
+    try {
+      const { $db } = useNuxtApp();
+      const setId = username
+
+      const userRef = doc($db,'users',setId)
+      const userSnap = await getDoc(userRef)
+
+      const q = query(collection($db, "users"))
+      const querySnapshot = await getDocs(q);
+      const users = []
+      querySnapshot.forEach((doc) => {
+        users.push(doc.id)
+      });
+      return users
+
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return {
     getFavouriteCards,
     addFavouriteCard,
     addUser,
+    fetchAllUsers,
   };
 };
