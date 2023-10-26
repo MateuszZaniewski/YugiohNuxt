@@ -27,7 +27,7 @@ const createNewUser = async () => {
   <div class="flex pl-5 pt-5 gap-1">
     
     <NuxtLink to="/">
-      <NuxtImg class="h-10 w-10 relative z-20" src="/backArrow.png" />
+      <NuxtImg class="h-10 w-10 relative z-20" src="/backArrowBlack.png" />
     </NuxtLink>
   </div>
 

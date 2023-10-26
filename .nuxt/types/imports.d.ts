@@ -43,6 +43,7 @@ declare global {
   const isShallow: typeof import('vue')['isShallow']
   const isVue2: typeof import('../../node_modules/nuxt/dist/app/compat/vue-demi')['isVue2']
   const isVue3: typeof import('../../node_modules/nuxt/dist/app/compat/vue-demi')['isVue3']
+  const listAllUsers: typeof import('../../composables/useFirebase')['listAllUsers']
   const loadPayload: typeof import('../../node_modules/nuxt/dist/app')['loadPayload']
   const logoutUser: typeof import('../../composables/useFirebase')['logoutUser']
   const markRaw: typeof import('vue')['markRaw']
@@ -210,6 +211,7 @@ declare module 'vue' {
     readonly isShallow: UnwrapRef<typeof import('vue')['isShallow']>
     readonly isVue2: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/compat/vue-demi')['isVue2']>
     readonly isVue3: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/compat/vue-demi')['isVue3']>
+    readonly listAllUsers: UnwrapRef<typeof import('../../composables/useFirebase')['listAllUsers']>
     readonly loadPayload: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['loadPayload']>
     readonly logoutUser: UnwrapRef<typeof import('../../composables/useFirebase')['logoutUser']>
     readonly markRaw: UnwrapRef<typeof import('vue')['markRaw']>
@@ -369,6 +371,7 @@ declare module '@vue/runtime-core' {
     readonly isShallow: UnwrapRef<typeof import('vue')['isShallow']>
     readonly isVue2: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/compat/vue-demi')['isVue2']>
     readonly isVue3: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/compat/vue-demi')['isVue3']>
+    readonly listAllUsers: UnwrapRef<typeof import('../../composables/useFirebase')['listAllUsers']>
     readonly loadPayload: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['loadPayload']>
     readonly logoutUser: UnwrapRef<typeof import('../../composables/useFirebase')['logoutUser']>
     readonly markRaw: UnwrapRef<typeof import('vue')['markRaw']>

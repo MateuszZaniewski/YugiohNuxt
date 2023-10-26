@@ -1,4 +1,5 @@
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signInWithRedirect, signOut, GoogleAuthProvider, getRedirectResult } from 'firebase/auth';
+const { addUser } = useFirestoreUtils()
 
 export const createUser = async (email:string, password:string) => {
     const auth = getAuth();
@@ -14,10 +15,17 @@ export const signInUser = async (email:string, password:string) => {
     return credentials
 };
 
+export const listAllUsers = (nextPageToken?: string): void => {
+  
+};
+
 export const signInWithGoogle = async () => {
     const auth = getAuth();
     const provider = new GoogleAuthProvider();
         const credentials = await signInWithRedirect(auth, provider)
+        .then(result => {
+          console.log('User Sign In')
+        })
     .catch((error) => console.log(error))
     return credentials
 }
@@ -27,8 +35,7 @@ export const redirectFromGoogle = async () => {
     const provider = new GoogleAuthProvider();
     getRedirectResult(auth)
     .then((result) => {
-      console.log('Redirected sucesfully', result)
-      return result
+      addUser(result?.user.displayName)
   }).catch((error) => {
     // Handle Errors here.
     const errorCode = error.code;

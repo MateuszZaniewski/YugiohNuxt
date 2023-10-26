@@ -10,13 +10,15 @@ console.log(user)
 
 const fetchFavoriteCards = async () => {
   try {
-    const favorites = await getFavouriteCards(user.email);
+    const favorites = await getFavouriteCards(user.displayName);
     fetchedFavouriteCards.value = favorites;
     console.log(fetchedFavouriteCards.value)
   } catch (error) {
     console.error(error);
   }
 };
+
+listAllUsers()
 
 
 onMounted(async () => {
@@ -28,7 +30,7 @@ const activeBox = ref('favourites')
 // here will be a database query to retrive a favourite cards, decks, friends and settings of desired user
 const favourites = ['Dark Magician Girl', 'Dark Magician', 'Blue-Eyes White Dragon', 'Monster Reborn', 'Evenly Matched'];
 const decks = ['Dark Magicians', 'Ultimate Blue Eyes Deck', 'Melffys Combo Deck'];
-const friends = ['RollMopsik','Ernestozol','Łukasz'];
+const friends = ['user1','user2','user3'];
 
 </script>
 

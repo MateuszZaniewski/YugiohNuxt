@@ -3,14 +3,8 @@ import { CollectionReference, collection, addDoc, getDocs, query, where, deleteD
 export const useFirestoreUtils = () => {
   const getFavouriteCards = async (username) => {
     try {
-      const { $db, $firestoreUser } = useNuxtApp();
+      const { $db} = useNuxtApp();
 
-      // MAKE THIS A USER AVAIBLE EVERYWHERE !!!!
-
-      // const o = await $userek
-      // console.log(o)
-
-      ////
       const colRef = collection($db, 'favourites');
       const q = query(colRef, where('author', '==', username));
 
@@ -55,8 +49,30 @@ export const useFirestoreUtils = () => {
     }
   };
 
+  const addUser = async(username) => {
+    try {
+      const { $db } = useNuxtApp();
+      const setId = username
+
+      const userRef = doc($db,'users',setId)
+      const userSnap = await getDoc(userRef)
+
+      if(userSnap.exists()){
+        console.log('User already exists')
+      } else {
+        setDoc(doc($db, "users", setId), {
+          name: username
+        });
+        console.log('User added to DB')
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return {
     getFavouriteCards,
     addFavouriteCard,
+    addUser,
   };
 };

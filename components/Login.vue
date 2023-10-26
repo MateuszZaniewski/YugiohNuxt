@@ -17,8 +17,8 @@ const googleSignIn = async () => {
   })
 }
 
-onMounted(() => {
-  redirectFromGoogle()
+onMounted(async() => {
+  await redirectFromGoogle()
 });
 
 </script>
@@ -29,7 +29,7 @@ onMounted(() => {
   <div class="flex pl-5 pt-5 gap-1 relative z-20">
     
     <NuxtLink to="/">
-      <NuxtImg class="h-10 w-10 relative z-20 mb-8" src="/backArrow.png" />
+      <NuxtImg class="h-10 w-10 relative z-20 mb-8" src="/backArrowBlack.png" />
     </NuxtLink>
   </div>
 
