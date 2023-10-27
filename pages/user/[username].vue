@@ -36,7 +36,7 @@ onMounted(async () => {
     <h2 class="pb-2">Favourite Cards : {{ fetchedFavouriteCards.length }}</h2>
         <div class="flex flex-col gap-5 w-[90%] mx-auto">
             <div v-for="fav in fetchedFavouriteCards" :key="fav" class="px-4 py-2 bg-[#cbd5e1] rounded-xl">
-                <NuxtLink :to="`card/${fav.card}`">
+                <NuxtLink :to="`/card/${fav.card}`">
                     <span class="text-xl">{{ fav.card }}</span>
                 </NuxtLink>
             </div>
