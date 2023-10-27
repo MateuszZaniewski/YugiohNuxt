@@ -584,9 +584,11 @@ const errorHandler = (async function errorhandler(error, event) {
   event.node.res.end(html);
 });
 
+const _lazy_8KudIr = () => Promise.resolve().then(function () { return cards_get$1; });
 const _lazy_I1BnWg = () => Promise.resolve().then(function () { return renderer$1; });
 
 const handlers = [
+  { route: '/api/cards', handler: _lazy_8KudIr, lazy: true, middleware: false, method: "get" },
   { route: '/__nuxt_error', handler: _lazy_I1BnWg, lazy: true, middleware: false, method: undefined },
   { route: '/**', handler: _lazy_I1BnWg, lazy: true, middleware: false, method: undefined }
 ];
@@ -715,6 +717,13 @@ const template$1 = _template;
 const errorDev = /*#__PURE__*/Object.freeze({
       __proto__: null,
       template: template$1
+});
+
+const cards_get = defineEventHandler((event) => event);
+
+const cards_get$1 = /*#__PURE__*/Object.freeze({
+      __proto__: null,
+      default: cards_get
 });
 
 const appRootId = "__nuxt";

@@ -1,5 +1,11 @@
 <script setup>
 import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithRedirect, getRedirectResult, FacebookAuthProvider, onAuthStateChanged } from "firebase/auth";
+import axios from "axios";
+
+const fetchRandomCard = async () => {
+  const response = await axios.get('https://db.ygoprodeck.com/api/v7/randomcard.php')
+  console.log(response.data)
+}
 
 </script>
 
@@ -32,7 +38,7 @@ import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithRedi
   </div>
 
   <div class="pt-20 flex justify-center flex-col items-center gap-5">
-    <NuxtImg class="cursor-pointer" src="Cards.png" height="135" width="150" />
+    <NuxtImg @click="fetchRandomCard" class="cursor-pointer" src="Cards.png" height="135" width="150" />
     <NuxtImg src="arrowUp.png" height="54" width="54" />
   </div>
 

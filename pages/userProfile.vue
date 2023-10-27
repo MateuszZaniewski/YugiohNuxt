@@ -46,8 +46,6 @@ const friends = ['user1','user2','user3'];
 
 <template>
 
-    <button>Show all users</button>
-
     <NuxtImg @click="$router.go(-1)" src="/backArrowBlack.png" height="30px" width="30px"  class=" mt-8 ml-8"/>
 
     <section v-if="user" class=" max-w-3xl mx-auto">
@@ -111,13 +109,22 @@ const friends = ['user1','user2','user3'];
         </div>
     </section>
 
+                
+
     <section v-if="activeBox === 'friends'" class="friends max-w-2xl mx-auto">
-        <div class="flex flex-col gap-5 w-[90%] mx-auto">
-            <div v-for="user in allUsers" :key="user" class="px-4 py-2 bg-[#cbd5e1] rounded-xl">
-                <NuxtLink :to="`card/${user}`">
-                    <span class="text-xl">{{ user }}</span>
+        <div class="flex flex-row flex-wrap justify-center gap-5 w-[90%] mx-auto">
+            <div v-for="user in allUsers" :key="user" class="w-28 flex flex-col items-center text-center">
+                <NuxtLink :to="`user/${user}`">
+                    <div class="px-4 py-2 bg-[#cbd5e1] rounded-xl w-28 h-fit">
+                        <NuxtImg src="/userTemplate.jpg" />
+                    </div>
+                        <span>{{ user }}</span>    
                 </NuxtLink>
+                
+                 
+
             </div>
+            
         </div>
     </section>
 
