@@ -2,7 +2,7 @@
 const { $firestoreUser } = useNuxtApp();
 const user = await $firestoreUser
 const { $db } = useNuxtApp()
-
+const route = useRoute();
 const email = ref('')
 const password = ref('')
 const name = ref('')
@@ -14,18 +14,28 @@ const loginUser = async () => {
 const googleSignIn = async () => {
   const credentials = await signInWithGoogle()
   .then((result) => {
+    console.log('User sign In', result)
   })
-}
+};
+
+
 
 onMounted(async() => {
-  await redirectFromGoogle()
+  if(user){
+    await redirectFromGoogle().then((result) => {
+    console.log(result)
+    navigateTo('/SearchPage')
+  } 
+  )
+  }
+  
 });
 
 </script>
 
 <template>
 
-<section class="bg-[#008F78] h-[100vh] relative">
+<section class="bg-[#008F78] relative">
   <div class="flex pl-5 pt-5 gap-1 relative z-20">
     
     <NuxtLink to="/">

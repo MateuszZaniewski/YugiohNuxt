@@ -8,7 +8,6 @@ const fetchFavoriteCards = async () => {
   try {
     const favorites = await getFavouriteCards(route.params.username);
     fetchedFavouriteCards.value = favorites;
-    console.log(fetchedFavouriteCards.value)
   } catch (error) {
     console.error(error);
   }

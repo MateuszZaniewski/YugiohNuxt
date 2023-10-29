@@ -3,14 +3,12 @@ const { $firestoreUser } = useNuxtApp();
 const user = await $firestoreUser
 const fetchedFavouriteCards = ref([]);
 
-const { getFavouriteCards, addFavouriteCard } = useFirestoreUtils()
-const { useSetAttribute, useSetCardType } = useUtils()
+const { getFavouriteCards } = useFirestoreUtils()
 
 const fetchFavoriteCards = async () => {
   try {
-    const favorites = await getFavouriteCards(user.displayName);
+    const favorites = await getFavouriteCards(user.email);
     fetchedFavouriteCards.value = favorites;
-    console.log(fetchedFavouriteCards.value)
   } catch (error) {
     console.error(error);
   }

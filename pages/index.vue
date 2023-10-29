@@ -4,7 +4,6 @@ import axios from "axios";
 
 const fetchRandomCard = async () => {
   const response = await axios.get('https://db.ygoprodeck.com/api/v7/randomcard.php')
-  console.log(response.data)
 }
 
 </script>

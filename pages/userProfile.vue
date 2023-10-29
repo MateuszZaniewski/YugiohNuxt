@@ -5,15 +5,14 @@ const fetchedFavouriteCards = ref([]);
 const { $firestoreUser } = useNuxtApp();
 const user = await $firestoreUser
 const allUsers = ref(null)
-console.log(user)
+
 
 
 
 const fetchFavoriteCards = async () => {
   try {
-    const favorites = await getFavouriteCards(user.displayName);
+    const favorites = await getFavouriteCards(user.email);
     fetchedFavouriteCards.value = favorites;
-    console.log(fetchedFavouriteCards.value)
   } catch (error) {
     console.error(error);
   }
@@ -21,9 +20,8 @@ const fetchFavoriteCards = async () => {
 
 const fetchUsers = async () => {
     try {
-        const users = await fetchAllUsers(user.displayName)
+        const users = await fetchAllUsers(user.email, user.displayName)
         allUsers.value = users
-        console.log(allUsers.value)
     } catch (error) {
         console.log(error)
     }
@@ -40,7 +38,6 @@ const activeBox = ref('favourites')
 // here will be a database query to retrive a favourite cards, decks, friends and settings of desired user
 const favourites = ['Dark Magician Girl', 'Dark Magician', 'Blue-Eyes White Dragon', 'Monster Reborn', 'Evenly Matched'];
 const decks = ['Dark Magicians', 'Ultimate Blue Eyes Deck', 'Melffys Combo Deck'];
-const friends = ['user1','user2','user3'];
 
 </script>
 
@@ -113,12 +110,12 @@ const friends = ['user1','user2','user3'];
 
     <section v-if="activeBox === 'friends'" class="friends max-w-2xl mx-auto">
         <div class="flex flex-row flex-wrap justify-center gap-5 w-[90%] mx-auto">
-            <div v-for="user in allUsers" :key="user" class="w-28 flex flex-col items-center text-center">
-                <NuxtLink :to="`user/${user}`">
+            <div v-for="friend in allUsers" :key="friend" class="flex flex-row items-center text-center">
+                <NuxtLink :to="`user/${user}`" class="flex justify-center flex-col items-center">
                     <div class="px-4 py-2 bg-[#cbd5e1] rounded-xl w-28 h-fit">
                         <NuxtImg src="/userTemplate.jpg" />
                     </div>
-                        <span>{{ user }}</span>    
+                        <span>{{ friend }}</span>    
                 </NuxtLink>
                 
                  

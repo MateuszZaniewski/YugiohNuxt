@@ -49,10 +49,11 @@ export const useFirestoreUtils = () => {
     }
   };
 
-  const addUser = async(username) => {
+  const addUser = async(username,email) => {
     try {
+
       const { $db } = useNuxtApp();
-      const setId = username
+      const setId = email
 
       const userRef = doc($db,'users',setId)
       const userSnap = await getDoc(userRef)
@@ -61,7 +62,9 @@ export const useFirestoreUtils = () => {
         console.log('User already exists')
       } else {
         setDoc(doc($db, "users", setId), {
-          name: username
+          name: username,
+          friends: [],
+          email: email
         });
         console.log('User added to DB')
       }
@@ -70,19 +73,19 @@ export const useFirestoreUtils = () => {
     }
   };
 
-  const fetchAllUsers = async(username) => {
+  const fetchAllUsers = async(email, username) => {
     try {
-      const { $db } = useNuxtApp();
-      const setId = username
-
-      const userRef = doc($db,'users',setId)
-      const userSnap = await getDoc(userRef)
+      const { $db, $firestoreUser } = useNuxtApp();
+      const user = await $firestoreUser
 
       const q = query(collection($db, "users"))
       const querySnapshot = await getDocs(q);
       const users = []
       querySnapshot.forEach((doc) => {
-        users.push(doc.id)
+        // adding all users to the list (excluding current user)
+        if(doc.id != user.email){
+          users.push(doc.id)
+        }
       });
       return users
 

@@ -3,101 +3,111 @@
   "compilerOptions": {
     "forceConsistentCasingInFileNames": true,
     "jsx": "preserve",
+    "jsxImportSource": "vue",
     "target": "ESNext",
     "module": "ESNext",
     "moduleResolution": "Node",
     "skipLibCheck": true,
+    "isolatedModules": true,
+    "useDefineForClassFields": true,
     "strict": true,
+    "noImplicitThis": true,
+    "esModuleInterop": true,
+    "types": [],
+    "verbatimModuleSyntax": true,
     "allowJs": true,
-    "baseUrl": "C:/Users/mateu/Desktop/nuxt/tutorial",
     "noEmit": true,
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
-    "types": [
-      "node"
-    ],
     "paths": {
       "~": [
-        "C:/Users/mateu/Desktop/nuxt/tutorial"
+        ".."
       ],
       "~/*": [
-        "C:/Users/mateu/Desktop/nuxt/tutorial/*"
+        "../*"
       ],
       "@": [
-        "/C:"
+        "../../../../../../..//C:"
+      ],
+      "@/*": [
+        "../../../../../../..//C:/*"
       ],
       "~~": [
-        "C:/Users/mateu/Desktop/nuxt/tutorial"
+        ".."
       ],
       "~~/*": [
-        "C:/Users/mateu/Desktop/nuxt/tutorial/*"
+        "../*"
       ],
       "@@": [
-        "C:/Users/mateu/Desktop/nuxt/tutorial"
+        ".."
       ],
       "@@/*": [
-        "C:/Users/mateu/Desktop/nuxt/tutorial/*"
+        "../*"
       ],
       "assets": [
-        "C:/Users/mateu/Desktop/nuxt/tutorial/assets"
+        "../assets"
       ],
       "assets/*": [
-        "C:/Users/mateu/Desktop/nuxt/tutorial/assets/*"
+        "../assets/*"
       ],
       "public": [
-        "C:/Users/mateu/Desktop/nuxt/tutorial/public"
+        "../public"
       ],
       "public/*": [
-        "C:/Users/mateu/Desktop/nuxt/tutorial/public/*"
+        "../public/*"
       ],
       "#app": [
-        "C:/Users/mateu/Desktop/nuxt/tutorial/node_modules/nuxt/dist/app"
+        "../node_modules/nuxt/dist/app"
       ],
       "#app/*": [
-        "C:/Users/mateu/Desktop/nuxt/tutorial/node_modules/nuxt/dist/app/*"
+        "../node_modules/nuxt/dist/app/*"
       ],
       "vue-demi": [
-        "C:/Users/mateu/Desktop/nuxt/tutorial/node_modules/nuxt/dist/app/compat/vue-demi"
+        "../node_modules/nuxt/dist/app/compat/vue-demi"
       ],
       "pinia": [
-        "C:/Users/mateu/Desktop/nuxt/tutorial/node_modules/pinia/dist/pinia"
+        "../node_modules/pinia/dist/pinia"
       ],
       "#image": [
-        "C:/Users/mateu/Desktop/nuxt/tutorial/node_modules/@nuxt/image/dist/runtime"
+        "../node_modules/@nuxt/image/dist/runtime"
       ],
       "#image/*": [
-        "C:/Users/mateu/Desktop/nuxt/tutorial/node_modules/@nuxt/image/dist/runtime/*"
+        "../node_modules/@nuxt/image/dist/runtime/*"
       ],
       "#vue-router": [
-        "C:/Users/mateu/Desktop/nuxt/tutorial/.nuxt/vue-router"
+        "./vue-router-stub"
       ],
       "#imports": [
-        "C:/Users/mateu/Desktop/nuxt/tutorial/.nuxt/imports"
+        "./imports"
       ],
       "#build": [
-        "C:/Users/mateu/Desktop/nuxt/tutorial/.nuxt"
+        "."
       ],
       "#build/*": [
-        "C:/Users/mateu/Desktop/nuxt/tutorial/.nuxt/*"
+        "./*"
       ],
       "#components": [
-        "C:/Users/mateu/Desktop/nuxt/tutorial/.nuxt/components"
+        "./components"
       ]
     }
   },
   "include": [
     "./nuxt.d.ts",
     "../**/*",
-    "../**/*",
-    "C:/Users/mateu/Desktop/nuxt/tutorial",
-    "C:/Users/mateu/Desktop/nuxt/tutorial/*",
-    "/C:",
-    "C:/Users/mateu/Desktop/nuxt/tutorial",
-    "C:/Users/mateu/Desktop/nuxt/tutorial/*",
-    "C:/Users/mateu/Desktop/nuxt/tutorial",
-    "C:/Users/mateu/Desktop/nuxt/tutorial/*"
+    "../node_modules/@pinia/nuxt/runtime",
+    "../node_modules/@nuxt/image/runtime",
+    "../node_modules/@nuxt/devtools/runtime",
+    "../node_modules/@nuxt/telemetry/runtime",
+    "..",
+    "../../../../../../..//C:"
   ],
   "exclude": [
+    "../node_modules",
+    "../node_modules/nuxt/node_modules",
+    "../node_modules/@pinia/nuxt/runtime/server",
+    "../node_modules/@nuxt/image/runtime/server",
+    "../node_modules/@nuxt/devtools/runtime/server",
+    "../node_modules/@nuxt/telemetry/runtime/server",
     "../dist",
     "../.output"
   ]

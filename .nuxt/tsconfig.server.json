@@ -8,63 +8,73 @@
     "allowJs": true,
     "resolveJsonModule": true,
     "jsx": "preserve",
+    "allowSyntheticDefaultImports": true,
     "jsxFactory": "h",
     "jsxFragmentFactory": "Fragment",
     "paths": {
       "#imports": [
-        "C:/Users/mateu/Desktop/nuxt/tutorial/.nuxt/types/nitro-imports"
+        "./types/nitro-imports"
       ],
       "#paths": [
-        "C:/Users/mateu/Desktop/nuxt/tutorial/node_modules/nuxt/dist/core/runtime/nitro/paths"
+        "../node_modules/nuxt/dist/core/runtime/nitro/paths"
       ],
       "~": [
-        "C:/Users/mateu/Desktop/nuxt/tutorial"
+        "./.."
       ],
       "~/*": [
-        "C:/Users/mateu/Desktop/nuxt/tutorial/*"
+        "../*"
       ],
       "@": [
-        "/C:"
+        "../../../../../../..//C:"
       ],
       "~~": [
-        "C:/Users/mateu/Desktop/nuxt/tutorial"
+        "./.."
       ],
       "~~/*": [
-        "C:/Users/mateu/Desktop/nuxt/tutorial/*"
+        "../*"
       ],
       "@@": [
-        "C:/Users/mateu/Desktop/nuxt/tutorial"
+        "./.."
       ],
       "@@/*": [
-        "C:/Users/mateu/Desktop/nuxt/tutorial/*"
+        "../*"
       ],
       "assets": [
-        "C:/Users/mateu/Desktop/nuxt/tutorial/assets"
+        "../assets"
       ],
       "assets/*": [
-        "C:/Users/mateu/Desktop/nuxt/tutorial/assets/*"
+        "../assets/*"
       ],
       "public": [
-        "C:/Users/mateu/Desktop/nuxt/tutorial/public"
+        "../public"
       ],
       "public/*": [
-        "C:/Users/mateu/Desktop/nuxt/tutorial/public/*"
+        "../public/*"
       ],
       "pinia": [
-        "C:/Users/mateu/Desktop/nuxt/tutorial/node_modules/pinia/dist/pinia"
+        "../node_modules/pinia/dist/pinia"
       ],
       "#image": [
-        "C:/Users/mateu/Desktop/nuxt/tutorial/node_modules/@nuxt/image/dist/runtime"
+        "../node_modules/@nuxt/image/dist/runtime"
       ],
       "#image/*": [
-        "C:/Users/mateu/Desktop/nuxt/tutorial/node_modules/@nuxt/image/dist/runtime/*"
+        "../node_modules/@nuxt/image/dist/runtime/*"
       ]
     }
   },
   "include": [
-    "C:/Users/mateu/Desktop/nuxt/tutorial/.nuxt/types/nitro-nuxt.d.ts",
+    "./types/nitro-nuxt.d.ts",
+    "../node_modules/@pinia/nuxt/runtime/server",
+    "../node_modules/@nuxt/image/runtime/server",
+    "../node_modules/@nuxt/devtools/runtime/server",
+    "../node_modules/@nuxt/telemetry/runtime/server",
     "./types/nitro.d.ts",
     "../**/*",
     "../server/**/*"
+  ],
+  "exclude": [
+    "../node_modules",
+    "../node_modules/nuxt/node_modules",
+    "../dist"
   ]
 }

@@ -27,9 +27,8 @@ const fetchCards = async () => {
 
 const fetchFavoriteCards = async () => {
   try {
-    const favorites = await getFavouriteCards(user.displayName);
+    const favorites = await getFavouriteCards(user.email);
     fetchedFavouriteCards.value = favorites;
-    console.log(fetchedFavouriteCards.value)
     if(fetchedFavouriteCards.value.some(obj => obj.card === route.params.name)){
       return isFavourite.value = true
     } else {
@@ -64,7 +63,7 @@ onMounted(async () => {
   <h1 class="text-3xl text-center">{{ card[0].name}}</h1>
 
   <div class="flex w-[50%] mx-auto pt-2 justify-around">
-                  <NuxtImg @click="addFavouriteCard(card[0].name, user.displayName, card[0].card_images[0].image_url ), isFavourite = !isFavourite" :src='isFavourite ? "/fullHeart.png" : "/emptyHeart.png"' height="30px" width="30px" alt="Add to favourites"/>
+                  <NuxtImg @click="addFavouriteCard(card[0].name, user.email, card[0].card_images[0].image_url ), isFavourite = !isFavourite" :src='isFavourite ? "/fullHeart.png" : "/emptyHeart.png"' height="30px" width="30px" alt="Add to favourites"/>
                   <NuxtImg src="/add.png" height="30px" width="30px" alt="Add to deck" />
   </div>
 
