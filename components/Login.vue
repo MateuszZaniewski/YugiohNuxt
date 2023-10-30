@@ -22,11 +22,11 @@ const googleSignIn = async () => {
 
 onMounted(async() => {
   if(user){
-    await redirectFromGoogle().then((result) => {
-    console.log(result)
-    navigateTo('/SearchPage')
-  } 
-  )
+    await redirectFromGoogle()
+    .then((result) => {
+      navigateTo('/SearchPage')
+    })
+    
   }
   
 });

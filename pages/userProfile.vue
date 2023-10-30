@@ -1,11 +1,12 @@
 <script setup>
 
-const { getFavouriteCards, addFavouriteCard, fetchAllUsers } = useFirestoreUtils()
+const { getFavouriteCards, addFavouriteCard, addFriend, removeFriend, fetchFriends, fetchAllUsers } = useFirestoreUtils()
 const fetchedFavouriteCards = ref([]);
 const { $firestoreUser } = useNuxtApp();
 const user = await $firestoreUser
 const allUsers = ref(null)
-
+const friendsActive = ref(true)
+const friendUsers = ref(null)
 
 
 
@@ -27,10 +28,37 @@ const fetchUsers = async () => {
     }
 }
 
+const fetchFriend = async () => {
+    try {
+        const friends = await fetchFriends(user.email)
+        friendUsers.value = friends
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+const addUserToFriend = async (userId, friendName) => {
+    try {
+        addFriend(userId, friendName )
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+const removeUserFromFriends = async (userId, friendName) => {
+    try {
+        removeFriend(userId, friendName)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 
 onMounted(async () => {
    fetchFavoriteCards()
    fetchUsers()
+   fetchFriend()
+   
 });
 
 const activeBox = ref('favourites')
@@ -109,20 +137,51 @@ const decks = ['Dark Magicians', 'Ultimate Blue Eyes Deck', 'Melffys Combo Deck'
                 
 
     <section v-if="activeBox === 'friends'" class="friends max-w-2xl mx-auto">
-        <div class="flex flex-row flex-wrap justify-center gap-5 w-[90%] mx-auto">
+
+        <div class="flex justify-around">
+            <div class="w-[50%] text-center py-4 rounded-t-xl" :class="friendsActive ? 'bg-slate-300' : 'bg-none'" @click="friendsActive = true">
+                <span>Friends</span>
+            </div>
+            <div class="w-[50%] text-center py-4 rounded-t-xl" :class="!friendsActive ? 'bg-slate-300' : 'bg-none'" @click="friendsActive = false">
+                <span>All users</span>
+            </div>
+        </div>
+
+        <!-- all users -->
+        <div v-if="!friendsActive" class="flex justify-around pb-2 bg-slate-300">
+            <div class="flex flex-row flex-wrap justify-center gap-5 w-[90%] mx-auto mt-5">
             <div v-for="friend in allUsers" :key="friend" class="flex flex-row items-center text-center">
+                <div class="flex justify-center flex-col items-center">
+                    <div class="px-4 py-2 bg-[#cbd5e1] rounded-xl w-28 h-fit">
+                        <NuxtLink :to="`user/${user}`" >
+                            <NuxtImg src="/userTemplate.jpg" />
+                        </NuxtLink>
+                        
+                    </div>
+                        <button>{{ friend }}</button>    
+                </div>
+                <div class="flex flex-col gap-2">
+                    <span @click="addUserToFriend(user.email, friend)">Add</span>
+                    <span @click="removeUserFromFriends(user.email, friend)">Remove</span>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <div v-if="friendsActive" class="flex justify-around pb-2 bg-slate-300">
+            <div class="flex flex-row flex-wrap justify-center gap-5 w-[90%] mx-auto mt-5">
+            <div v-for="friend in friendUsers" :key="friend" class="flex flex-row items-center text-center">
                 <NuxtLink :to="`user/${user}`" class="flex justify-center flex-col items-center">
                     <div class="px-4 py-2 bg-[#cbd5e1] rounded-xl w-28 h-fit">
                         <NuxtImg src="/userTemplate.jpg" />
                     </div>
                         <span>{{ friend }}</span>    
                 </NuxtLink>
-                
-                 
-
             </div>
-            
+            </div>
         </div>
+        
+        
     </section>
 
     <section v-if="activeBox === 'settings'" class="settings max-w-2xl mx-auto">

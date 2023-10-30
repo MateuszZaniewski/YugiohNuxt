@@ -1,4 +1,4 @@
-import { CollectionReference, collection, addDoc, getDocs, query, where, deleteDoc, setDoc, doc, getDoc } from "firebase/firestore";
+import { CollectionReference, collection, addDoc, getDocs, query, where, deleteDoc, setDoc, doc, getDoc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
 
 export const useFirestoreUtils = () => {
   const getFavouriteCards = async (username) => {
@@ -73,6 +73,58 @@ export const useFirestoreUtils = () => {
     }
   };
 
+  const addFriend = async (userId,friendName) => {
+    try {
+      const { $db } = useNuxtApp();
+
+      const userRef = doc($db, 'users', userId);
+
+      await updateDoc(userRef, {
+        friends: arrayUnion(friendName)
+    });
+
+      console.log('User', friendName, ' added to your friend list')
+    
+
+    } catch (error) {
+      console.log(error)
+    }
+  };
+
+  const removeFriend = async (userId, friendName) => {
+    try {
+      const { $db } = useNuxtApp();
+
+      const userRef = doc($db, 'users', userId);
+
+      await updateDoc(userRef, {
+        friends: arrayRemove(friendName)
+    });
+
+      console.log('User', friendName, ' removed to your friend list')
+    
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const fetchFriends = async (userId) => {
+    try {
+      const { $db } = useNuxtApp();
+      const userRef = doc($db, 'users', userId);
+      const docSnap = await getDoc(userRef);
+      if (docSnap.exists()) {
+        const userData = docSnap.data();
+        const friendsArray = userData.friends;
+        console.log("User's friends:", friendsArray);
+        return friendsArray;
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   const fetchAllUsers = async(email, username) => {
     try {
       const { $db, $firestoreUser } = useNuxtApp();
@@ -83,8 +135,9 @@ export const useFirestoreUtils = () => {
       const users = []
       querySnapshot.forEach((doc) => {
         // adding all users to the list (excluding current user)
+        const userData = doc.data();
         if(doc.id != user.email){
-          users.push(doc.id)
+          users.push(userData.name)
         }
       });
       return users
@@ -98,6 +151,9 @@ export const useFirestoreUtils = () => {
     getFavouriteCards,
     addFavouriteCard,
     addUser,
+    addFriend,
+    removeFriend,
+    fetchFriends,
     fetchAllUsers,
   };
 };
