@@ -107,7 +107,7 @@ export const useFirestoreUtils = () => {
     } catch (error) {
       console.log(error)
     }
-  }
+  };
 
   const fetchFriends = async (userId) => {
     try {
