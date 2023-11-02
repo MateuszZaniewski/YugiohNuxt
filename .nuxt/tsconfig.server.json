@@ -59,6 +59,9 @@
       ],
       "#image/*": [
         "../node_modules/@nuxt/image/dist/runtime/*"
+      ],
+      "#primevue-style": [
+        "./primevue-style"
       ]
     }
   },
@@ -66,6 +69,7 @@
     "./types/nitro-nuxt.d.ts",
     "../node_modules/@pinia/nuxt/runtime/server",
     "../node_modules/@nuxt/image/runtime/server",
+    "../node_modules/nuxt-primevue/runtime/server",
     "../node_modules/@nuxt/devtools/runtime/server",
     "../node_modules/@nuxt/telemetry/runtime/server",
     "./types/nitro.d.ts",

@@ -6,10 +6,17 @@ const fetchRandomCard = async () => {
   const response = await axios.get('https://db.ygoprodeck.com/api/v7/randomcard.php')
 }
 
+const items = ['/arrowUp.png','/arrowUp.png','/arrowUp.png','4','/arrowUp.png','/arrowUp.png']
+
 </script>
 
 <template>
   <Navbar />
+
+  <ColorPicker v-model="color" />
+  <SpeedDial :model="items" :radius="80" type="circle" buttonClass="p-button-warning" />
+
+
   <div class="w-[90%] mx-auto">
     <h1 class="text-3xl text-center pt-7 max-w-xs mx-auto">
       Welcome to Your Ultimate Yu-Gi-Oh Fan Destination

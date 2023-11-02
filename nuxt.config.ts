@@ -9,8 +9,26 @@ export default defineNuxtConfig({
     // ...
     "@pinia/nuxt",
     "@nuxt/image",
+    'nuxt-primevue'
   ],
-  css: ["~/main.css"],
+  primevue: {
+    usePrimeVue: true,
+    options: {
+      unstyled: false,
+    },
+    importPT: { as: 'Tailwind', from: 'primevue/passthrough/tailwind' },
+    cssLayerOrder: 'primevue, tailwind-base, tailwind-components, tailwind-utilities',
+    components: {
+        
+    },
+    directives: {
+        
+    },
+    composables: {
+        
+    }
+  },
+  css: ['primevue/resources/themes/md-light-indigo/theme.css', "~/main.css"],
   postcss: {
     plugins: {
       tailwindcss: {},
@@ -28,6 +46,6 @@ export default defineNuxtConfig({
       APP_ID : process.env.APP_ID,
       MEASUREMENT_ID : process.env.MEASUREMENT_ID
     }
-  }
+  },
   
 });

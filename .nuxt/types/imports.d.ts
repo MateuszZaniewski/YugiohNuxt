@@ -148,6 +148,7 @@ declare global {
   const useSortMethod: typeof import('../../composables/states')['useSortMethod']
   const useSpellTypes: typeof import('../../composables/states')['useSpellTypes']
   const useState: typeof import('../../node_modules/nuxt/dist/app')['useState']
+  const useStyle: typeof import('primevue/usestyle')['useStyle']
   const useTransitionState: typeof import('../../node_modules/vue')['useTransitionState']
   const useTrapTypes: typeof import('../../composables/states')['useTrapTypes']
   const useUtils: typeof import('../../composables/useUtils')['useUtils']
@@ -320,6 +321,7 @@ declare module 'vue' {
     readonly useSortMethod: UnwrapRef<typeof import('../../composables/states')['useSortMethod']>
     readonly useSpellTypes: UnwrapRef<typeof import('../../composables/states')['useSpellTypes']>
     readonly useState: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['useState']>
+    readonly useStyle: UnwrapRef<typeof import('primevue/usestyle')['useStyle']>
     readonly useTransitionState: UnwrapRef<typeof import('../../node_modules/vue')['useTransitionState']>
     readonly useTrapTypes: UnwrapRef<typeof import('../../composables/states')['useTrapTypes']>
     readonly useUtils: UnwrapRef<typeof import('../../composables/useUtils')['useUtils']>
@@ -484,6 +486,7 @@ declare module '@vue/runtime-core' {
     readonly useSortMethod: UnwrapRef<typeof import('../../composables/states')['useSortMethod']>
     readonly useSpellTypes: UnwrapRef<typeof import('../../composables/states')['useSpellTypes']>
     readonly useState: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['useState']>
+    readonly useStyle: UnwrapRef<typeof import('primevue/usestyle')['useStyle']>
     readonly useTransitionState: UnwrapRef<typeof import('../../node_modules/vue')['useTransitionState']>
     readonly useTrapTypes: UnwrapRef<typeof import('../../composables/states')['useTrapTypes']>
     readonly useUtils: UnwrapRef<typeof import('../../composables/useUtils')['useUtils']>
