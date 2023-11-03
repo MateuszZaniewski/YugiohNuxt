@@ -9,15 +9,18 @@ export default defineNuxtConfig({
     // ...
     "@pinia/nuxt",
     "@nuxt/image",
-    'nuxt-primevue'
+    '@nuxtjs/tailwindcss',
+    'nuxt-primevue',
   ],
   primevue: {
     usePrimeVue: true,
     options: {
-      unstyled: false,
+        unstyled: true,
+        ripple: true,
+        inputStyle: 'filled'
     },
     importPT: { as: 'Tailwind', from: 'primevue/passthrough/tailwind' },
-    cssLayerOrder: 'primevue, tailwind-base, tailwind-components, tailwind-utilities',
+    cssLayerOrder: 'tailwind-base, primevue, tailwind-utilities',
     components: {
         
     },
@@ -28,13 +31,13 @@ export default defineNuxtConfig({
         
     }
   },
-  css: ['primevue/resources/themes/md-light-indigo/theme.css', "~/main.css"],
-  postcss: {
-    plugins: {
-      tailwindcss: {},
-      autoprefixer: {},
-    },
-  },
+  css: [
+    "~/main.css",
+    "primeicons/primeicons.css",
+    "primevue/resources/primevue.css"],
+  // styles: [
+  //   "node_modules/primeicons/primeicons.css",
+  // ],
   ssr: false,
   runtimeConfig: {
     public: {

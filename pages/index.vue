@@ -1,21 +1,18 @@
 <script setup>
 import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithRedirect, getRedirectResult, FacebookAuthProvider, onAuthStateChanged } from "firebase/auth";
 import axios from "axios";
+import Button from 'primevue/button';
+const { $firestoreUser } = useNuxtApp();
+const user = await $firestoreUser
 
 const fetchRandomCard = async () => {
   const response = await axios.get('https://db.ygoprodeck.com/api/v7/randomcard.php')
 }
 
-const items = ['/arrowUp.png','/arrowUp.png','/arrowUp.png','4','/arrowUp.png','/arrowUp.png']
-
 </script>
 
 <template>
   <Navbar />
-
-  <ColorPicker v-model="color" />
-  <SpeedDial :model="items" :radius="80" type="circle" buttonClass="p-button-warning" />
-
 
   <div class="w-[90%] mx-auto">
     <h1 class="text-3xl text-center pt-7 max-w-xs mx-auto">
@@ -29,18 +26,13 @@ const items = ['/arrowUp.png','/arrowUp.png','/arrowUp.png','4','/arrowUp.png','
   </div>
 
   <div class="flex justify-center gap-5 pt-12">
-    <NuxtLink
-      class="bg-[#3498DB] text-base text-center px-1 py-1 cursor-pointer cw-36 h-8 rounded-3xl"
-      text="Create an Account"
-      to="/registerPage"
-      >Create and Account</NuxtLink
-    >
-    <NuxtLink
-      class="bg-[#9B59B6] text-base text-center px-1 py-1 cursor-pointer w-36 h-8 rounded-3xl"
-      text="Login"
-      to="/loginPage"
-      >Login</NuxtLink
-    >
+    <NuxtLink to="/registerPage">
+      <Button v-if="!user" label="Create and Account" severity="info" />  
+    </NuxtLink>
+    <NuxtLink to="/loginPage">
+      <Button v-if="!user" label="Login" severity="success" />
+    </NuxtLink>
+    
   </div>
 
   <div class="pt-20 flex justify-center flex-col items-center gap-5">

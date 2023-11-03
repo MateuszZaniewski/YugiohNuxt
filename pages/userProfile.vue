@@ -1,14 +1,19 @@
 <script setup>
 
 const { getFavouriteCards, addFriend, removeFriend, fetchFriends, fetchAllUsers } = useFirestoreUtils()
+import Button from 'primevue/button';
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
+import ColumnGroup from 'primevue/columngroup';
+import Row from 'primevue/row';
+
 const fetchedFavouriteCards = ref([]);
 const { $firestoreUser } = useNuxtApp();
 const user = await $firestoreUser
-const allUsers = ref(null)
+const allUsers = ref([])
 const friendsActive = ref(true)
-const friendUsers = ref(null)
-
-
+const friendUsers = ref([])
+const i = ref(Number)
 
 const fetchFavoriteCards = async () => {
   try {
@@ -23,6 +28,8 @@ const fetchUsers = async () => {
     try {
         const users = await fetchAllUsers(user.email, user.displayName)
         allUsers.value = users
+        console.log(Array.from(allUsers.value))
+        i.value = allUsers.value.length
     } catch (error) {
         console.log(error)
     }
@@ -86,7 +93,7 @@ const decks = ['Dark Magicians', 'Ultimate Blue Eyes Deck', 'Melffys Combo Deck'
     </section>
 
 
-    <section id="favouriteCards"  class=" py-5">
+    <!-- <section id="favouriteCards"  class=" py-5">
         <div class="flex gap-2 items-center pb-3">
             <NuxtImg src="/user/starBlack.svg" />
             <span>Favourite Cards</span>
@@ -125,32 +132,34 @@ const decks = ['Dark Magicians', 'Ultimate Blue Eyes Deck', 'Melffys Combo Deck'
             <span>Settings</span>
             <NuxtImg src="/arrowDown.png" height="15px" width="15px" />
         </div>
-    </section>
-
-    <!-- <section class="flex justify-around py-8 max-w-xl mx-auto">
-        <div>
-            <div @click="activeBox = 'favourites'" class="px-4 py-3 rounded-2xl" :class="activeBox === 'favourites' ? 'bg-[#2D61AF]' : 'bg-[#cbd5e1]'">
-               <NuxtImg :src="activeBox === 'favourites' ? '/user/starWhite.svg' : '/user/starBlack.svg' " height="30px" width="30px" /> 
-            </div>
-        </div>
-        <div>
-            <div @click="activeBox = 'decks'" class="px-4 py-3 rounded-2xl" :class="activeBox === 'decks' ? 'bg-[#2D61AF]' : 'bg-[#cbd5e1]'">
-               <NuxtImg :src="activeBox === 'decks' ? '/user/deckWhite.svg' : '/user/deckBlack.svg' " height="30px" width="30px" /> 
-            </div>
-        </div>
-        <div>
-            <div @click="activeBox = 'friends'" class="px-4 py-3 rounded-2xl" :class="activeBox === 'friends' ? 'bg-[#2D61AF]' : 'bg-[#cbd5e1]'">
-               <NuxtImg :src="activeBox === 'friends' ? '/user/friendsWhite.svg' : '/user/friendsBlack.svg' " height="30px" width="30px" /> 
-            </div>
-        </div>
-        <div>
-            <div @click="activeBox = 'settings'" class="px-4 py-3 rounded-2xl" :class="activeBox === 'settings' ? 'bg-[#2D61AF]' : 'bg-[#cbd5e1]'">
-               <NuxtImg :src="activeBox === 'settings' ? '/user/settingsWhite.svg' : '/user/settingsBlack.svg' " height="30px" width="30px" /> 
-            </div>
-        </div>
     </section> -->
 
-    <!-- <section v-if="activeBox === 'favourites'" class="favourites max-w-2xl mx-auto">
+    <section class="flex justify-around py-8 max-w-xl mx-auto">
+        <div>
+            <div @click="activeBox = 'favourites'">
+                <Button icon="pi pi-heart" severity="danger" rounded size="large" aria-label="Favorite" />
+            </div>
+            
+        </div>
+        <div> 
+            <div @click="activeBox = 'decks'">
+                <Button icon="pi pi-mobile" severity="info" rounded size="large" aria-label="Decks" />
+            </div>
+        </div>
+
+        <div>
+            <div @click="activeBox = 'friends'">
+                <Button icon="pi pi-users" severity="warning" :badge='i' rounded size="large" aria-label="Friends" />
+            </div>
+        </div>
+        <div>
+            <div @click="activeBox = 'settings'">
+                <Button icon="pi pi-cog" severity="secondary" rounded size="large" aria-label="Settings" />
+            </div>
+        </div>
+    </section>
+
+    <section v-if="activeBox === 'favourites'" class="favourites max-w-2xl mx-auto">
         <div class="flex flex-col gap-5 w-[90%] mx-auto">
             <div v-for="fav in fetchedFavouriteCards" :key="fav" class="px-4 py-2 bg-[#cbd5e1] rounded-xl">
                 <NuxtLink :to="`card/${fav.card}`">
@@ -158,9 +167,9 @@ const decks = ['Dark Magicians', 'Ultimate Blue Eyes Deck', 'Melffys Combo Deck'
                 </NuxtLink>
             </div>
         </div>
-    </section> -->
+    </section>
 
-    <!-- <section v-if="activeBox === 'decks'" class="decks max-w-2xl mx-auto">
+    <section v-if="activeBox === 'decks'" class="decks max-w-2xl mx-auto">
         <div class="flex flex-col gap-5 w-[90%] mx-auto">
             <div v-for="deck in decks" :key="deck" class="px-4 py-2 bg-[#cbd5e1] rounded-xl flex justify-between gap-6">
                 <div class="w-[50%]">
@@ -175,11 +184,11 @@ const decks = ['Dark Magicians', 'Ultimate Blue Eyes Deck', 'Melffys Combo Deck'
                 
             </div>
         </div>
-    </section> -->
+    </section>
 
                 
 
-    <!-- <section v-if="activeBox === 'friends'" class="friends max-w-2xl mx-auto">
+    <section v-if="activeBox === 'friends'" class="friends max-w-2xl mx-auto">
 
         <div class="flex w-[90%] mx-auto justify-around">
             <div class="w-[50%] text-center py-4 rounded-t-xl" :class="friendsActive ? 'bg-slate-300' : 'bg-none'" @click="friendsActive = true">
@@ -226,9 +235,9 @@ const decks = ['Dark Magicians', 'Ultimate Blue Eyes Deck', 'Melffys Combo Deck'
         </div>
         
         
-    </section> -->
+    </section>
 
-    <!-- <section v-if="activeBox === 'settings'" class="settings max-w-2xl mx-auto">
+    <section v-if="activeBox === 'settings'" class="settings max-w-2xl mx-auto">
         <div>
             <div class="w-[90%] mx-auto">
                 <div class="flex justify-between">
@@ -251,6 +260,6 @@ const decks = ['Dark Magicians', 'Ultimate Blue Eyes Deck', 'Melffys Combo Deck'
                 
             </div>
         </div>
-    </section> -->
+    </section>
 
 </template>
