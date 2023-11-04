@@ -15,4 +15,5 @@ export { useUtils } from '../composables/useUtils';
 export { usePinia } from '../node_modules/@pinia/nuxt/dist/runtime/composables';
 export { useImage } from '../node_modules/@nuxt/image/dist/runtime/composables';
 export { useStyle } from 'primevue/usestyle';
+export { useNuxtDevTools } from '../node_modules/@nuxt/devtools/dist/runtime/use-nuxt-devtools';
 export { definePageMeta } from '../node_modules/nuxt/dist/pages/runtime/composables';

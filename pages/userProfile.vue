@@ -6,6 +6,7 @@ import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import ColumnGroup from 'primevue/columngroup';
 import Row from 'primevue/row';
+import SelectButton from 'primevue/selectbutton';
 
 const fetchedFavouriteCards = ref([]);
 const { $firestoreUser } = useNuxtApp();
@@ -14,11 +15,15 @@ const allUsers = ref([])
 const friendsActive = ref(true)
 const friendUsers = ref([])
 const i = ref(Number)
+const numberOfFavCards = ref(Number)
+const favouriteCards = ref([])
 
 const fetchFavoriteCards = async () => {
   try {
     const favorites = await getFavouriteCards(user.email);
     fetchedFavouriteCards.value = favorites;
+    console.log(fetchedFavouriteCards.value)
+    numberOfFavCards.value = fetchedFavouriteCards.value.length
   } catch (error) {
     console.error(error);
   }
@@ -29,7 +34,7 @@ const fetchUsers = async () => {
         const users = await fetchAllUsers(user.email, user.displayName)
         allUsers.value = users
         console.log(Array.from(allUsers.value))
-        i.value = allUsers.value.length
+        
     } catch (error) {
         console.log(error)
     }
@@ -39,6 +44,7 @@ const fetchFriend = async () => {
     try {
         const friends = await fetchFriends(user.email)
         friendUsers.value = friends
+        i.value = friendUsers.value.length
     } catch (error) {
         console.log(error)
     }
@@ -149,7 +155,7 @@ const decks = ['Dark Magicians', 'Ultimate Blue Eyes Deck', 'Melffys Combo Deck'
 
         <div>
             <div @click="activeBox = 'friends'">
-                <Button icon="pi pi-users" severity="warning" :badge='i' rounded size="large" aria-label="Friends" />
+                <Button icon="pi pi-users" severity="warning" rounded size="large" aria-label="Friends" />
             </div>
         </div>
         <div>
@@ -161,11 +167,25 @@ const decks = ['Dark Magicians', 'Ultimate Blue Eyes Deck', 'Melffys Combo Deck'
 
     <section v-if="activeBox === 'favourites'" class="favourites max-w-2xl mx-auto">
         <div class="flex flex-col gap-5 w-[90%] mx-auto">
-            <div v-for="fav in fetchedFavouriteCards" :key="fav" class="px-4 py-2 bg-[#cbd5e1] rounded-xl">
+
+<DataTable :value="fetchedFavouriteCards">
+    <Column field="card" header="Name">
+    </Column>
+    <Column header="image">
+        <template #body="slotProps">
+            <img :src="slotProps.data.image" class=" h-[100px] w-[70px]" />
+        </template>
+    </Column>
+    
+</DataTable>
+
+
+
+            <!-- <div v-for="fav in fetchedFavouriteCards" :key="fav" class="px-4 py-2 bg-[#cbd5e1] rounded-xl">
                 <NuxtLink :to="`card/${fav.card}`">
                     <span class="text-xl">{{ fav.card }}</span>
                 </NuxtLink>
-            </div>
+            </div> -->
         </div>
     </section>
 
@@ -191,16 +211,17 @@ const decks = ['Dark Magicians', 'Ultimate Blue Eyes Deck', 'Melffys Combo Deck'
     <section v-if="activeBox === 'friends'" class="friends max-w-2xl mx-auto">
 
         <div class="flex w-[90%] mx-auto justify-around">
-            <div class="w-[50%] text-center py-4 rounded-t-xl" :class="friendsActive ? 'bg-slate-300' : 'bg-none'" @click="friendsActive = true">
-                <span>Friends</span>
+            <div class="w-[50%] text-center rounded-t-xl" :class="friendsActive ? 'bg-[#d4d4d4]' : 'bg-none'" @click="friendsActive = true">
+                <Button label="Friends" severity="info" :badge='i' badgeClass="p-badge-info" aria-label="Friends" class="w-full" />
+
             </div>
-            <div class="w-[50%] text-center py-4 rounded-t-xl" :class="!friendsActive ? 'bg-slate-300' : 'bg-none'" @click="friendsActive = false">
-                <span>All users</span>
+            <div class="w-[50%] text-center rounded-t-xl" :class="!friendsActive ? 'bg-[#d4d4d4]' : 'bg-none'" @click="friendsActive = false">
+                <Button label="All users" severity="secondary" aria-label="All users" class="w-full" />
             </div>
         </div>
 
         
-        <div v-if="!friendsActive" class="w-[90%] mx-auto pb-2 bg-slate-300">
+        <div v-if="!friendsActive" class="w-[90%] mx-auto pb-2 bg-[#d4d4d4]">
             <div class="flex flex-col justify-center gap-5 w-[90%] mx-auto">
             <div v-for="friend in allUsers" :key="friend" class="flex flex-row justify-between pt-2 items-center text-center">
                 <div class="flex justify-center items-center">
@@ -219,9 +240,9 @@ const decks = ['Dark Magicians', 'Ultimate Blue Eyes Deck', 'Melffys Combo Deck'
             </div>
             </div>
         </div>
-
         
-        <div v-if="friendsActive" class="w-[90%] mx-auto pb-2 bg-slate-300">
+        
+        <div v-if="friendsActive" class="w-[90%] mx-auto pb-2 bg-[#d4d4d4]">
             <div class="flex flex-row flex-wrap justify-center gap-5 w-[90%] mx-auto">
             <div v-for="friend in friendUsers" :key="friend" class="flex flex-row items-center text-center">
                 <NuxtLink :to="`user/${user}`" class="flex justify-center flex-col items-center">

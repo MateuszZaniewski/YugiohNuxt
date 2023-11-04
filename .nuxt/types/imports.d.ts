@@ -127,6 +127,7 @@ declare global {
   const useMonsterTypes: typeof import('../../composables/states')['useMonsterTypes']
   const useNuxtApp: typeof import('../../node_modules/nuxt/dist/app')['useNuxtApp']
   const useNuxtData: typeof import('../../node_modules/nuxt/dist/app')['useNuxtData']
+  const useNuxtDevTools: typeof import('../../node_modules/@nuxt/devtools/dist/runtime/use-nuxt-devtools')['useNuxtDevTools']
   const usePagesLength: typeof import('../../composables/states')['usePagesLength']
   const usePinia: typeof import('../../node_modules/@pinia/nuxt/dist/runtime/composables')['usePinia']
   const useRequestEvent: typeof import('../../node_modules/nuxt/dist/app')['useRequestEvent']
@@ -299,6 +300,7 @@ declare module 'vue' {
     readonly useMonsterTypes: UnwrapRef<typeof import('../../composables/states')['useMonsterTypes']>
     readonly useNuxtApp: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['useNuxtApp']>
     readonly useNuxtData: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['useNuxtData']>
+    readonly useNuxtDevTools: UnwrapRef<typeof import('../../node_modules/@nuxt/devtools/dist/runtime/use-nuxt-devtools')['useNuxtDevTools']>
     readonly usePagesLength: UnwrapRef<typeof import('../../composables/states')['usePagesLength']>
     readonly usePinia: UnwrapRef<typeof import('../../node_modules/@pinia/nuxt/dist/runtime/composables')['usePinia']>
     readonly useRequestEvent: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['useRequestEvent']>
@@ -463,6 +465,7 @@ declare module '@vue/runtime-core' {
     readonly useMonsterTypes: UnwrapRef<typeof import('../../composables/states')['useMonsterTypes']>
     readonly useNuxtApp: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['useNuxtApp']>
     readonly useNuxtData: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['useNuxtData']>
+    readonly useNuxtDevTools: UnwrapRef<typeof import('../../node_modules/@nuxt/devtools/dist/runtime/use-nuxt-devtools')['useNuxtDevTools']>
     readonly usePagesLength: UnwrapRef<typeof import('../../composables/states')['usePagesLength']>
     readonly usePinia: UnwrapRef<typeof import('../../node_modules/@pinia/nuxt/dist/runtime/composables')['usePinia']>
     readonly useRequestEvent: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['useRequestEvent']>
