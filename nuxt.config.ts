@@ -2,6 +2,13 @@
 import { resolve } from "path";
 export default defineNuxtConfig({
   devtools: { enabled: true },
+  vite: {
+    build: {
+      rollupOptions: {
+        external: ['quill', 'chart.js/auto']
+      }
+    },
+  },
   alias: {
     "@": resolve(__dirname, "/"),
   },
