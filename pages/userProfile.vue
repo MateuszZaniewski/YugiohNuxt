@@ -12,6 +12,7 @@ import Column from "primevue/column";
 import ColumnGroup from "primevue/columngroup";
 import Row from "primevue/row";
 import SelectButton from "primevue/selectbutton";
+import Dropdown from 'primevue/dropdown';
 
 const fetchedFavouriteCards = ref([]);
 const { $firestoreUser } = useNuxtApp();
@@ -22,6 +23,12 @@ const friendUsers = ref([]);
 const i = ref(Number);
 const numberOfFavCards = ref(Number);
 const favouriteCards = ref([]);
+const columns = [
+    { field: 'name', header: 'Name' },
+    { field: 'email', header: 'Email' },
+    { field: 'button', header: 'Friend' },
+];
+
 
 const fetchFavoriteCards = async () => {
   try {
@@ -38,7 +45,7 @@ const fetchUsers = async () => {
   try {
     const users = await fetchAllUsers(user.email, user.displayName);
     allUsers.value = users;
-    console.log(Array.from(allUsers.value));
+    console.log(allUsers);
   } catch (error) {
     console.log(error);
   }
@@ -173,16 +180,14 @@ const decks = [
     v-if="activeBox === 'favourites'"
     class="favourites max-w-2xl mx-auto"
   >
-    <div class="flex flex-col gap-5 w-[90%] mx-auto">
+    <div class="w-[90%] mx-auto">
       <DataTable
         :value="fetchedFavouriteCards"
         scrollable
         scrollHeight="50vh"
         paginator
-        :rows="5"
-        :rowsPerPageOptions="[5, 10, 20, 50]"
-        paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
-        currentPageReportTemplate="{first} to {last} of {totalRecords}"
+        :rows="10"
+        class="w-full"
       >
         <Column field="card" header="Name">
           <template #body="slotProps">
@@ -206,6 +211,7 @@ const decks = [
         </Column>
       </DataTable>
     </div>
+      
   </section>
 
   <section v-if="activeBox === 'decks'" class="decks max-w-2xl mx-auto">
@@ -258,7 +264,20 @@ const decks = [
     </div>
 
     <div v-if="!friendsActive" class="w-[90%] mx-auto pb-2 bg-[#d4d4d4]">
-      <div class="flex flex-col justify-center gap-5 w-[90%] mx-auto">
+
+      <DataView :value="allUsers">
+        <template #list="slotProps">
+            <!-- work here  -->
+                <div class="flex p-4 gap-4 w-full justify-around">
+                            <div>{{ slotProps.data.name }}</div>
+                            <span>{{ slotProps.data.email }}</span>
+                            <Button @click="friendUsers.includes(slotProps.data.name) ? addUserToFriend(user.email, slotProps.data.name) : removeUserFromFriends(user.email, slotProps.data.name)" :icon="friendUsers.includes(slotProps.data.name) ? 'pi-heart' : 'pi-heart-fill'" rounded ></Button>
+                </div>
+            
+        </template>
+      </DataView>
+
+      <!-- <div class="flex flex-col justify-center gap-5 w-[90%] mx-auto">
         <div
           v-for="friend in allUsers"
           :key="friend"
@@ -285,11 +304,11 @@ const decks = [
             >
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
 
     <div v-if="friendsActive" class="w-[90%] mx-auto pb-2 bg-[#d4d4d4]">
-      <div class="flex flex-row flex-wrap justify-center gap-5 w-[90%] mx-auto">
+      <!-- <div class="flex flex-row flex-wrap justify-center gap-5 w-[90%] mx-auto">
         <div
           v-for="friend in friendUsers"
           :key="friend"
@@ -305,7 +324,7 @@ const decks = [
             <span>{{ friend }}</span>
           </NuxtLink>
         </div>
-      </div>
+      </div> -->
     </div>
   </section>
 
@@ -353,5 +372,10 @@ const decks = [
 
 <style scoped>
 
+.ui-dropdown {
+  width: 10px;
+  height: 10px;
+  border: 1px solid red;
+}
 
 </style>

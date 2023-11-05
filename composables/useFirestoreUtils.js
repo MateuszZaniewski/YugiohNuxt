@@ -145,7 +145,7 @@ export const useFirestoreUtils = () => {
         // adding all users to the list (excluding current user)
         const userData = doc.data();
         if (doc.id != user.email) {
-          users.push(userData.name);
+          users.push({name: userData.name, email: userData.email});
         }
       });
       return users;
