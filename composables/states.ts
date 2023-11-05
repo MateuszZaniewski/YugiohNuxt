@@ -19,5 +19,4 @@ export const useCurrentPage = () => useState<number>("currentPage", () => 1);
 export const useFiltersOpen = () =>
   useState<boolean>("filtersOpen", () => false);
 
-export const useFavs = () => useState<Boolean>('favourites', () => false)
-
+export const useFavs = () => useState<Boolean>("favourites", () => false);

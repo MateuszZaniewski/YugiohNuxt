@@ -1,11 +1,14 @@
 <script setup lang="ts">
+import DataView from 'primevue/dataview';
+import DataViewLayoutOptions from 'primevue/dataviewlayoutoptions'
+const layout = ref("grid");
+
 let clickedCard = ref();
 const cardsPerPage = ref(12);
 const { $firestoreUser } = useNuxtApp();
-const user = await $firestoreUser
+const user = await $firestoreUser;
 
 let fetchedCards = ref<Card[]>([]);
-
 
 const makeCardDetails = (card: Object) => {
   clickedCard.value = card;
@@ -18,7 +21,7 @@ interface Card {
     image_url: string;
   }[];
 }
-const { useSetAttribute, useSetCardType } = useUtils()
+const { useSetAttribute, useSetCardType } = useUtils();
 const attributes = useAttributes();
 const monsterTypes = useMonsterTypes();
 const cardRaces = useCardRaces();
@@ -30,7 +33,7 @@ const maxLength = usePagesLength();
 const currentPage = useCurrentPage();
 const filtersExpanded = useFiltersOpen();
 const innerWidth = ref(window.innerWidth);
-const fav = useFavs()
+const fav = useFavs();
 
 let attr = ref(attributes.value);
 
@@ -79,7 +82,7 @@ const searchForCards = async (
 };
 
 onMounted(() => {
-    searchForCards(
+  searchForCards(
     fname.value,
     attributes.value,
     cardLevels.value,
@@ -103,7 +106,6 @@ watch(
   <section
     class="searchBar w-[90%] mx-auto pt-5 flex items-center max-w-[730px]"
   >
-    
     <input
       v-model="fname"
       type="search"
@@ -119,7 +121,8 @@ watch(
           cardRaces,
           monsterTypes,
           sort,
-        ), filtersExpanded = false
+        ),
+          (filtersExpanded = false)
       "
       class="h-11 w-[20%] border-2 rounded-r-3xl rounded-br-3xl border-[#2D61AF] bg-[url('/glass.png')] bg-no-repeat bg-[#2D61AF] bg-center"
     ></button>
@@ -178,8 +181,19 @@ watch(
 
         <div class="flex justify-center items-center gap-5 pt-4">
           <div class="flex gap-4">
-                  <NuxtImg @click="fav = !fav" :src='fav ? "/fullHeart.png" : "/emptyHeart.png"' height="30px" width="30px" alt="Add to favourites"/>
-                  <NuxtImg src="/add.png" height="30px" width="30px" alt="Add to deck" />
+            <NuxtImg
+              @click="fav = !fav"
+              :src="fav ? '/fullHeart.png' : '/emptyHeart.png'"
+              height="30px"
+              width="30px"
+              alt="Add to favourites"
+            />
+            <NuxtImg
+              src="/add.png"
+              height="30px"
+              width="30px"
+              alt="Add to deck"
+            />
           </div>
           <div class="flex gap-2 items-center">
             <NuxtImg
@@ -204,7 +218,6 @@ watch(
             />
             <span>{{ clickedCard.race }}</span>
           </div>
-          
         </div>
 
         <div v-if="clickedCard.atk >= 0" class="pt-2">
@@ -233,29 +246,30 @@ watch(
         </div>
       </div>
     </div>
+
+
     <div>
-      <div
-        v-if="visibleCards.length > 0 && !filtersExpanded"
-        class="flex flex-wrap justify-center gap-6 mx-auto w-[90%] max-w-3xl lg:w-[50vw]"
-      >
-        <div
-          v-for="card in visibleCards" :key="card.id"
-          class="justify-center w-fit mx-auto"
-          :class="innerWidth <= 1024 ? 'flex' : 'hidden'"
-        >
-          <NuxtLink
-            :src="card.card_images[0].image_url"
-            class="h-[200px] w-[140px]"
-            :to="`card/${card.name}`"
-          >
-            <!-- rework this :class to hide it -->
-            <NuxtImg
-              :src="card.card_images[0].image_url"
-              class="h-[200px] w-[140px]"
-              @click="makeCardDetails(card)"
-            />
-          </NuxtLink>
-        </div>
+      <DataView :value="fetchedCards" :layout="layout" paginator :rows="10" >
+
+        <template #header class=" w-20">
+          <div class="flex justify-end">
+              <DataViewLayoutOptions v-model="layout" class="flex w-[33%] rounded-xl visible border border-black" />
+          </div>
+        </template>
+
+    
+
+    <template #grid="slotProps">
+      <div class="w-[50%] pb-3 flex justify-center">
+        <NuxtLink :to="`card/${slotProps.data.name}`">
+          <img class="h-[200px] w-[140px]" :src="slotProps.data.card_images[0].image_url" :alt="slotProps.data.name" />
+        </NuxtLink>
+      </div>
+        
+    </template>
+</DataView>
+
+
 
         <div
           v-for="card in visibleCards"
@@ -274,18 +288,7 @@ watch(
             />
           </NuxtLink>
         </div>
-      </div>
-      <div>
-        <Pagination v-if="!filtersExpanded" />
-      </div>
     </div>
-  </div>
-
-  <div
-    class="flex justify-center"
-    v-if="fetchedCards.length === 0 && !filtersExpanded"
-  >
-    <p>Tymczasowy tekst ładowania kart</p>
   </div>
 </template>
 

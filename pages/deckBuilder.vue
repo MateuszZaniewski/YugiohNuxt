@@ -1,13 +1,7 @@
-<script setup>
-
-</script>
+<script setup></script>
 
 <template>
-
-<span>Deck builder</span>
-
+  <span>Deck builder</span>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

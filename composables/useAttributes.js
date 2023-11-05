@@ -2,7 +2,7 @@ export const useSetAttribute = (card) => {
   return card.attribute === "DARK"
     ? "./Attributes/DARK.png"
     : card.attribute === "LIGHT"
-    ? "./Attributes/LIGHT.png"  
+    ? "./Attributes/LIGHT.png"
     : card.attribute === "EARTH"
     ? "./Attributes/EARTH.png"
     : card.attribute === "WATER"
