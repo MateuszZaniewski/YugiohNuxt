@@ -67,5 +67,3 @@ const addAttribute = () => {
     </div>
   </section>
 </template>
-
-<style></style>

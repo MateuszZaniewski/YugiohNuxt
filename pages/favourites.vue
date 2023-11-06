@@ -56,5 +56,3 @@ onMounted(async () => {
     </div>
   </section>
 </template>
-
-<style scoped></style>

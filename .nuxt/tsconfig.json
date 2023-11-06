@@ -74,8 +74,26 @@
       "#image/*": [
         "../node_modules/@nuxt/image/dist/runtime/*"
       ],
-      "#primevue-style": [
-        "./primevue-style.mjs"
+      "#ui": [
+        "../node_modules/@nuxt/ui/dist/runtime"
+      ],
+      "#ui/*": [
+        "../node_modules/@nuxt/ui/dist/runtime/*"
+      ],
+      "#ui-colors": [
+        "."
+      ],
+      "#ui-colors/*": [
+        "./*"
+      ],
+      "#color-mode-options": [
+        "./color-mode-options.mjs"
+      ],
+      "#tailwind-config": [
+        "./tailwind.config"
+      ],
+      "#tailwind-config/*": [
+        "./tailwind.config/*"
       ],
       "#vue-router": [
         "./vue-router-stub"
@@ -99,8 +117,9 @@
     "../**/*",
     "../node_modules/@pinia/nuxt/runtime",
     "../node_modules/@nuxt/image/runtime",
+    "../node_modules/@nuxtjs/color-mode/runtime",
     "../node_modules/@nuxtjs/tailwindcss/runtime",
-    "../node_modules/nuxt-primevue/runtime",
+    "../node_modules/@nuxt/ui/runtime",
     "../node_modules/@nuxt/telemetry/runtime",
     "..",
     "../../../../../../..//C:"
@@ -110,8 +129,9 @@
     "../node_modules/nuxt/node_modules",
     "../node_modules/@pinia/nuxt/runtime/server",
     "../node_modules/@nuxt/image/runtime/server",
+    "../node_modules/@nuxtjs/color-mode/runtime/server",
     "../node_modules/@nuxtjs/tailwindcss/runtime/server",
-    "../node_modules/nuxt-primevue/runtime/server",
+    "../node_modules/@nuxt/ui/runtime/server",
     "../node_modules/@nuxt/telemetry/runtime/server",
     "../dist",
     "../.output"

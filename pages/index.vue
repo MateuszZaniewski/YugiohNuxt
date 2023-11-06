@@ -9,7 +9,6 @@ import {
   onAuthStateChanged,
 } from "firebase/auth";
 import axios from "axios";
-import Button from "primevue/button";
 const { $firestoreUser } = useNuxtApp();
 const user = await $firestoreUser;
 
@@ -36,10 +35,10 @@ const fetchRandomCard = async () => {
 
   <div class="flex justify-center gap-5 pt-12">
     <NuxtLink to="/registerPage">
-      <Button v-if="!user" label="Create and Account" severity="info" />
+      <button v-if="!user">Create and Account</button>
     </NuxtLink>
     <NuxtLink to="/loginPage">
-      <Button v-if="!user" label="Login" severity="success" />
+      <button v-if="!user">Login</button>
     </NuxtLink>
   </div>
 
@@ -56,5 +55,3 @@ const fetchRandomCard = async () => {
 
   <p class="pt-5 text-center">Click on cards to see what’s Your lucky Card</p>
 </template>
-
-<style scoped></style>

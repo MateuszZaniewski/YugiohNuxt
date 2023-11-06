@@ -86,5 +86,3 @@ const addMethodSort = () => {
     </div>
   </section>
 </template>
-
-<style scoped></style>

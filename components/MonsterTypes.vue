@@ -93,5 +93,3 @@ const addTypes = () => {
     </div>
   </section>
 </template>
-
-<style></style>

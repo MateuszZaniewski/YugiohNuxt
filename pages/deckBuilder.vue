@@ -3,5 +3,3 @@
 <template>
   <span>Deck builder</span>
 </template>
-
-<style scoped></style>

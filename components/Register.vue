@@ -70,5 +70,3 @@ const createNewUser = async () => {
     <NuxtImg src="/blob2.svg" class="absolute bottom-0 right-0 z-1 h-56" />
   </section>
 </template>
-
-<style scoped></style>

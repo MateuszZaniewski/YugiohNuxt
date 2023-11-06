@@ -2,13 +2,6 @@
 import { resolve } from "path";
 export default defineNuxtConfig({
   devtools: { enabled: false },
-  vite: {
-    build: {
-      rollupOptions: {
-        external: ["quill", "chart.js/auto"],
-      },
-    },
-  },
   alias: {
     "@": resolve(__dirname, "/"),
   },
@@ -16,25 +9,9 @@ export default defineNuxtConfig({
     // ...
     "@pinia/nuxt",
     "@nuxt/image",
-    "@nuxtjs/tailwindcss",
-    "nuxt-primevue",
+    '@nuxt/ui'
   ],
-  primevue: {
-    usePrimeVue: true,
-    options: {
-      ripple: true,
-      inputStyle: "filled",
-    },
-    importPT: { as: "Tailwind", from: "primevue/passthrough/tailwind" },
-    cssLayerOrder: "tailwind-base, primevue, tailwind-utilities",
-    components: {},
-    directives: {},
-    composables: {},
-  },
   css: [
-    "primeicons/primeicons.css",
-    "primevue/resources/primevue.css",
-    'primevue/resources/themes/lara-light-teal/theme.css',
     "~/main.css",
   ],
   ssr: false,

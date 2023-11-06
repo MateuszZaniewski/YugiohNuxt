@@ -57,5 +57,3 @@ const goToLastPage = () => {
     </div>
   </section>
 </template>
-
-<style scoped></style>

@@ -31,9 +31,3 @@ const clearAllFilters = () => {
     <Spells />
   </div>
 </template>
-
-<style>
-.flex {
-  display: flex;
-}
-</style>

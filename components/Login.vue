@@ -94,5 +94,3 @@ onMounted(async () => {
     <NuxtImg src="/blob2.svg" class="absolute z-10 bottom-0 right-0 z-1 h-56" />
   </section>
 </template>
-
-<style scoped></style>

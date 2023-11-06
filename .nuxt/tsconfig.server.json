@@ -60,8 +60,26 @@
       "#image/*": [
         "../node_modules/@nuxt/image/dist/runtime/*"
       ],
-      "#primevue-style": [
-        "./primevue-style"
+      "#ui": [
+        "../node_modules/@nuxt/ui/dist/runtime"
+      ],
+      "#ui/*": [
+        "../node_modules/@nuxt/ui/dist/runtime/*"
+      ],
+      "#ui-colors": [
+        "./"
+      ],
+      "#ui-colors/*": [
+        "./*"
+      ],
+      "#color-mode-options": [
+        "./color-mode-options"
+      ],
+      "#tailwind-config": [
+        "./tailwind.config"
+      ],
+      "#tailwind-config/*": [
+        "./tailwind.config/*"
       ]
     }
   },
@@ -69,8 +87,9 @@
     "./types/nitro-nuxt.d.ts",
     "../node_modules/@pinia/nuxt/runtime/server",
     "../node_modules/@nuxt/image/runtime/server",
+    "../node_modules/@nuxtjs/color-mode/runtime/server",
     "../node_modules/@nuxtjs/tailwindcss/runtime/server",
-    "../node_modules/nuxt-primevue/runtime/server",
+    "../node_modules/@nuxt/ui/runtime/server",
     "../node_modules/@nuxt/telemetry/runtime/server",
     "./types/nitro.d.ts",
     "../**/*",

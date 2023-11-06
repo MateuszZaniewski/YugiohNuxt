@@ -9,5 +9,3 @@ const props = defineProps({
     {{ text }}
   </button>
 </template>
-
-<style scoped></style>

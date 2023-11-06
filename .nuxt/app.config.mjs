@@ -5,6 +5,31 @@ import { defuFn } from 'C:/Users/mateu/Desktop/nuxt/tutorial/node_modules/defu/d
 const inlineConfig = {
   "nuxt": {
     "buildId": "test"
+  },
+  "ui": {
+    "primary": "green",
+    "gray": "cool",
+    "colors": [
+      "red",
+      "orange",
+      "amber",
+      "yellow",
+      "lime",
+      "green",
+      "emerald",
+      "teal",
+      "cyan",
+      "sky",
+      "blue",
+      "indigo",
+      "violet",
+      "purple",
+      "fuchsia",
+      "pink",
+      "rose",
+      "primary"
+    ],
+    "strategy": "merge"
   }
 }
 

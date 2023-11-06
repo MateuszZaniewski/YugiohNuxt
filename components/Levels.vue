@@ -73,5 +73,3 @@ const addLevels = () => {
     </div>
   </section>
 </template>
-
-<style></style>

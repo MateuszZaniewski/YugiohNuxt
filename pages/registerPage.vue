@@ -5,5 +5,3 @@
     <Register class="max-w-xl mx-auto" />
   </div>
 </template>
-
-<style scoped></style>

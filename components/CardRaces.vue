@@ -91,5 +91,3 @@ const addMonsterRace = () => {
     </div>
   </section>
 </template>
-
-<style></style>
