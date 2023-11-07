@@ -8,7 +8,11 @@ const page = ref(1)
 const cardsPerPage = ref(12);
 const pageCount = computed(() => Math.ceil(fetchedCards.value.length / cardsPerPage.value));
 let fetchedCards = ref<Card[]>([]);
-
+let allCardsForHints = {}
+// Wartość allCardsForHints powinna być stała, nie zmieniać się po wciśnięciu szukania np:
+// if(allCardsForHitns === undefined) {
+  // nadać jej wartość kart, a gdy już ma jakąś wartość to zostawić ją w spokoju
+//}
 
 const makeCardDetails = (card: Object) => {
   clickedCard.value = card;
@@ -61,10 +65,13 @@ const searchForCards = async (
     );
     if (apiFetch) {
       fetchedCards.value = apiFetch;
+
       if (order.value === "Descending") {
         fetchedCards.value = fetchedCards.value.reverse();
+        
       } else {
         fetchedCards.value = fetchedCards.value;
+        
       }
       console.log(fetchedCards.value);
     } else {
@@ -96,6 +103,15 @@ watch(
     currentPage.value = 1;
   },
 );
+
+let showHints = false;
+
+const filteredCards = computed(() => {
+  return fetchedCards.value.filter((card) =>
+    card.name.toLowerCase().startsWith(fname.value.toLowerCase())
+  );
+});
+
 </script>
 
 <template>
@@ -104,13 +120,22 @@ watch(
   <section
     class="searchBar w-[90%] mx-auto pt-5 flex items-center max-w-[730px]"
   >
+
     
     <input
       v-model="fname"
       type="search"
       placeholder="Search"
       class="search border-2 h-11 w-[80%] mx-auto rounded-l-3xl rounded-bl-3xl pl-[10%] text-base border-[#2D61AF]"
+      list="hints"
+      @focus="showHints = true"
+      @blur="showHints = false"
     />
+
+    <datalist v-if="showHints" id="hints">
+      <option v-for="card in fetchedCards" :key="card.name" :value="card.name"></option>
+    </datalist>
+    
     <button
       @click="
         searchForCards(
@@ -237,7 +262,7 @@ watch(
     <div>
       <div
         v-if="visibleCards.length > 0 && !filtersExpanded"
-        class="flex flex-wrap justify-center gap-6 mx-auto w-[90%] max-w-3xl lg:w-[50vw]"
+        class="flex flex-wrap justify-center gap-3 mx-auto w-[90%] max-w-3xl lg:w-[50vw] px-2 py-2 border border-gray-300 rounded-xl"
       >
         <div
           v-for="card in visibleCards" :key="card.id"
@@ -252,7 +277,7 @@ watch(
             <!-- rework this :class to hide it -->
             <NuxtImg
               :src="card.card_images[0].image_url"
-              class="h-[200px] w-[140px]"
+              class="h-[200px] w-[140px] rounded-md"
               @click="makeCardDetails(card)"
             />
           </NuxtLink>
@@ -277,13 +302,13 @@ watch(
         </div>
       </div>
       <div class="flex justify-center pt-4">
-        <UPagination v-model="page" :page-count="12" :total="fetchedCards.length" show-last show-firs size="sm" :active-button="{ variant: 'outline' }"
-        :inactive-button="{ color: 'gray' }" />
+        <UPagination v-model="page" :page-count="12" :total="fetchedCards.length" show-first show-last show-firs size="xs" :active-button="{ variant: 'solid' }"
+        :inactive-button="{ color: 'gray' }"
+        class="flex gap-1">
+        </UPagination>
       </div>
     </div>
   </div>
-  
-
 
 
 
