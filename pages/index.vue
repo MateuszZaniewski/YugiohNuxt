@@ -27,22 +27,58 @@ const fetchRandomCard = async () => {
       Welcome to Your Ultimate Yu-Gi-Oh Fan Destination
     </h1>
 
-    <p class="text-base text-center pt-10 max-w-sm mx-auto">
-      Explore card searches, Craft decks, Share strategies, and cherish Your
-      favorites cards
-    </p>
   </div>
 
-  <div class="flex justify-center gap-5 pt-12">
+  <UContainer class="pt-10">
+    <div class="py-5">
+      <div class="flex items-center gap-1 pb-2">
+        <UIcon name="i-heroicons-magnifying-glass" />
+        <h2>Discover the Power of Search</h2>
+      </div>
+      
+      <p>Unleash the full potential of your deck with our comprehensive card search feature. Find the perfect cards to enhance your strategy and dominate the battlefield.</p>
+    </div>
+    
+    <div class="py-5">
+      <div class="flex items-center gap-1 pb-2">
+        <UIcon name="i-heroicons-cube" />
+        <h2>Build Your Perfect Deck</h2>
+      </div>
+      
+      <p>Unleash your inner strategist and construct your dream deck with ease. Our intuitive deck-building tools empower you to create unstoppable combinations and reign supreme in every duel.</p>
+    </div>
+    
+    <div class="py-5">
+      <div class="flex items-center gap-1 pb-2">
+        <UIcon name="i-heroicons-users" />
+        <h2>Connect with Fellow Duelists</h2>
+      </div>
+      
+      <p>Forge alliances, challenge rivals, and make new friends within our vibrant community of Yu-Gi-Oh enthusiasts. Dive into the world of dueling and connect with like-minded players to exchange tips, tricks, and strategies.</p>
+    </div>
+    
+    <div class="py-5">
+      <div class="flex items-center gap-1 pb-2">
+        <UIcon name="i-heroicons-document" />
+        <h2>Stay in Control with Your cards</h2>
+      </div>
+      
+      <p>Keep your most cherished cards close at hand by adding them to your favorites. Never lose track of the cards that define your winning strategy and personal style.</p>
+    </div>
+    
+
+  </UContainer>
+
+  <!-- <div class="flex justify-center gap-5 pt-12">
     <NuxtLink to="/registerPage">
       <button v-if="!user">Create and Account</button>
     </NuxtLink>
     <NuxtLink to="/loginPage">
       <button v-if="!user">Login</button>
     </NuxtLink>
-  </div>
+  </div> -->
 
-  <div class="pt-20 flex justify-center flex-col items-center gap-5">
+  <!-- <div class="pt-20 flex justify-center flex-col items-center gap-5">
     <NuxtImg
       @click="fetchRandomCard"
       class="cursor-pointer"
@@ -53,5 +89,5 @@ const fetchRandomCard = async () => {
     <NuxtImg src="arrowUp.png" height="54" width="54" />
   </div>
 
-  <p class="pt-5 text-center">Click on cards to see what’s Your lucky Card</p>
+  <p class="pt-5 text-center">Click on cards to see what’s Your lucky Card</p> -->
 </template>

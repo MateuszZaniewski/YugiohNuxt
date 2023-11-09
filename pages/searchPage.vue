@@ -4,11 +4,12 @@ let clickedCard = ref();
 const { $firestoreUser } = useNuxtApp();
 const user = await $firestoreUser
 
-const page = ref(1)
+const page = ref(useCurrentPage())
 const cardsPerPage = ref(12);
 const pageCount = computed(() => Math.ceil(fetchedCards.value.length / cardsPerPage.value));
 let fetchedCards = ref<Card[]>([]);
-let allCardsForHints = {}
+let allCardsForHints = <any>[]
+let checker = 0
 // Wartość allCardsForHints powinna być stała, nie zmieniać się po wciśnięciu szukania np:
 // if(allCardsForHitns === undefined) {
   // nadać jej wartość kart, a gdy już ma jakąś wartość to zostawić ją w spokoju
@@ -33,7 +34,6 @@ const cardLevels = useCardLevels();
 const sort = useSort();
 const fname = useFnameParam();
 const order = useSortMethod();
-const currentPage = useCurrentPage();
 const filtersExpanded = useFiltersOpen();
 const innerWidth = ref(window.innerWidth);
 const fav = useFavs()
@@ -65,6 +65,11 @@ const searchForCards = async (
     );
     if (apiFetch) {
       fetchedCards.value = apiFetch;
+      
+      if(checker === 0){
+        allCardsForHints = fetchedCards.value
+        checker++
+      }
 
       if (order.value === "Descending") {
         fetchedCards.value = fetchedCards.value.reverse();
@@ -100,7 +105,7 @@ onMounted(() => {
 watch(
   () => fname.value,
   (newValue) => {
-    currentPage.value = 1;
+    page.value = 1;
   },
 );
 
@@ -108,7 +113,7 @@ let showHints = false;
 
 const filteredCards = computed(() => {
   return fetchedCards.value.filter((card) =>
-    card.name.toLowerCase().startsWith(fname.value.toLowerCase())
+    card.name.toLowerCase().includes(fname.value.toLowerCase())
   );
 });
 
@@ -133,7 +138,7 @@ const filteredCards = computed(() => {
     />
 
     <datalist v-if="showHints" id="hints">
-      <option v-for="card in fetchedCards" :key="card.name" :value="card.name"></option>
+      <option v-for="card in allCardsForHints" :key="card.name" :value="card.name"></option>
     </datalist>
     
     <button
@@ -302,9 +307,9 @@ const filteredCards = computed(() => {
         </div>
       </div>
       <div class="flex justify-center pt-4">
-        <UPagination v-model="page" :page-count="12" :total="fetchedCards.length" show-first show-last show-firs size="xs" :active-button="{ variant: 'solid' }"
+        <UPagination v-model="page" :page-count="12" :total="fetchedCards.length" show-first show-last show-firs :size="innerWidth <= 1024 ? 'xs' : 'xl'" :active-button="{ variant: 'solid' }"
         :inactive-button="{ color: 'gray' }"
-        class="flex gap-1">
+        class="flex gap-1 lg:size='xl'">
         </UPagination>
       </div>
     </div>
