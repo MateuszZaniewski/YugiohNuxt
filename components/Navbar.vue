@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { signOut, onAuthStateChanged } from "firebase/auth";
-
+const isOpen = ref(false)
 const currentUser = ref();
 const menuOpen = ref(false);
 const links = [
@@ -23,6 +23,10 @@ const openAndCloseMenu = () => {
 };
 
 onMounted(() => {});
+
+
+
+
 </script>
 
 <template>
@@ -58,11 +62,21 @@ onMounted(() => {});
     </NuxtLink>
 
     <div>
-      <NuxtImg
+      <!-- <NuxtImg
         :src="menuOpen ? '/close.png' : '/hamburger.png'"
         class="w-6 h-6 md:hidden"
         @click="openAndCloseMenu"
-      />
+      /> -->
+      <div>
+    <UButton label="Open" @click="isOpen = true" />
+
+    <USlideover v-model="isOpen" :overlay="false" >
+      <div class="p-4 flex-1 w-[30wv]">
+        <Placeholder class="h-full" />
+      </div>
+    </USlideover>
+  </div>
+      
     </div>
 
     <div class="flex md:justify-around md:w-[100%]">
@@ -93,4 +107,8 @@ onMounted(() => {});
       </ul>
     </nav>
   </nav>
+
+
+  
+
 </template>
