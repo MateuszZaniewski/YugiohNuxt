@@ -1,31 +1,48 @@
 <script setup lang="ts">
+import type { _right } from "#tailwind-config/theme/backgroundPosition";
 import { signOut, onAuthStateChanged } from "firebase/auth";
 const isOpen = ref(false)
 const currentUser = ref();
 const menuOpen = ref(false);
+const lightMode = ref(true)
+
 const links = [
-  "My Account",
-  "Search Cards",
-  "Deck Builder",
-  "Favourites",
-  "Login/SignIn",
+{
+  label: 'My Account',
+  to: '/userProfile',
+  icon: 'i-heroicons-user-circle',
+},
+{
+  label: 'Search Cards',
+  to: '/searchPage',
+  icon: 'i-heroicons-magnifying-glass-circle',
+},
+{
+  label: 'Deck Builder',
+  to: '/deckBuilder',
+  icon: 'i-heroicons-puzzle-piece',
+},
+{
+  label: 'Favourites',
+  to: '/favourites',
+  icon: 'i-heroicons-star',
+},
 ];
-const adress = [
-  "/userProfile",
-  "/searchPage",
-  "/deckBuilder",
-  "/favourites",
-  "/loginPage",
+
+const secondLinks = [
+{
+  label: 'Login/SignIn',
+  to: '/loginPage',
+  icon: 'i-heroicons-sparkles',
+}
 ];
 
-const openAndCloseMenu = () => {
-  menuOpen.value = !menuOpen.value;
-};
-
-onMounted(() => {});
-
-
-
+const modeLink = [
+{
+  label: 'Light Mode',
+  icon:  'i-heroicons-sun'
+},
+]
 
 </script>
 
@@ -61,27 +78,61 @@ onMounted(() => {});
       >Yu-Gi-OH
     </NuxtLink>
 
-    <div>
-      <!-- <NuxtImg
-        :src="menuOpen ? '/close.png' : '/hamburger.png'"
+    
+    
+    
+    
+  <div>
+    <div class="flex flex-end">
+      <NuxtImg
+        src="/hamburger.png"
         class="w-6 h-6 md:hidden"
-        @click="openAndCloseMenu"
-      /> -->
-      <div>
-    <UButton label="Open" @click="isOpen = true" />
+        @click="isOpen = true"
+      />
 
-    <USlideover v-model="isOpen" :overlay="false" >
-      <div class="p-4 flex-1 w-[30wv]">
-        <Placeholder class="h-full" />
+      <div class="flex flex-col flex-1">
+        <USlideover v-model="isOpen" :overlay="true" class="w-[50%] left-auto" :side="'right'" >
+          <div class="pt-8 pl-4 flex">
+            <UVerticalNavigation :links="links" class="flex flex-col gap-2">
+            <template #default="{ link }">
+              <div>
+                <span class="group-hover:text-primary relative">{{ link.label }}</span>
+              </div>
+            </template>
+          </UVerticalNavigation>
+          </div>
+          <div class="pb-2 pl-4 mt-auto">
+            <UVerticalNavigation :links="secondLinks" class="flex flex-col gap-2">
+            <template #default="{ link }">
+              <div>
+                <span class="group-hover:text-primary relative">{{ link.label }}</span>
+              </div>
+            </template>
+          </UVerticalNavigation>
+          </div>
+          <div class="pb-8 pl-4">
+            <UVerticalNavigation :links="modeLink" class="flex flex-col gap-2">
+            <template #default="{ link }">
+              <div>
+                <span class="group-hover:text-primary relative" @click="lightMode = !lightMode">{{ lightMode ? link.label : 'Dark Mode'}}</span>
+              </div>
+            </template>
+          </UVerticalNavigation>
+          </div>
+        </USlideover>
       </div>
-    </USlideover>
-  </div>
-      
+
     </div>
+  </div>
+
+
+
+
 
     <div class="flex md:justify-around md:w-[100%]">
       <NuxtLink
         class="hidden md:block md:text-lg hover:text-[#9B59B6] cursor-pointer"
+        to="/favourites"
         >Favourites</NuxtLink
       >
       <NuxtLink
@@ -90,22 +141,6 @@ onMounted(() => {});
         >Login/SignIn</NuxtLink
       >
     </div>
-
-    <nav
-      :class="menuOpen ? 'block' : 'hidden'"
-      class="w-[100vw] absolute top-[20.833vw] left-0 bg-inherit pb-5"
-    >
-      <ul class="flex flex-col">
-        <NuxtLink
-          class="pt-5 pl-5 hover:text-[#9B59B6] text-white"
-          v-for="(link, index) in links"
-          :key="link"
-          :to="adress[index]"
-        >
-          {{ link }}
-        </NuxtLink>
-      </ul>
-    </nav>
   </nav>
 
 
