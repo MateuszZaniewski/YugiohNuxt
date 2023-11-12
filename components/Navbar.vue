@@ -48,7 +48,7 @@ const modeLink = [
 
 <template>
   <nav
-    class="h-[20.833vw] bg-[#2D61AF] max-h-[100px] flex justify-between items-center md:justify-center md:gap-14 lg:justify-center text-white"
+    class="h-[15vw] bg-[#2D61AF] max-h-[80px] flex justify-center items-center md:justify-center md:gap-14 lg:justify-center text-white border-b shadow-lg shadow-slate-300"
   >
     <div class="flex md:justify-around md:w-[100%]">
       <NuxtLink
@@ -67,14 +67,7 @@ const modeLink = [
       >
     </div>
 
-    <div>
-      <NuxtLink to="/userProfile">
-        <NuxtImg src="/user.png" class="w-9 h-9 md:hidden" />
-      </NuxtLink>
-      <!-- @click="logoutCurrentUser" -->
-    </div>
-
-    <NuxtLink to="/" class="text-3xl md:w-[33%] text-center cursor-pointer"
+    <NuxtLink to="/" class="text-2xl md:w-[33%] text-center cursor-pointer font-[yugioh]"
       >Yu-Gi-OH
     </NuxtLink>
 
@@ -82,8 +75,8 @@ const modeLink = [
     
     
     
-  <div>
-    <div class="flex flex-end">
+  <div class=" absolute right-[5vw]">
+    <div>
       <NuxtImg
         src="/hamburger.png"
         class="w-6 h-6 md:hidden"
@@ -96,7 +89,7 @@ const modeLink = [
             <UVerticalNavigation :links="links" class="flex flex-col gap-2">
             <template #default="{ link }">
               <div>
-                <span class="group-hover:text-primary relative">{{ link.label }}</span>
+                <span class="group-hover:text-primary relative font-[yugioh]">{{ link.label }}</span>
               </div>
             </template>
           </UVerticalNavigation>
@@ -105,7 +98,7 @@ const modeLink = [
             <UVerticalNavigation :links="secondLinks" class="flex flex-col gap-2">
             <template #default="{ link }">
               <div>
-                <span class="group-hover:text-primary relative">{{ link.label }}</span>
+                <span class="group-hover:text-primary relative font-[yugioh]">{{ link.label }}</span>
               </div>
             </template>
           </UVerticalNavigation>
@@ -114,7 +107,7 @@ const modeLink = [
             <UVerticalNavigation :links="modeLink" class="flex flex-col gap-2">
             <template #default="{ link }">
               <div>
-                <span class="group-hover:text-primary relative" @click="lightMode = !lightMode">{{ lightMode ? link.label : 'Dark Mode'}}</span>
+                <span class="group-hover:text-primary relative font-[yugioh]" @click="lightMode = !lightMode">{{ lightMode ? link.label : 'Dark Mode'}}</span>
               </div>
             </template>
           </UVerticalNavigation>

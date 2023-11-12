@@ -13,6 +13,7 @@ export default defineNuxtConfig({
   ],
   css: [
     "~/main.css",
+    "~/layouts/global.css"
   ],
   ssr: false,
   runtimeConfig: {
