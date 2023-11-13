@@ -306,7 +306,7 @@ const filteredCards = computed(() => {
           </NuxtLink>
         </div>
       </div>
-      <div class="flex justify-center pt-4">
+      <div v-if="!filtersExpanded" class="flex justify-center pt-4">
         <UPagination v-model="page" :page-count="12" :total="fetchedCards.length" show-first show-last show-firs :size="innerWidth <= 1024 ? 'xs' : 'xl'" :active-button="{ variant: 'solid' }"
         :inactive-button="{ color: 'gray' }"
         class="flex gap-1 lg:size='xl'">

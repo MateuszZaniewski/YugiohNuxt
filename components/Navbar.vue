@@ -8,6 +8,11 @@ const lightMode = ref(true)
 
 const links = [
 {
+  label: 'Home',
+  to: '/',
+  icon: 'i-heroicons-home'
+},
+{
   label: 'My Account',
   to: '/userProfile',
   icon: 'i-heroicons-user-circle',
@@ -42,13 +47,17 @@ const modeLink = [
   label: 'Light Mode',
   icon:  'i-heroicons-sun'
 },
+{
+  label: 'Dark Mode',
+  icon:  'i-heroicons-moon'
+}
 ]
 
 </script>
 
 <template>
   <nav
-    class="h-[15vw] bg-[#2D61AF] max-h-[80px] flex justify-center items-center md:justify-center md:gap-14 lg:justify-center text-white border-b shadow-lg shadow-slate-300"
+    class="h-[15vw] bg-[#2D61AF] max-h-[80px] flex pl-[5vw] items-center md:justify-center md:gap-14 lg:justify-center text-white border-b shadow-lg shadow-slate-300"
   >
     <div class="flex md:justify-around md:w-[100%]">
       <NuxtLink
@@ -75,7 +84,7 @@ const modeLink = [
     
     
     
-  <div class=" absolute right-[5vw]">
+  <div class="absolute right-[5vw]">
     <div>
       <NuxtImg
         src="/hamburger.png"
@@ -106,8 +115,8 @@ const modeLink = [
           <div class="pb-8 pl-4">
             <UVerticalNavigation :links="modeLink" class="flex flex-col gap-2">
             <template #default="{ link }">
-              <div>
-                <span class="group-hover:text-primary relative font-[yugioh]" @click="lightMode = !lightMode">{{ lightMode ? link.label : 'Dark Mode'}}</span>
+              <div v-if="link.label === 'Light Mode'">
+                <span class="group-hover:text-primary relative font-[yugioh]">{{ link.label }}</span>
               </div>
             </template>
           </UVerticalNavigation>
