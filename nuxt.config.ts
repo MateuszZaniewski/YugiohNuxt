@@ -9,7 +9,8 @@ export default defineNuxtConfig({
     // ...
     "@pinia/nuxt",
     "@nuxt/image",
-    '@nuxt/ui'
+    '@nuxt/ui',
+    '@nuxtjs/google-fonts',
   ],
   css: [
     "~/main.css",
@@ -27,4 +28,15 @@ export default defineNuxtConfig({
       MEASUREMENT_ID: process.env.MEASUREMENT_ID,
     },
   },
+  googleFonts: {
+    families: {
+      Roboto: true,
+      'Josefin+Sans': true,
+      Lato: [100, 300],
+      Raleway: {
+        wght: [100, 400],
+        ital: [100]
+      },
+    }
+  }
 });

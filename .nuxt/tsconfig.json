@@ -120,6 +120,7 @@
     "../node_modules/@nuxtjs/color-mode/runtime",
     "../node_modules/@nuxtjs/tailwindcss/runtime",
     "../node_modules/@nuxt/ui/runtime",
+    "../node_modules/@nuxtjs/google-fonts/runtime",
     "../node_modules/@nuxt/telemetry/runtime",
     "..",
     "../../../../../../..//C:"
@@ -132,6 +133,7 @@
     "../node_modules/@nuxtjs/color-mode/runtime/server",
     "../node_modules/@nuxtjs/tailwindcss/runtime/server",
     "../node_modules/@nuxt/ui/runtime/server",
+    "../node_modules/@nuxtjs/google-fonts/runtime/server",
     "../node_modules/@nuxt/telemetry/runtime/server",
     "../dist",
     "../.output"

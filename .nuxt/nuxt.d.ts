@@ -2,6 +2,7 @@
 /// <reference types="@pinia/nuxt" />
 /// <reference types="@nuxt/image" />
 /// <reference types="@nuxt/ui" />
+/// <reference types="@nuxtjs/google-fonts" />
 /// <reference types="@nuxt/telemetry" />
 /// <reference types="nuxt" />
 /// <reference path="types/plugins.d.ts" />
