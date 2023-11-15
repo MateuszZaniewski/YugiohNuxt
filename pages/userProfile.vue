@@ -71,9 +71,28 @@ const decks = ['Dark Magicians', 'Ultimate Blue Eyes Deck', 'Melffys Combo Deck'
 
 <template>
 
-    <NuxtImg @click="$router.go(-1)" src="/backArrowBlack.png" height="30px" width="30px"  class=" mt-8 ml-8"/>
+    <div class="text-center pt-6 text-xs">
+        <span>User Profile</span>
+    </div>
 
-    <section v-if="user" class=" max-w-3xl mx-auto">
+    <div>
+        <NuxtImg @click="$router.go(-1)" src="/backArrowBlack.png" height="30px" width="30px"  class="ml-8"/>
+    </div>
+
+    <section class="flex pt-7 gap-3 justify-between w-[90%] mx-auto">
+        <div class="w-fit flex justify-center">
+            <NuxtImg :src="user.photoURL ? user.photoURL : '/userTemplate.jpg'" height="60px" width="60px" class="rounded-full"/>
+        </div>
+        <div class="flex flex-col w-[60%] justify-end">
+            <span class="w-fit font-bold">Mateusz Mati</span>
+            <span class="text-xs italic">mateusz.kokoszka111@gmail.com</span>
+        </div>
+        <div class="flex items-end mr-2">
+            <UButton class="text-xs px-2 py-1 roundex-3xl">Edit profile</UButton>
+        </div>
+    </section>
+
+    <!-- <section v-if="user" class=" max-w-3xl mx-auto">
         <div class="flex justify-center">
             <NuxtImg :src="user.photoURL ? user.photoURL : '/userTemplate.jpg'" height="100px" width="100px" class="rounded-full"/>
         </div>
@@ -147,7 +166,6 @@ const decks = ['Dark Magicians', 'Ultimate Blue Eyes Deck', 'Melffys Combo Deck'
             </div>
         </div>
 
-        <!-- all users -->
         <div v-if="!friendsActive" class="flex justify-around pb-2 bg-slate-300">
             <div class="flex flex-row flex-wrap justify-center gap-5 w-[90%] mx-auto mt-5">
             <div v-for="friend in allUsers" :key="friend" class="flex flex-row items-center text-center">
@@ -207,6 +225,6 @@ const decks = ['Dark Magicians', 'Ultimate Blue Eyes Deck', 'Melffys Combo Deck'
                 
             </div>
         </div>
-    </section>
+    </section> -->
 
 </template>
