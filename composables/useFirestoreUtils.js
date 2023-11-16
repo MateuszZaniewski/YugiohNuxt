@@ -92,7 +92,9 @@ export const useFirestoreUtils = () => {
       const userRef = doc($db, "users", userId);
 
       await updateDoc(userRef, {
-        friends: arrayUnion(friendName),
+        friends: arrayUnion({
+          name: friendName
+        }),
       });
 
       console.log("User", friendName, " added to your friend list");

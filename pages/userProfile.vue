@@ -7,6 +7,8 @@ const user = await $firestoreUser
 const allUsers = ref(null)
 const friendsActive = ref(true)
 const friendUsers = ref(null)
+const isOpenFriends = ref(false)
+const selected = ref([])
 
 
 
@@ -32,6 +34,7 @@ const fetchFriend = async () => {
     try {
         const friends = await fetchFriends(user.email)
         friendUsers.value = friends
+        console.log(friendUsers)
     } catch (error) {
         console.log(error)
     }
@@ -44,6 +47,8 @@ const addUserToFriend = async (userId, friendName) => {
         console.log(error)
     }
 }
+
+addUserToFriend('mateusz.zaniewski94@gmail.com', 'Praca Pedagogika')
 
 const removeUserFromFriends = async (userId, friendName) => {
     try {
@@ -79,7 +84,7 @@ const decks = ['Dark Magicians', 'Ultimate Blue Eyes Deck', 'Melffys Combo Deck'
         <NuxtImg @click="$router.go(-1)" src="/backArrowBlack.png" height="30px" width="30px"  class="ml-8"/>
     </div>
 
-    <section class="flex pt-7 gap-3 justify-between w-[90%] mx-auto">
+    <section class="flex pt-7 gap-3 justify-between w-[90%] mx-auto max-w-xl">
         <div class="w-fit flex justify-center">
             <NuxtImg :src="user.photoURL ? user.photoURL : '/userTemplate.jpg'" height="60px" width="60px" class="rounded-full"/>
         </div>
@@ -88,9 +93,74 @@ const decks = ['Dark Magicians', 'Ultimate Blue Eyes Deck', 'Melffys Combo Deck'
             <span class="text-xs italic">mateusz.kokoszka111@gmail.com</span>
         </div>
         <div class="flex items-end mr-2">
-            <UButton class="text-xs px-2 py-1 roundex-3xl">Edit profile</UButton>
+            <UButton class="text-xs px-1 py-1 roundex-3xl bg-[rgba(45,97,175,0.7)]">Edit profile</UButton>
         </div>
     </section>
+
+
+    <section class=" pt-8 w-[90%] mx-auto max-w-xl">
+        <div class="flex gap-1 items-center w-[90%] mx-auto">
+            <UIcon name="i-heroicons-heart" />
+            <UBadge label="Favourite cards" class="px-0 bg-transparent text-[rgba(0,0,0,0.8)]" />
+        </div>
+        <div class="rounded-xl border border-white w-[90%] mx-auto flex gap-5 pl-5 pr-2 items-center">
+            <div v-for="fav in fetchedFavouriteCards.slice(0,3)" :key="fav" class="w-fit py-7">
+                <NuxtLink :to="`card/${fav.card}`">
+                    <NuxtImg :src="fav.image" class="rounded-sm max-w-[150px] h-[80px] w-[54px] lg:h-[160px] lg:w-[108px]"  />
+                </NuxtLink>
+            </div>
+            <NuxtLink :to="`/favourites`" class="">
+                <UButton class="text-xs px-1 py-1 roundex-3xl bg-[rgba(45,97,175,0.7)]">Show more</UButton>
+            </NuxtLink>
+        </div>
+    </section>
+
+
+    <section class=" pt-8 w-[90%] mx-auto max-w-xl">
+        <div class="flex gap-1 items-center w-[90%] mx-auto">
+            <UIcon name="i-heroicons-users" />
+            <UBadge label="Friends" class="px-0 bg-transparent text-[rgba(0,0,0,0.8)]" />
+        </div>
+        <div class="rounded-xl border border-white w-[90%] mx-auto flex items-center h-44">
+            <div class=" w-2/5 mx-auto h-full flex items-center justify-center border-r border-white">
+                <!-- <UButton class="text-xs px-1 py-1 roundex-3xl bg-[rgba(45,97,175,0.7)]">Search for friends</UButton> -->
+
+                <UButton label="Search for friends" @click="isOpenFriends = true" class="w-[80%] flex justify-center" />
+
+                <UModal v-model="isOpenFriends">
+                <UCommandPalette
+                    v-model="selected"
+                    multiple
+                    nullable
+                />
+                </UModal>
+
+
+            </div>
+            <div class="w-3/5 mx-auto h-full border-l border-white pt-4">
+                <div v-for="friend in friendUsers" :key="friend">
+                    <NuxtLink :to="`user/${friend}`">
+                        <div class="flex items-center justify-left gap-1 pl-2 pb-1">
+                            <div class="rounded-full h-2 w-2 border border-black bg-green-600"></div>
+                            <p class="text-sm">{{ friend.name }}</p>
+                        </div>
+                    </NuxtLink>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class=" pt-8 w-[90%] mx-auto max-w-xl">
+        <div class="flex gap-1 items-center w-[90%] mx-auto">
+            <UIcon name="i-heroicons-puzzle-piece" />
+            <UBadge label="Decks" class="px-0 bg-transparent text-[rgba(0,0,0,0.8)]" />
+        </div>
+        <div class="rounded-xl border border-white w-[90%] mx-auto flex gap-5 pl-5 pr-2 items-center h-44">
+            
+        </div>
+    </section>
+
 
     <!-- <section v-if="user" class=" max-w-3xl mx-auto">
         <div class="flex justify-center">
