@@ -4,11 +4,34 @@ const { getFavouriteCards, addFavouriteCard, addFriend, removeFriend, fetchFrien
 const fetchedFavouriteCards = ref([]);
 const { $firestoreUser } = useNuxtApp();
 const user = await $firestoreUser
-const allUsers = ref(null)
+const allUsers = ref([])
 const friendsActive = ref(true)
 const friendUsers = ref(null)
 const isOpenFriends = ref(false)
 const selected = ref([])
+const router = useRouter()
+
+
+
+const groups = ref([]);
+watchEffect(() => {
+  if (allUsers.value) {
+    groups.value = [{
+      key: 'label', // or another property of the user object you want to search on
+      commands: allUsers.value,
+      filter: (q, commands) => {
+        if (!q) {
+          return commands?.filter(command => !command.child)
+        }
+        return commands
+      }
+    }];
+  }
+});
+
+function onSelect(option){
+    router.push(`user/${option.label}`)
+}
 
 
 
@@ -25,6 +48,7 @@ const fetchUsers = async () => {
     try {
         const users = await fetchAllUsers(user.email, user.displayName)
         allUsers.value = users
+        console.log(allUsers)
     } catch (error) {
         console.log(error)
     }
@@ -48,8 +72,6 @@ const addUserToFriend = async (userId, friendName) => {
     }
 }
 
-addUserToFriend('mateusz.zaniewski94@gmail.com', 'Praca Pedagogika')
-
 const removeUserFromFriends = async (userId, friendName) => {
     try {
         removeFriend(userId, friendName)
@@ -60,17 +82,11 @@ const removeUserFromFriends = async (userId, friendName) => {
 
 
 onMounted(async () => {
-   fetchFavoriteCards()
-   fetchUsers()
-   fetchFriend()
+  await fetchFavoriteCards()
+  await fetchUsers()
+  await fetchFriend()
    
 });
-
-const activeBox = ref('favourites')
-
-// here will be a database query to retrive a favourite cards, decks, friends and settings of desired user
-const favourites = ['Dark Magician Girl', 'Dark Magician', 'Blue-Eyes White Dragon', 'Monster Reborn', 'Evenly Matched'];
-const decks = ['Dark Magicians', 'Ultimate Blue Eyes Deck', 'Melffys Combo Deck'];
 
 </script>
 
@@ -83,7 +99,10 @@ const decks = ['Dark Magicians', 'Ultimate Blue Eyes Deck', 'Melffys Combo Deck'
     <div>
         <NuxtImg @click="$router.go(-1)" src="/backArrowBlack.png" height="30px" width="30px"  class="ml-8"/>
     </div>
-
+    <div class="flex gap-3 justify-end w-[90%] mx-auto max-w-xl">
+        <UButton @click="logoutUser()" class="text-xs px-1 py-1 roundex-3xl bg-[rgba(134,144,158,0.7)]">Logout</UButton>
+    </div>
+    
     <section class="flex pt-7 gap-3 justify-between w-[90%] mx-auto max-w-xl">
         <div class="w-fit flex justify-center">
             <NuxtImg :src="user.photoURL ? user.photoURL : '/userTemplate.jpg'" height="60px" width="60px" class="rounded-full"/>
@@ -94,6 +113,7 @@ const decks = ['Dark Magicians', 'Ultimate Blue Eyes Deck', 'Melffys Combo Deck'
         </div>
         <div class="flex items-end mr-2">
             <UButton class="text-xs px-1 py-1 roundex-3xl bg-[rgba(45,97,175,0.7)]">Edit profile</UButton>
+            
         </div>
     </section>
 
@@ -117,32 +137,34 @@ const decks = ['Dark Magicians', 'Ultimate Blue Eyes Deck', 'Melffys Combo Deck'
 
 
     <section class=" pt-8 w-[90%] mx-auto max-w-xl">
-        <div class="flex gap-1 items-center w-[90%] mx-auto">
-            <UIcon name="i-heroicons-users" />
-            <UBadge label="Friends" class="px-0 bg-transparent text-[rgba(0,0,0,0.8)]" />
-        </div>
-        <div class="rounded-xl border border-white w-[90%] mx-auto flex items-center h-44">
-            <div class=" w-2/5 mx-auto h-full flex items-center justify-center border-r border-white">
-                <!-- <UButton class="text-xs px-1 py-1 roundex-3xl bg-[rgba(45,97,175,0.7)]">Search for friends</UButton> -->
-
-                <UButton label="Search for friends" @click="isOpenFriends = true" class="w-[80%] flex justify-center" />
+        <div class="flex justify-between w-[90%] mx-auto">
+            <div class="flex gap-1 items-center">
+                <UIcon name="i-heroicons-users" />
+                <UBadge label="Friends" class="px-0 bg-transparent text-[rgba(0,0,0,0.8)]" />
+            </div>
+            <div>
+                <UButton label="Search" @click="isOpenFriends = true" class="border shadow-none border-transparent bg-transparent text-[rgba(0,0,0,0.8)] px-0 py-0 text-xs" />
 
                 <UModal v-model="isOpenFriends">
-                <UCommandPalette
+                    <UCommandPalette
                     v-model="selected"
-                    multiple
-                    nullable
-                />
+                    :autoselect="false"
+                    :groups="groups"
+                    :fuse="{ resultLimit: 6, fuseOptions: { threshold: 0.1 } }"
+                    @update:model-value="onSelect" 
+                    />
                 </UModal>
 
-
             </div>
-            <div class="w-3/5 mx-auto h-full border-l border-white pt-4">
+        </div>
+        <div class="rounded-xl border border-white w-[90%] mx-auto flex items-center h-44">
+            <div class="w-11/12 mx-auto h-full pt-4">
                 <div v-for="friend in friendUsers" :key="friend">
-                    <NuxtLink :to="`user/${friend}`">
+                    <NuxtLink :to="`user/${friend.name}`">
                         <div class="flex items-center justify-left gap-1 pl-2 pb-1">
                             <div class="rounded-full h-2 w-2 border border-black bg-green-600"></div>
                             <p class="text-sm">{{ friend.name }}</p>
+                            <span> {{ friend.email }}</span>
                         </div>
                     </NuxtLink>
                 </div>

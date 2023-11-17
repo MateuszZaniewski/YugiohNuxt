@@ -1,7 +1,9 @@
 <script setup>
 const route = useRoute();
+const { $firestoreUser } = useNuxtApp();
+const user = await $firestoreUser
 
-const { getFavouriteCards, addFavouriteCard, fetchAllUsers } =
+const { getFavouriteCards, addFavouriteCard, fetchAllUsersm, addFriend, removeFriend } =
   useFirestoreUtils();
 const fetchedFavouriteCards = ref([]);
 
@@ -13,6 +15,23 @@ const fetchFavoriteCards = async () => {
     console.error(error);
   }
 };
+
+const removeUserFromFriends = async (userId, friendName) => {
+    try {
+        removeFriend(userId, friendName)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+const addUserToFriend = async (userId, friendName) => {
+    try {
+        addFriend(userId, friendName )
+        console.log('User', friendName, 'added.')
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 onMounted(async () => {
   fetchFavoriteCards();
@@ -46,6 +65,16 @@ onMounted(async () => {
           <span class="text-xl">{{ fav.card }}</span>
         </NuxtLink>
       </div>
+    </div>
+
+    <div>
+      <p>Add {{ route.params.username }} to friends!</p>
+      <UButton @click="addUserToFriend(user.email, route.params.username)" class="text-xs px-1 py-1 roundex-3xl bg-[rgba(134,144,158,0.7)]">Add</UButton>
+    </div>
+
+    <div>
+      <p>Remove {{ route.params.username }} to friends!</p>
+      <UButton @click="removeUserFromFriends(user.email, route.params.username)" class="text-xs px-1 py-1 roundex-3xl bg-[rgba(134,144,158,0.7)]">Remove</UButton>
     </div>
   </section>
 </template>

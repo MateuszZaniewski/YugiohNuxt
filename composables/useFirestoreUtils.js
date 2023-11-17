@@ -103,6 +103,9 @@ export const useFirestoreUtils = () => {
     }
   };
 
+  // poprawić funkcje by usuwała friendsa -- 
+  // nowy typ { [ '0' : 'username' ]}
+  // wcześniej ['username']
   const removeFriend = async (userId, friendName) => {
     try {
       const { $db } = useNuxtApp();
@@ -139,7 +142,7 @@ export const useFirestoreUtils = () => {
     try {
       const { $db, $firestoreUser } = useNuxtApp();
       const user = await $firestoreUser;
-
+      let index = 0
       const q = query(collection($db, "users"));
       const querySnapshot = await getDocs(q);
       const users = [];
@@ -147,7 +150,8 @@ export const useFirestoreUtils = () => {
         // adding all users to the list (excluding current user)
         const userData = doc.data();
         if (doc.id != user.email) {
-          users.push({name: userData.name, email: userData.email});
+          users.push({id: index, label: userData.name});
+          index++
         }
       });
       return users;
