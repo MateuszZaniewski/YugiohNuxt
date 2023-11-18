@@ -2,19 +2,15 @@
 const route = useRoute();
 const { $firestoreUser } = useNuxtApp();
 const user = await $firestoreUser
+const desiredUserData = ref(null)
 
-const { getFavouriteCards, addFavouriteCard, fetchAllUsersm, addFriend, removeFriend } =
+console.log(route.params.username)
+
+const { getFavouriteCards, addFriend, removeFriend, getDesiredUserData } =
   useFirestoreUtils();
 const fetchedFavouriteCards = ref([]);
 
-const fetchFavoriteCards = async () => {
-  try {
-    const favorites = await getFavouriteCards(route.params.username);
-    fetchedFavouriteCards.value = favorites;
-  } catch (error) {
-    console.error(error);
-  }
-};
+// get desired User from database => 
 
 const removeUserFromFriends = async (userId, friendName) => {
     try {
@@ -33,8 +29,27 @@ const addUserToFriend = async (userId, friendName) => {
     }
 }
 
+// WORKS, shows desiredUser data from DB (username, email and friends array)
+
+const desiredUserFunction = async () => {
+  try {
+    const desiredUser = await getDesiredUserData(route.params.username)
+    const favourites = await getFavouriteCards(desiredUser[0].email);
+    fetchedFavouriteCards.value = favourites
+
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+
+// shows desiredUser favourite cards array 
+
+
+
+
 onMounted(async () => {
-  fetchFavoriteCards();
+  await desiredUserFunction();
 });
 </script>
 
