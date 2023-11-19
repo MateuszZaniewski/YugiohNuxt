@@ -77,6 +77,7 @@ export const useFirestoreUtils = () => {
           name: username,
           friends: [],
           email: email,
+          image: '/userTemplate.jpg'
         });
         console.log("User added to DB");
       }
@@ -93,7 +94,8 @@ export const useFirestoreUtils = () => {
 
       await updateDoc(userRef, {
         friends: arrayUnion({
-          name: friendName
+          name: friendName,
+          image: '/userTemplate.jpg'
         }),
       });
 
@@ -166,7 +168,7 @@ export const useFirestoreUtils = () => {
       let desiredUser = []
       querySnapshot.forEach((doc) => {
         const user = doc.data();
-        desiredUser.push({name: user.name, email: user.email, friends: user.friends })
+        desiredUser.push({name: user.name, email: user.email, friends: user.friends, image: user.image })
       });
       return desiredUser
     } catch (error) {
