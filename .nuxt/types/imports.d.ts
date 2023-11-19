@@ -105,6 +105,7 @@ declare global {
   const useAsyncData: typeof import('../../node_modules/nuxt/dist/app')['useAsyncData']
   const useAttributes: typeof import('../../composables/states')['useAttributes']
   const useAttrs: typeof import('../../node_modules/vue')['useAttrs']
+  const useCU: typeof import('../../composables/states')['useCU']
   const useCardLevels: typeof import('../../composables/states')['useCardLevels']
   const useCardRaces: typeof import('../../composables/states')['useCardRaces']
   const useCardSearch: typeof import('../../composables/useCardSearch')['useCardSearch']
@@ -287,6 +288,7 @@ declare module 'vue' {
     readonly useAsyncData: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['useAsyncData']>
     readonly useAttributes: UnwrapRef<typeof import('../../composables/states')['useAttributes']>
     readonly useAttrs: UnwrapRef<typeof import('../../node_modules/vue')['useAttrs']>
+    readonly useCU: UnwrapRef<typeof import('../../composables/states')['useCU']>
     readonly useCardLevels: UnwrapRef<typeof import('../../composables/states')['useCardLevels']>
     readonly useCardRaces: UnwrapRef<typeof import('../../composables/states')['useCardRaces']>
     readonly useCardSearch: UnwrapRef<typeof import('../../composables/useCardSearch')['useCardSearch']>
@@ -461,6 +463,7 @@ declare module '@vue/runtime-core' {
     readonly useAsyncData: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['useAsyncData']>
     readonly useAttributes: UnwrapRef<typeof import('../../composables/states')['useAttributes']>
     readonly useAttrs: UnwrapRef<typeof import('../../node_modules/vue')['useAttrs']>
+    readonly useCU: UnwrapRef<typeof import('../../composables/states')['useCU']>
     readonly useCardLevels: UnwrapRef<typeof import('../../composables/states')['useCardLevels']>
     readonly useCardRaces: UnwrapRef<typeof import('../../composables/states')['useCardRaces']>
     readonly useCardSearch: UnwrapRef<typeof import('../../composables/useCardSearch')['useCardSearch']>

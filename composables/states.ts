@@ -20,3 +20,6 @@ export const useFiltersOpen = () =>
   useState<boolean>("filtersOpen", () => false);
 
 export const useFavs = () => useState<Boolean>("favourites", () => false);
+
+
+export const useCU = () => useState<Object>('currentUser', () => Object)

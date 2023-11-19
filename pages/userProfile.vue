@@ -4,15 +4,17 @@ const { getFavouriteCards, getDesiredUserData, fetchFriends, fetchAllUsers } = u
 const fetchedFavouriteCards = ref([]);
 const { $firestoreUser } = useNuxtApp();
 const user = await $firestoreUser
-const currentUser = ref([])
+const currentUser = ref({})
 const allUsers = ref([])
-const friendsActive = ref(true)
 const friendUsers = ref([])
 const isOpenFriends = ref(false)
+const editProfile = ref(false)
 const selected = ref([])
 const router = useRouter()
 const decks = ref([])
-const avatar = ref('')
+
+
+
 
 
 
@@ -52,9 +54,9 @@ const fetchUsers = async () => {
         const users = await fetchAllUsers(user.email, user.displayName)
         allUsers.value = users
 
-        const current = await getDesiredUserData(user.displayName)
+        const current = await getDesiredUserData(user.email)
         currentUser.value = current
-        console.log(current[0])
+        console.log(currentUser.value)
         console.log(allUsers)
     } catch (error) {
         console.log(error)
@@ -96,24 +98,30 @@ onMounted(async () => {
     
     
     <section class="flex pt-7 gap-3 justify-between w-[90%] mx-auto max-w-xl">
-        <div class="w-fit flex justify-center">
-            <NuxtImg :src="user.photoURL ? user.photoURL : '/userTemplate.jpg'" height="60px" width="60px" class="rounded-full"/>
+        <div v-if="currentUser.image" class="flex justify-center w-fit">
+            <NuxtImg :src="currentUser.image" height="60px" width="60px" class="rounded-full w-full"/>
         </div>
         <div class="flex flex-col w-[60%] justify-end">
-            <span class="w-fit font-bold">Mateusz Mati</span>
-            <span class="text-xs italic">mateusz.kokoszka111@gmail.com</span>
+            <span class="w-fit font-bold">{{ currentUser.name }}</span>
+            <span class="text-xs italic">{{ currentUser.email }}</span>
         </div>
         <div class="flex items-end mr-2">
-            <UButton class="text-xs px-1 py-1 roundex-3xl bg-[rgba(45,97,175,0.7)]">Edit profile</UButton>
+            <UButton @click="editProfile = !editProfile" class="text-xs px-1 py-1 roundex-3xl bg-[rgba(45,97,175,0.7)]">Edit profile</UButton>
             
         </div>
     </section>
 
 
+<!-- ///////////////////////////////// SETTINGS SECTION ///////////////////////////////////////////////// -->
+
+
+<settings v-if="editProfile && currentUser" :user="currentUser" />
+
+
 <!-- ///////////////////////////////// FAVOURITES SECTION ///////////////////////////////////////////////// -->
 
 
-<div>
+<div v-if="!editProfile">
     <section class="pt-8 w-[90%] mx-auto max-w-xl">
         <div>
             <div class="flex justify-between w-[90%] mx-auto">

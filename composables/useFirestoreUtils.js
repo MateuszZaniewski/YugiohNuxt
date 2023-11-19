@@ -12,6 +12,7 @@ import {
   updateDoc,
   arrayUnion,
   arrayRemove,
+  onSnapshot
 } from "firebase/firestore";
 
 export const useFirestoreUtils = () => {
@@ -86,16 +87,18 @@ export const useFirestoreUtils = () => {
     }
   };
 
-  const addFriend = async (userId, friendName) => {
+  const addFriend = async (userId, friendName, friendEmail) => {
     try {
       const { $db } = useNuxtApp();
 
       const userRef = doc($db, "users", userId);
 
+
       await updateDoc(userRef, {
         friends: arrayUnion({
           name: friendName,
-          image: '/userTemplate.jpg'
+          image: '/userTemplate.jpg',
+
         }),
       });
 
@@ -160,17 +163,38 @@ export const useFirestoreUtils = () => {
   };
 
 
-  const getDesiredUserData = async (username) => {
+  const getDesiredUserData = async (email) => {
     try {
       const { $db } = useNuxtApp();
-      const q = query(collection($db, "users"), where("name", "==", username));
+      const q = query(collection($db, "users"), where("email", "==", email));
       const querySnapshot = await getDocs(q);
-      let desiredUser = []
+      let desiredUser = {}
       querySnapshot.forEach((doc) => {
         const user = doc.data();
-        desiredUser.push({name: user.name, email: user.email, friends: user.friends, image: user.image })
+        desiredUser = {
+          name: user.name,
+          email: user.email,
+          friends: user.friends,
+          image: user.image
+        }
       });
       return desiredUser
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const updateUsername = async(username, newUsername) => {
+    try {
+      const { $db } = useNuxtApp();
+
+      const userRef = doc($db, "users", username);
+
+      await updateDoc(userRef, {
+        name: newUsername
+      });
+
+
     } catch (error) {
       console.log(error)
     }
@@ -184,6 +208,7 @@ export const useFirestoreUtils = () => {
     removeFriend,
     fetchFriends,
     fetchAllUsers,
-    getDesiredUserData
+    getDesiredUserData,
+    updateUsername
   };
 };
