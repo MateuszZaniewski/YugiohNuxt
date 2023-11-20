@@ -12,6 +12,9 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     '@nuxtjs/google-fonts',
   ],
+  pinia: {
+    autoImports: ['defineStore']
+  },
   css: [
     "~/main.css",
     "~/layouts/global.css"
@@ -38,5 +41,8 @@ export default defineNuxtConfig({
         ital: [100]
       },
     }
+  },
+  imports: {
+    dirs: ['/stores']
   }
 });

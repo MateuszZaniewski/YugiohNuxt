@@ -1,7 +1,18 @@
 <script setup>
 
+import { useUserStore } from '~/store/user'
+const userStore = useUserStore();
 const { $firestoreUser } = useNuxtApp();
-const user = await $firestoreUser;
+const checkIfUser = await $firestoreUser
+
+if(checkIfUser){
+  const user = await userStore.loadGoogleUser()
+  const firestoreUser = await userStore.loadFirestoreCurrentLogedUser(user)
+  console.log(user)
+  console.log(firestoreUser)
+}
+
+
 
 </script>
 

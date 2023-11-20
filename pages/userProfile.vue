@@ -1,10 +1,14 @@
 <script setup>
 
-const { getFavouriteCards, getDesiredUserData, fetchFriends, fetchAllUsers } = useFirestoreUtils()
+const { getFavouriteCards, fetchFriends, fetchAllUsers } = useFirestoreUtils()
+
+import { useUserStore } from '~/store/user'
+const userStore = useUserStore();
+const user = await userStore.loadGoogleUser()
+const firestoreUser = await userStore.loadFirestoreCurrentLogedUser(user)
+console.log(firestoreUser)
+
 const fetchedFavouriteCards = ref([]);
-const { $firestoreUser } = useNuxtApp();
-const user = await $firestoreUser
-const currentUser = ref({})
 const allUsers = ref([])
 const friendUsers = ref([])
 const isOpenFriends = ref(false)
@@ -12,11 +16,6 @@ const editProfile = ref(false)
 const selected = ref([])
 const router = useRouter()
 const decks = ref([])
-
-
-
-
-
 
 const groups = ref([]);
 watchEffect(() => {
@@ -53,11 +52,6 @@ const fetchUsers = async () => {
     try {
         const users = await fetchAllUsers(user.email, user.displayName)
         allUsers.value = users
-
-        const current = await getDesiredUserData(user.email)
-        currentUser.value = current
-        console.log(currentUser.value)
-        console.log(allUsers)
     } catch (error) {
         console.log(error)
     }
@@ -67,7 +61,6 @@ const fetchFriend = async () => {
     try {
         const friends = await fetchFriends(user.email)
         friendUsers.value = friends
-        console.log(friendUsers)
     } catch (error) {
         console.log(error)
     }
@@ -98,12 +91,12 @@ onMounted(async () => {
     
     
     <section class="flex pt-7 gap-3 justify-between w-[90%] mx-auto max-w-xl">
-        <div v-if="currentUser.image" class="flex justify-center w-fit">
-            <NuxtImg :src="currentUser.image" height="60px" width="60px" class="rounded-full w-full"/>
+        <div v-if="firestoreUser.image" class="flex justify-center w-fit">
+            <NuxtImg :src="firestoreUser.image" height="60px" width="60px" class="rounded-full w-full"/>
         </div>
         <div class="flex flex-col w-[60%] justify-end">
-            <span class="w-fit font-bold">{{ currentUser.name }}</span>
-            <span class="text-xs italic">{{ currentUser.email }}</span>
+            <span class="w-fit font-bold">{{ firestoreUser.name }}</span>
+            <span class="text-xs italic">{{ firestoreUser.email }}</span>
         </div>
         <div class="flex items-end mr-2">
             <UButton @click="editProfile = !editProfile" class="text-xs px-1 py-1 roundex-3xl bg-[rgba(45,97,175,0.7)]">Edit profile</UButton>
@@ -115,7 +108,7 @@ onMounted(async () => {
 <!-- ///////////////////////////////// SETTINGS SECTION ///////////////////////////////////////////////// -->
 
 
-<settings v-if="editProfile && currentUser" :user="currentUser" />
+<settings v-if="editProfile && firestoreUser" :user="firestoreUser" />
 
 
 <!-- ///////////////////////////////// FAVOURITES SECTION ///////////////////////////////////////////////// -->

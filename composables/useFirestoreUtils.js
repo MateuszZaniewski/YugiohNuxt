@@ -16,12 +16,13 @@ import {
 } from "firebase/firestore";
 
 export const useFirestoreUtils = () => {
-  const getFavouriteCards = async (username) => {
+  // works good
+  const getFavouriteCards = async (email) => {
     try {
       const { $db } = useNuxtApp();
 
       const colRef = collection($db, "favourites");
-      const q = query(colRef, where("author", "==", username));
+      const q = query(colRef, where("author", "==", email));
 
       const querySnapshot = await getDocs(q);
       let favs = [];
@@ -132,7 +133,6 @@ export const useFirestoreUtils = () => {
       if (docSnap.exists()) {
         const userData = docSnap.data();
         const friendsArray = userData.friends;
-        console.log("User's friends:", friendsArray);
         return friendsArray;
       }
     } catch (error) {
@@ -140,6 +140,7 @@ export const useFirestoreUtils = () => {
     }
   };
 
+  // Works good
   const fetchAllUsers = async (email, username) => {
     try {
       const { $db, $firestoreUser } = useNuxtApp();

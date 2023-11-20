@@ -1,6 +1,15 @@
 <script setup>
 
-const { updateUsername } = useFirestoreUtils()
+const { updateUsername } = useFirestoreUtils();
+
+import { useUserStore } from '~/store/user'
+const userStore = useUserStore();
+const user = await userStore.loadGoogleUser()
+const firestoreUser = await userStore.loadFirestoreCurrentLogedUser(user)
+console.log(firestoreUser)
+
+
+
 const props = defineProps({
   user: {
     type: Object,

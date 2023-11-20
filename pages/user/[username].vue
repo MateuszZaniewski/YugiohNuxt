@@ -1,8 +1,14 @@
 <script setup>
 const route = useRoute();
+import { useUserStore } from '~/store/user'
+const userStore = useUserStore();
 const { $firestoreUser } = useNuxtApp();
-const user = await $firestoreUser
-const desiredUserData = ref(null)
+const checkIfUser = await $firestoreUser
+  const user = await userStore.loadGoogleUser()
+  const firestoreUser = await userStore.loadFirestoreCurrentLogedUser(user)
+  console.log(user)
+  console.log(firestoreUser)
+
 
 console.log(route.params.username)
 
@@ -34,7 +40,7 @@ const addUserToFriend = async (userId, friendName) => {
 const desiredUserFunction = async () => {
   try {
     const desiredUser = await getDesiredUserData(route.params.username)
-    const favourites = await getFavouriteCards(desiredUser[0].email);
+    const favourites = await getFavouriteCards(firestoreUser.email);
     fetchedFavouriteCards.value = favourites
 
   } catch (error) {
