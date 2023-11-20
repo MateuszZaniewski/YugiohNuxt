@@ -1,16 +1,13 @@
 <script setup>
 
-import { useUserStore } from '~/store/user'
-const userStore = useUserStore();
-const { $firestoreUser } = useNuxtApp();
-const checkIfUser = await $firestoreUser
-
-if(checkIfUser){
+  import { useUserStore } from '~/store/user'
+  const userStore = useUserStore();
   const user = await userStore.loadGoogleUser()
   const firestoreUser = await userStore.loadFirestoreCurrentLogedUser(user)
-  console.log(user)
-  console.log(firestoreUser)
-}
+  const allFirestoreUsers = await userStore.loadAllFirestoreUsers()
+  console.log(`Aktualny user Google`,user)
+  console.log(`Aktualny user z FireStore`,firestoreUser)
+  console.log(`Wszyscy urzytkwnicy oprócz ciebie`,allFirestoreUsers)
 
 
 

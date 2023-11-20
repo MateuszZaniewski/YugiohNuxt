@@ -141,23 +141,22 @@ export const useFirestoreUtils = () => {
   };
 
   // Works good
-  const fetchAllUsers = async (email, username) => {
+  const fetchAllUsers = async () => {
     try {
-      const { $db, $firestoreUser } = useNuxtApp();
-      const user = await $firestoreUser;
-      let index = 0
+      const { $db } = useNuxtApp();
       const q = query(collection($db, "users"));
       const querySnapshot = await getDocs(q);
-      const users = [];
+      let allUsers = []
       querySnapshot.forEach((doc) => {
-        // adding all users to the list (excluding current user)
-        const userData = doc.data();
-        if (doc.id != user.email) {
-          users.push({id: index, label: userData.name});
-          index++
-        }
+        const user = doc.data();
+        allUsers.push({
+          name: user.name,
+          email: user.email,
+          friends: user.friends,
+          image: user.image
+        })
       });
-      return users;
+      return allUsers
     } catch (error) {
       console.log(error);
     }

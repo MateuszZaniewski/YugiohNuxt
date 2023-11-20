@@ -6,10 +6,10 @@ import { useUserStore } from '~/store/user'
 const userStore = useUserStore();
 const user = await userStore.loadGoogleUser()
 const firestoreUser = await userStore.loadFirestoreCurrentLogedUser(user)
-console.log(firestoreUser)
+const allFireStoreUsers = await userStore.loadAllFirestoreUsers()
 
 const fetchedFavouriteCards = ref([]);
-const allUsers = ref([])
+const allUsers = ref(allFireStoreUsers)
 const friendUsers = ref([])
 const isOpenFriends = ref(false)
 const editProfile = ref(false)
@@ -21,14 +21,17 @@ const groups = ref([]);
 watchEffect(() => {
   if (allUsers.value) {
     groups.value = [{
-      key: 'label',
-      commands: allUsers.value,
+      key: 'name',
+      commands: Object.keys(allUsers.value).map(userId => ({
+        label: allUsers.value[userId].name,
+        value: allUsers.value[userId],
+      })),
       filter: (q, commands) => {
         if (!q) {
-          return commands?.filter(command => !command.child)
+          return commands?.filter(command => !command.child);
         }
-        return commands
-      }
+        return commands;
+      },
     }];
   }
 });
@@ -48,15 +51,6 @@ const fetchFavoriteCards = async () => {
   }
 };
 
-const fetchUsers = async () => {
-    try {
-        const users = await fetchAllUsers(user.email, user.displayName)
-        allUsers.value = users
-    } catch (error) {
-        console.log(error)
-    }
-}
-
 const fetchFriend = async () => {
     try {
         const friends = await fetchFriends(user.email)
@@ -68,7 +62,7 @@ const fetchFriend = async () => {
 
 onMounted(async () => {
   await fetchFavoriteCards()
-  await fetchUsers()
+//   await fetchUsers()
   await fetchFriend()
    
 });
