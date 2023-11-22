@@ -1,21 +1,19 @@
 <script setup>
+const router = useRouter()
+const { getFavouriteCards, fetchFriends, loadCurrentUser, fetchAllUsers} = useFirestoreUtils()
 
-const { getFavouriteCards, fetchFriends, fetchAllUsers } = useFirestoreUtils()
+const user = ref() // contains user credentials
+const fetchedFavouriteCards = ref([]); // contains user favourite cards
+const allUsers = ref() // contains all users from firebase exept current user
+const friendUsers = ref([]) // contains user friends array
+const decks = ref([]) // contains in the future user decks
 
-import { useUserStore } from '~/store/user'
-const userStore = useUserStore();
-const user = await userStore.loadGoogleUser()
-const firestoreUser = await userStore.loadFirestoreCurrentLogedUser(user)
-const allFireStoreUsers = await userStore.loadAllFirestoreUsers()
 
-const fetchedFavouriteCards = ref([]);
-const allUsers = ref(allFireStoreUsers)
-const friendUsers = ref([])
+// Conditionals
 const isOpenFriends = ref(false)
 const editProfile = ref(false)
 const selected = ref([])
-const router = useRouter()
-const decks = ref([])
+
 
 const groups = ref([]);
 watchEffect(() => {
@@ -41,30 +39,31 @@ function onSelect(option){
 }
 
 
-
-const fetchFavoriteCards = async () => {
-  try {
-    const favorites = await getFavouriteCards(user.email);
-    fetchedFavouriteCards.value = favorites;
-  } catch (error) {
-    console.error(error);
-  }
-};
-
-const fetchFriend = async () => {
+const loadUserDataFavCardsAndFriends = async () => {
     try {
-        const friends = await fetchFriends(user.email)
+        const data = await loadCurrentUser(); // GoogleUser credentials
+        console.log('User', data)
+        user.value = data
+
+        const favourites = await getFavouriteCards(user.value.email);
+        fetchedFavouriteCards.value = favourites;
+        console.log('Favourites array', fetchedFavouriteCards.value)
+
+        const friends = await fetchFriends(user.value.email)
         friendUsers.value = friends
+        console.log('Friends array', friendUsers.value)
+
+        const users = await fetchAllUsers(user.value.email)
+        allUsers.value = users
+        console.log('All users', allUsers.value)
     } catch (error) {
         console.log(error)
     }
 }
 
 onMounted(async () => {
-  await fetchFavoriteCards()
-//   await fetchUsers()
-  await fetchFriend()
-   
+  await loadUserDataFavCardsAndFriends()
+
 });
 
 </script>
@@ -84,13 +83,13 @@ onMounted(async () => {
     </div>
     
     
-    <section class="flex pt-7 gap-3 justify-between w-[90%] mx-auto max-w-xl">
-        <div v-if="firestoreUser.image" class="flex justify-center w-fit">
-            <NuxtImg :src="firestoreUser.image" height="60px" width="60px" class="rounded-full w-full"/>
+    <section v-if="user" class="flex pt-7 gap-3 justify-between w-[90%] mx-auto max-w-xl">
+        <div class="flex justify-center w-fit">
+            <NuxtImg :src="user.photoURL" height="60px" width="60px" class="rounded-full w-full"/>
         </div>
         <div class="flex flex-col w-[60%] justify-end">
-            <span class="w-fit font-bold">{{ firestoreUser.name }}</span>
-            <span class="text-xs italic">{{ firestoreUser.email }}</span>
+            <span class="w-fit font-bold">{{ user.displayName }}</span>
+            <span class="text-xs italic">{{ user.email }}</span>
         </div>
         <div class="flex items-end mr-2">
             <UButton @click="editProfile = !editProfile" class="text-xs px-1 py-1 roundex-3xl bg-[rgba(45,97,175,0.7)]">Edit profile</UButton>
@@ -102,7 +101,7 @@ onMounted(async () => {
 <!-- ///////////////////////////////// SETTINGS SECTION ///////////////////////////////////////////////// -->
 
 
-<settings v-if="editProfile && firestoreUser" :user="firestoreUser" />
+<settings v-if="editProfile && user" :user="user" />
 
 
 <!-- ///////////////////////////////// FAVOURITES SECTION ///////////////////////////////////////////////// -->

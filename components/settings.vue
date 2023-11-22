@@ -2,11 +2,10 @@
 
 const { updateUsername } = useFirestoreUtils();
 
-import { useUserStore } from '~/store/user'
-const userStore = useUserStore();
-const user = await userStore.loadGoogleUser()
-const firestoreUser = await userStore.loadFirestoreCurrentLogedUser(user)
-console.log(firestoreUser)
+const { loadCurrentUser } = useFirestoreUtils();
+
+  const user = await loadCurrentUser(); // GoogleUser credentials
+  console.log(user)
 
 
 

@@ -1,9 +1,13 @@
 <script setup>
-const { $firestoreUser } = useNuxtApp();
-const user = await $firestoreUser;
+
 const fetchedFavouriteCards = ref([]);
 
-const { getFavouriteCards } = useFirestoreUtils();
+const { loadCurrentUser, getFavouriteCards } = useFirestoreUtils();
+
+  const user = await loadCurrentUser(); // GoogleUser credentials
+  console.log(user)
+
+
 
 const fetchFavoriteCards = async () => {
   try {

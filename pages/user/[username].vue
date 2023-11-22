@@ -1,62 +1,58 @@
 <script setup>
 const route = useRoute();
-import { useUserStore } from '~/store/user'
-const userStore = useUserStore();
-const { $firestoreUser } = useNuxtApp();
-const checkIfUser = await $firestoreUser
-  const user = await userStore.loadGoogleUser()
-  const firestoreUser = await userStore.loadFirestoreCurrentLogedUser(user)
-  console.log(user)
-  console.log(firestoreUser)
+const { getFavouriteCards, addFriend, removeFriend, loadCurrentUser, getDesiredUserData } = useFirestoreUtils();
 
 
-console.log(route.params.username)
-
-const { getFavouriteCards, addFriend, removeFriend, getDesiredUserData } =
-  useFirestoreUtils();
+const user = ref();
 const fetchedFavouriteCards = ref([]);
+const displayedUser = ref();
 
-// get desired User from database => 
 
-const removeUserFromFriends = async (userId, friendName) => {
+
+
+
+const removeUserFromFriends = async (email, friendName, image) => {
     try {
-        removeFriend(userId, friendName)
+        removeFriend(email, friendName, image)
     } catch (error) {
         console.log(error)
     }
 }
 
-const addUserToFriend = async (userId, friendName) => {
+const addUserToFriend = async (email, friendName, image) => {
     try {
-        addFriend(userId, friendName )
+        addFriend(email, friendName, image )
         console.log('User', friendName, 'added.')
     } catch (error) {
         console.log(error)
     }
 }
 
-// WORKS, shows desiredUser data from DB (username, email and friends array)
+
 
 const desiredUserFunction = async () => {
   try {
-    const desiredUser = await getDesiredUserData(route.params.username)
-    const favourites = await getFavouriteCards(firestoreUser.email);
+    const data = await loadCurrentUser(); // GoogleUser credentials
+    console.log('User', data)
+    user.value = data
+
+
+    const favourites = await getFavouriteCards(user.value.email);
     fetchedFavouriteCards.value = favourites
+
+    const cup = await getDesiredUserData(route.params.username);
+    displayedUser.value = cup
+    console.log(displayedUser.value)
 
   } catch (error) {
     console.log(error)
   }
 }
 
-
-// shows desiredUser favourite cards array 
-
-
-
-
 onMounted(async () => {
   await desiredUserFunction();
 });
+
 </script>
 
 <template>
@@ -90,12 +86,12 @@ onMounted(async () => {
 
     <div>
       <p>Add {{ route.params.username }} to friends!</p>
-      <UButton @click="addUserToFriend(user.email, route.params.username)" class="text-xs px-1 py-1 roundex-3xl bg-[rgba(134,144,158,0.7)]">Add</UButton>
+      <UButton @click="addUserToFriend(user.email, route.params.username, displayedUser.image)" class="text-xs px-1 py-1 roundex-3xl bg-[rgba(134,144,158,0.7)]">Add</UButton>
     </div>
 
     <div>
       <p>Remove {{ route.params.username }} to friends!</p>
-      <UButton @click="removeUserFromFriends(user.email, route.params.username)" class="text-xs px-1 py-1 roundex-3xl bg-[rgba(134,144,158,0.7)]">Remove</UButton>
+      <UButton @click="removeUserFromFriends(user.email, route.params.username, displayedUser.image)" class="text-xs px-1 py-1 roundex-3xl bg-[rgba(134,144,158,0.7)]">Remove</UButton>
     </div>
   </section>
 </template>

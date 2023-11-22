@@ -20,7 +20,7 @@ const googleSignIn = async () => {
 onMounted(async () => {
   if (user) {
     await redirectFromGoogle().then((result) => {
-      navigateTo("/SearchPage");
+      navigateTo("/");
     });
   }
 });
