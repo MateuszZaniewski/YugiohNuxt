@@ -1,12 +1,13 @@
 <script setup>
 const router = useRouter()
-const { getFavouriteCards, fetchFriends, loadCurrentUser, fetchAllUsers} = useFirestoreUtils()
+const { getFavouriteCards, fetchFriends, loadCurrentUser, fetchAllUsers, getDesiredUserData} = useFirestoreUtils()
 
 const user = ref() // contains user credentials
 const fetchedFavouriteCards = ref([]); // contains user favourite cards
 const allUsers = ref() // contains all users from firebase exept current user
 const friendUsers = ref([]) // contains user friends array
 const decks = ref([]) // contains in the future user decks
+const displayedUser = ref(); // actual displayed user
 
 
 // Conditionals
@@ -56,6 +57,10 @@ const loadUserDataFavCardsAndFriends = async () => {
         const users = await fetchAllUsers(user.value.email)
         allUsers.value = users
         console.log('All users', allUsers.value)
+
+        const cup = await getDesiredUserData(user.value.email);
+        displayedUser.value = cup
+        console.log(displayedUser.value)
     } catch (error) {
         console.log(error)
     }
@@ -83,13 +88,13 @@ onMounted(async () => {
     </div>
     
     
-    <section v-if="user" class="flex pt-7 gap-3 justify-between w-[90%] mx-auto max-w-xl">
+    <section v-if="displayedUser" class="flex pt-7 gap-3 justify-between w-[90%] mx-auto max-w-xl">
         <div class="flex justify-center w-fit">
-            <NuxtImg :src="user.photoURL" height="60px" width="60px" class="rounded-full w-full"/>
+            <NuxtImg :src="displayedUser.image" height="60px" width="60px" class="rounded-full w-full"/>
         </div>
         <div class="flex flex-col w-[60%] justify-end">
-            <span class="w-fit font-bold">{{ user.displayName }}</span>
-            <span class="text-xs italic">{{ user.email }}</span>
+            <span class="w-fit font-bold">{{ displayedUser.name }}</span>
+            <span class="text-xs italic">{{ displayedUser.email }}</span>
         </div>
         <div class="flex items-end mr-2">
             <UButton @click="editProfile = !editProfile" class="text-xs px-1 py-1 roundex-3xl bg-[rgba(45,97,175,0.7)]">Edit profile</UButton>
@@ -101,7 +106,7 @@ onMounted(async () => {
 <!-- ///////////////////////////////// SETTINGS SECTION ///////////////////////////////////////////////// -->
 
 
-<settings v-if="editProfile && user" :user="user" />
+<settings v-if="editProfile && user" :user="displayedUser" />
 
 
 <!-- ///////////////////////////////// FAVOURITES SECTION ///////////////////////////////////////////////// -->

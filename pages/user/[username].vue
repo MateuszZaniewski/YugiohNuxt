@@ -1,13 +1,12 @@
 <script setup>
 const route = useRoute();
-const { getFavouriteCards, addFriend, removeFriend, loadCurrentUser, getDesiredUserData } = useFirestoreUtils();
+const { getFavouriteCards, addFriend, removeFriend, loadCurrentUser, getDesiredUserData, grabUser } = useFirestoreUtils();
 
 
 const user = ref();
 const fetchedFavouriteCards = ref([]);
 const displayedUser = ref();
-
-
+const userData = ref();
 
 
 
@@ -40,9 +39,13 @@ const desiredUserFunction = async () => {
     const favourites = await getFavouriteCards(user.value.email);
     fetchedFavouriteCards.value = favourites
 
-    const cup = await getDesiredUserData(route.params.username);
+    const cup = await getDesiredUserData(user.value.displayName);
     displayedUser.value = cup
     console.log(displayedUser.value)
+
+    const userD = await grabUser(route.params.username);
+    userData.value = userD
+    console.log(userData.value)
 
   } catch (error) {
     console.log(error)

@@ -1,12 +1,27 @@
 <script setup>
 
-const { updateUsername } = useFirestoreUtils();
+const { loadCurrentUser, getDesiredUserData, setNewUserAvatar } = useFirestoreUtils();
 
-const { loadCurrentUser } = useFirestoreUtils();
+const desiredUserFunction = async () => {
+  try {
+    const data = await loadCurrentUser(); // GoogleUser credentials
+    user.value = data
+    console.log('User', user.value)
 
-  const user = await loadCurrentUser(); // GoogleUser credentials
-  console.log(user)
+    const cup = await getDesiredUserData(user.value.email);
+    displayedUser.value = cup
+    console.log(displayedUser.value)
 
+    newAvatar.value = displayedUser.image
+
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const user = ref();
+const displayedUser = ref();
+const avatarsOpen = ref(false);
 
 
 const props = defineProps({
@@ -15,9 +30,8 @@ const props = defineProps({
     required: true,
   },
 });
-const avatarsOpen = ref(false)
-const newUsername = ref('');
-const newAvatar = ref(props.user.image);
+
+const newAvatar = ref();
 
 
 const avatars = [
@@ -40,12 +54,16 @@ const avatars = [
 ];
 
 
+onMounted(async () => {
+  await desiredUserFunction();
+});
+
 </script>
 
 
 <template>
 
-<div>
+<div v-if="displayedUser">
 
     <div class="flex gap-2 pt-4">
         <span>Username : </span>
@@ -54,19 +72,19 @@ const avatars = [
     
     <div class="flex gap-2 pt-8">
         <span>Current avatar : </span>
-        <NuxtImg :src="newAvatar" class=" h-14 w-14 border border-white rounded-full px-1 py-1 box-content" />
+        <NuxtImg :src="displayedUser.image" class=" h-14 w-14 border border-white rounded-full px-1 py-1 box-content" />
         <UButton @click="avatarsOpen = !avatarsOpen">Browse Avatars</UButton>
     </div>
     
     <div v-if="avatarsOpen" class="rounded-xl border border-blue-200 w-[90%] mt-4 py-4 px-4 mx-auto flex items-center flex-wrap bg-blue-100">
         <div v-for="avatar in avatars" :key="avatar" class="px-2 py-1">
-            <NuxtImg :src="avatar" class=" h-14 w-14 border border-white" @click="newAvatar = avatar" >
+            <NuxtImg :src="avatar" class=" h-14 w-14 border border-white" @click="displayedUser.image = avatar" >
 
             </NuxtImg>
         </div>
     </div>
     
-    <UButton @click="updateUsername(props.user.email, newUsername)">Save</UButton>
+    <UButton @click="setNewUserAvatar(displayedUser.email, displayedUser.image)">Save</UButton>
 
 
 </div>

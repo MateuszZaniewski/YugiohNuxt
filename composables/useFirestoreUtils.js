@@ -12,7 +12,8 @@ import {
   updateDoc,
   arrayUnion,
   arrayRemove,
-  onSnapshot
+  onSnapshot,
+  queryEqual
 } from "firebase/firestore";
 
 export const useFirestoreUtils = () => {
@@ -71,10 +72,10 @@ const loadCurrentUserData = async (currentUserEmail) => {
 }
 
   // Fetch from DB an user that you want to display in [username].vue
-  const getDesiredUserData = async (name) => {
+  const getDesiredUserData = async (email) => {
     try {
       const { $db } = useNuxtApp();
-      const q = query(collection($db, "users"), where("name", "==", name));
+      const q = query(collection($db, "users"), where("email", "==", email));
       const querySnapshot = await getDocs(q);
       let desiredUser = {}
       querySnapshot.forEach((doc) => {
@@ -91,6 +92,39 @@ const loadCurrentUserData = async (currentUserEmail) => {
       console.log(error)
     }
   };
+
+  /// podziałać tutaj
+
+
+  const grabUser = async (name) => {
+    try {
+      const { $db } = useNuxtApp();
+      const usersRef = collection($db, "users");
+      const q = query(collection($db, "users"), where("name", "==", name));
+
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        console.log(doc.id, " => ", doc.data());
+});
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const setNewUserAvatar = async (email, newAvatar) => {
+    try {
+      const { $db } = useNuxtApp();
+      const userRef = doc($db, "users", email);
+
+      await updateDoc(userRef, {
+        image: newAvatar
+      });
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   // Fetch all users from DB
   const fetchAllUsers = async (email) => {
@@ -179,11 +213,6 @@ const loadCurrentUserData = async (currentUserEmail) => {
     }
   };
 
-
-
-
-  /// Function that not work good 
-
   const addFriend = async (email, friendName, image) => {
       try {
         const { $db } = useNuxtApp();
@@ -225,22 +254,10 @@ const loadCurrentUserData = async (currentUserEmail) => {
     };
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
   return {
     loadCurrentUser,
     loadCurrentUserData,
+    setNewUserAvatar,
     getFavouriteCards,
     addFavouriteCard,
     addUser,
@@ -249,5 +266,6 @@ const loadCurrentUserData = async (currentUserEmail) => {
     fetchFriends,
     fetchAllUsers,
     getDesiredUserData,
+    grabUser
   };
 };
