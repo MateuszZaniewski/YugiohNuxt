@@ -99,14 +99,18 @@ const loadCurrentUserData = async (currentUserEmail) => {
   const grabUser = async (name) => {
     try {
       const { $db } = useNuxtApp();
-      const usersRef = collection($db, "users");
       const q = query(collection($db, "users"), where("name", "==", name));
-
       const querySnapshot = await getDocs(q);
+      let desiredUser = {}
       querySnapshot.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-        console.log(doc.id, " => ", doc.data());
+        const user = doc.data();
+        desiredUser = {
+          name : user.name,
+          email : user.email,
+          image : user.image,
+        }
 });
+    return desiredUser
     } catch (error) {
       console.log(error)
     }
@@ -151,20 +155,27 @@ const loadCurrentUserData = async (currentUserEmail) => {
   };
 
   // Fetch friends array from an active user
-  const fetchFriends = async (email) => {
+  const fetchFriends = async (currentUserEmail) => {
     try {
-      const { $db } = useNuxtApp();
-      const userRef = doc($db, "users", email);
-      const docSnap = await getDoc(userRef);
-      if (docSnap.exists()) {
-        const userData = docSnap.data();
-        const friendsArray = userData.friends;
-        return friendsArray;
+      const userData = await getDesiredUserData(currentUserEmail)
+      const displayedUser = userData
+      const friendsArray = Object.values(displayedUser.friends)
+      let result = []
+      let friendsObject = {}
+      for (const friend of friendsArray) {
+        const userFriend = await getDesiredUserData(friend.email);
+        result.push(friendsObject = {
+          name: userFriend.name,
+          email: userFriend.email,
+          image: userFriend.image
+        })
       }
+      return result
     } catch (error) {
       console.log(error);
     }
-  };
+  }
+
 
   const addFavouriteCard = async (card, email, image) => {
     try {
@@ -213,7 +224,7 @@ const loadCurrentUserData = async (currentUserEmail) => {
     }
   };
 
-  const addFriend = async (email, friendName, image) => {
+  const addFriend = async (email, friendEmail, friendName) => {
       try {
         const { $db } = useNuxtApp();
   
@@ -223,7 +234,7 @@ const loadCurrentUserData = async (currentUserEmail) => {
         await updateDoc(userRef, {
           friends: arrayUnion({
             name: friendName,
-            image: image,
+            email : friendEmail
   
           }),
         });
@@ -234,7 +245,7 @@ const loadCurrentUserData = async (currentUserEmail) => {
       }
     };
   
-    const removeFriend = async (email, friendName, image) => {
+    const removeFriend = async (email, friendEmail, friendName) => {
       try {
         const { $db } = useNuxtApp();
   
@@ -242,8 +253,8 @@ const loadCurrentUserData = async (currentUserEmail) => {
   
         await updateDoc(userRef, {
           friends: arrayRemove({
-            name: friendName,
-            image: image
+            email: friendEmail,
+            name: friendName
           }),
         });
   
@@ -266,6 +277,6 @@ const loadCurrentUserData = async (currentUserEmail) => {
     fetchFriends,
     fetchAllUsers,
     getDesiredUserData,
-    grabUser
+    grabUser,
   };
 };

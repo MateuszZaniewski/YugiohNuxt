@@ -1,6 +1,6 @@
 <script setup>
 const route = useRoute();
-const { getFavouriteCards, addFriend, removeFriend, loadCurrentUser, getDesiredUserData, grabUser } = useFirestoreUtils();
+const { getFavouriteCards, addFriend, removeFriend, loadCurrentUser, getDesiredUserData, grabUser, anotherFetchFriends } = useFirestoreUtils();
 
 
 const user = ref();
@@ -89,12 +89,12 @@ onMounted(async () => {
 
     <div>
       <p>Add {{ route.params.username }} to friends!</p>
-      <UButton @click="addUserToFriend(user.email, route.params.username, displayedUser.image)" class="text-xs px-1 py-1 roundex-3xl bg-[rgba(134,144,158,0.7)]">Add</UButton>
+      <UButton @click="addUserToFriend(user.email, userData.email, userData.name)" class="text-xs px-1 py-1 roundex-3xl bg-[rgba(134,144,158,0.7)]">Add</UButton>
     </div>
 
     <div>
       <p>Remove {{ route.params.username }} to friends!</p>
-      <UButton @click="removeUserFromFriends(user.email, route.params.username, displayedUser.image)" class="text-xs px-1 py-1 roundex-3xl bg-[rgba(134,144,158,0.7)]">Remove</UButton>
+      <UButton @click="removeUserFromFriends(user.email, userData.email, userData.name)" class="text-xs px-1 py-1 roundex-3xl bg-[rgba(134,144,158,0.7)]">Remove</UButton>
     </div>
   </section>
 </template>

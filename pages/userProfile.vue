@@ -61,6 +61,7 @@ const loadUserDataFavCardsAndFriends = async () => {
         const cup = await getDesiredUserData(user.value.email);
         displayedUser.value = cup
         console.log(displayedUser.value)
+        
     } catch (error) {
         console.log(error)
     }
@@ -180,7 +181,6 @@ onMounted(async () => {
                                 <NuxtImg :src="friend.image" class=" h-9 w-9 object-contain" />
                             </div>
                             <p class="text-md">{{ friend.name }}</p>
-                            <span> {{ friend.email }}</span>
                         </div>
                     </NuxtLink>
                 </div>
