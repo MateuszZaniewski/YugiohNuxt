@@ -1,5 +1,5 @@
 @font-face {
     font-family: "Yugioh";
     src: local("Yugioh"),
-     url(~assets/yu-gi-oh-matrix.ttf) format("truetype");
+     url(~/assets/yu-gi-oh-matrix.ttf) format("truetype");
 }

@@ -108,6 +108,7 @@ const loadCurrentUserData = async (currentUserEmail) => {
           name : user.name,
           email : user.email,
           image : user.image,
+          friends : user.friends
         }
 });
     return desiredUser

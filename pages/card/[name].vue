@@ -101,7 +101,7 @@ onMounted(async () => {
               <span v-else>{{ card[0].type }}</span>
             </div>
             <div v-if="card[0].level" class="flex gap-2 items-center">
-              <NuxtImg src="/level.webp" height="20px" width="20px" />
+              <NuxtImg src="/level.png" height="20px" width="20px" />
               <span>{{ card[0].level }}</span>
             </div>
             <div v-if="!card[0].level" class="flex gap-2 items-center">

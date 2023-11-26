@@ -277,7 +277,7 @@ const filteredCards = computed(() => {
           <NuxtLink
             :src="card.card_images[0].image_url"
             class="h-[200px] w-[140px]"
-            :to="`card/${card.name}`"
+            :to="`/card/${card.name}`"
           >
             <!-- rework this :class to hide it -->
             <NuxtImg

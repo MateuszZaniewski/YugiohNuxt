@@ -25,14 +25,7 @@ const cardRacesArray = [
   "Divine-Beast",
   "Wyrm",
   "Cyberse",
-  "Creator-God",
-  "Equip",
-  "Field",
-  "Quick-Play",
-  "Ritual",
-  "Continuous",
-  "Normal",
-  "Counter",
+  "Creator-God"
 ];
 const expanded = ref(false);
 

@@ -165,14 +165,14 @@ onMounted(async () => {
                     v-model="selected"
                     :autoselect="false"
                     :groups="groups"
-                    :fuse="{ resultLimit: 6, fuseOptions: { threshold: 0.1 } }"
+                    :fuse="{ resultLimit: 3, fuseOptions: { threshold: 0.1 } }"
                     @update:model-value="onSelect" 
                     />
                 </UModal>
 
             </div>
         </div>
-        <div v-if="friendUsers.length > 0" class="rounded-xl border border-blue-200 w-[90%] mx-auto flex items-center h-44 bg-blue-100">
+        <div v-if="friendUsers.length > 0" class="rounded-xl border border-blue-200 w-[90%] mx-auto flex items-center h-44 bg-blue-100 overflow-scroll overflow-x-hidden">
             <div class="w-11/12 mx-auto h-full pt-4">
                 <div v-for="friend in friendUsers" :key="friend">
                     <NuxtLink :to="`user/${friend.name}`">
