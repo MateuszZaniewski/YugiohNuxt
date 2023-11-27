@@ -1,10 +1,7 @@
 <script setup lang="ts">
-import type { _right } from "#tailwind-config/theme/backgroundPosition";
-import { signOut, onAuthStateChanged } from "firebase/auth";
 const isOpen = ref(false)
-const currentUser = ref();
-const menuOpen = ref(false);
-const lightMode = ref(true)
+const { $firestoreUser } = useNuxtApp();
+const user = await $firestoreUser
 
 const links = [
 {
@@ -42,16 +39,13 @@ const secondLinks = [
 }
 ];
 
-const modeLink = [
-{
-  label: 'Light Mode',
-  icon:  'i-heroicons-sun'
-},
-{
-  label: 'Dark Mode',
-  icon:  'i-heroicons-moon'
-}
-]
+onMounted(async () => {
+  try {
+
+  } catch (error) {
+    console.error(error);
+  }
+});
 
 </script>
 
@@ -104,19 +98,10 @@ const modeLink = [
               </template>
             </UVerticalNavigation>
             </div>
-            <div class="pb-2 pl-4 mt-auto">
+            <div v-if="!user" class="pb-2 pl-4 mt-auto">
               <UVerticalNavigation :links="secondLinks" class="flex flex-col gap-2">
               <template #default="{ link }">
                 <div>
-                  <span class="group-hover:text-primary relative font-[yugioh]">{{ link.label }}</span>
-                </div>
-              </template>
-            </UVerticalNavigation>
-            </div>
-            <div class="pb-8 pl-4">
-              <UVerticalNavigation :links="modeLink" class="flex flex-col gap-2">
-              <template #default="{ link }">
-                <div v-if="link.label === 'Light Mode'">
                   <span class="group-hover:text-primary relative font-[yugioh]">{{ link.label }}</span>
                 </div>
               </template>

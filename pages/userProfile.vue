@@ -43,24 +43,19 @@ function onSelect(option){
 const loadUserDataFavCardsAndFriends = async () => {
     try {
         const data = await loadCurrentUser(); // GoogleUser credentials
-        console.log('User', data)
         user.value = data
 
         const favourites = await getFavouriteCards(user.value.email);
         fetchedFavouriteCards.value = favourites;
-        console.log('Favourites array', fetchedFavouriteCards.value)
 
         const friends = await fetchFriends(user.value.email)
         friendUsers.value = friends
-        console.log('Friends array', friendUsers.value)
 
         const users = await fetchAllUsers(user.value.email)
         allUsers.value = users
-        console.log('All users', allUsers.value)
 
         const cup = await getDesiredUserData(user.value.email);
         displayedUser.value = cup
-        console.log(displayedUser.value)
         
     } catch (error) {
         console.log(error)

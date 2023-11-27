@@ -2,8 +2,6 @@
 const route = useRoute();
 const { getFavouriteCards, addFriend, removeFriend, loadCurrentUser, getDesiredUserData, grabUser } = useFirestoreUtils();
 
-console.log(route.params.username)
-
 const user = ref();
 const fetchedFavouriteCards = ref([]);
 const userData = ref();
@@ -34,20 +32,16 @@ const addUserToFriend = async (email, friendName, image) => {
 const desiredUserFunction = async () => {
   try {
     const data = await loadCurrentUser(); // GoogleUser credentials
-    console.log('User', data)
     user.value = data
 
     const current = await getDesiredUserData(user.value.email)
     currentUser.value = current
-    console.log(currentUser.value.friends)
 
     const userD = await grabUser(route.params.username);
     userData.value = userD
-    console.log(userData.value)
 
     const favourites = await getFavouriteCards(userData.value.email);
     fetchedFavouriteCards.value = favourites
-    console.log(fetchedFavouriteCards.value)
 
     
 

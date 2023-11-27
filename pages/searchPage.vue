@@ -78,11 +78,9 @@ const searchForCards = async (
         fetchedCards.value = fetchedCards.value;
         
       }
-      console.log(fetchedCards.value);
     } else {
       // Handle the case when no cards are found
       fetchedCards.value = [];
-      console.log("No cards found.");
     }
   } catch (error) {
     // Handle any errors that occur during the API request

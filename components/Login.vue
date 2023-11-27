@@ -13,7 +13,6 @@ const loginUser = async () => {
 
 const googleSignIn = async () => {
   const credentials = await signInWithGoogle().then((result) => {
-    console.log("User sign In", result);
   });
 };
 

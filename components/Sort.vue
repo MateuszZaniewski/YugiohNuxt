@@ -23,8 +23,6 @@ const addSortParam = () => {
   } else {
     sort.value = "Name";
   }
-
-  console.log(sort);
 };
 
 const addMethodSort = () => {

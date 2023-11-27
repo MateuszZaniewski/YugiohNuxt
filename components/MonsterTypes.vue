@@ -44,7 +44,6 @@ const addTypes = () => {
 
   if (!monsterTypes.value.includes(type)) {
     monsterTypes.value.push(type);
-    console.log(monsterTypes.value);
   } else {
     const element = monsterTypes.value.indexOf(type);
     monsterTypes.value.splice(element, 1);

@@ -6,11 +6,9 @@ const desiredUserFunction = async () => {
   try {
     const data = await loadCurrentUser(); // GoogleUser credentials
     user.value = data
-    console.log('User', user.value)
 
     const cup = await getDesiredUserData(user.value.email);
     displayedUser.value = cup
-    console.log(displayedUser.value)
 
     newAvatar.value = displayedUser.image
 
@@ -64,12 +62,6 @@ onMounted(async () => {
 <template>
 
 <div v-if="displayedUser">
-
-    <div class="flex gap-2 pt-4">
-        <span>Username : </span>
-        <UInput :placeholder="props.user.name" v-model="newUsername" />
-    </div>
-    
     <div class="flex gap-2 pt-8">
         <span>Current avatar : </span>
         <NuxtImg :src="displayedUser.image" class=" h-14 w-14 border border-white rounded-full px-1 py-1 box-content" />

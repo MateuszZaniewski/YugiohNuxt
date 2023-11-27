@@ -3,7 +3,7 @@
   const { loadCurrentUser } = useFirestoreUtils();
 
   const user = await loadCurrentUser(); // GoogleUser credentials
-  console.log(user)
+  
 
 
 </script>
