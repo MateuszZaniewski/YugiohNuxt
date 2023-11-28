@@ -69,7 +69,7 @@ onMounted(async () => {
           class="w-full max-w-[300px] py-5 rounded-lg"
           :src="card[0].card_images[0].image_url"
         />
-    
+
         <h1 class="text-3xl text-center">{{ card[0].name }}</h1>
         <div class="flex w-[50%] mx-auto pt-2 justify-around">
           <NuxtImg
@@ -86,17 +86,26 @@ onMounted(async () => {
             width="30px"
             alt="Add to favourites"
           />
-          <NuxtImg src="/add.png" height="30px" width="30px" alt="Add to deck" />
+          <NuxtImg
+            src="/add.png"
+            height="30px"
+            width="30px"
+            alt="Add to deck"
+          />
         </div>
       </div>
-  
+
       <div class="md:w-1/2">
         <div
           class="bg-[#142D45] text-white w-[90%] mx-auto rounded-t-xl py-2 px-2 mt-2 md:mt-0 md:w-full md:h-[500px] overflow-scroll"
         >
           <div class="flex gap-4 justify-center pb-2 pt-2">
             <div class="flex gap-2 items-center">
-              <NuxtImg :src="useSetAttribute(card[0])" height="20px" width="20px" />
+              <NuxtImg
+                :src="useSetAttribute(card[0])"
+                height="20px"
+                width="20px"
+              />
               <span v-if="card[0].attribute">{{ card[0].attribute }}</span>
               <span v-else>{{ card[0].type }}</span>
             </div>
@@ -105,7 +114,11 @@ onMounted(async () => {
               <span>{{ card[0].level }}</span>
             </div>
             <div v-if="!card[0].level" class="flex gap-2 items-center">
-              <NuxtImg :src="useSetCardType(card[0])" height="20px" width="20px" />
+              <NuxtImg
+                :src="useSetCardType(card[0])"
+                height="20px"
+                width="20px"
+              />
               <span>{{ card[0].race }}</span>
             </div>
           </div>
@@ -134,10 +147,6 @@ onMounted(async () => {
         </div>
       </div>
     </div>
-
-
-
-
   </section>
 </template>
 

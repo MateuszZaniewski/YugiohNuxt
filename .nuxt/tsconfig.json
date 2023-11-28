@@ -20,96 +20,36 @@
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "paths": {
-      "~": [
-        ".."
-      ],
-      "~/*": [
-        "../*"
-      ],
-      "@": [
-        "../../../../../../..//C:"
-      ],
-      "@/*": [
-        "../../../../../../..//C:/*"
-      ],
-      "~~": [
-        ".."
-      ],
-      "~~/*": [
-        "../*"
-      ],
-      "@@": [
-        ".."
-      ],
-      "@@/*": [
-        "../*"
-      ],
-      "assets": [
-        "../assets"
-      ],
-      "assets/*": [
-        "../assets/*"
-      ],
-      "public": [
-        "../public"
-      ],
-      "public/*": [
-        "../public/*"
-      ],
-      "#app": [
-        "../node_modules/nuxt/dist/app"
-      ],
-      "#app/*": [
-        "../node_modules/nuxt/dist/app/*"
-      ],
-      "vue-demi": [
-        "../node_modules/nuxt/dist/app/compat/vue-demi"
-      ],
-      "pinia": [
-        "../node_modules/pinia/dist/pinia"
-      ],
-      "#image": [
-        "../node_modules/@nuxt/image/dist/runtime"
-      ],
-      "#image/*": [
-        "../node_modules/@nuxt/image/dist/runtime/*"
-      ],
-      "#ui": [
-        "../node_modules/@nuxt/ui/dist/runtime"
-      ],
-      "#ui/*": [
-        "../node_modules/@nuxt/ui/dist/runtime/*"
-      ],
-      "#ui-colors": [
-        "."
-      ],
-      "#ui-colors/*": [
-        "./*"
-      ],
-      "#color-mode-options": [
-        "./color-mode-options.mjs"
-      ],
-      "#tailwind-config": [
-        "./tailwind.config"
-      ],
-      "#tailwind-config/*": [
-        "./tailwind.config/*"
-      ],
-      "#vue-router": [
-        "./vue-router-stub"
-      ],
-      "#imports": [
-        "./imports"
-      ],
-      "#build": [
-        "."
-      ],
-      "#build/*": [
-        "./*"
-      ],
-      "#components": [
-        "./components"
-      ]
+      "~": [".."],
+      "~/*": ["../*"],
+      "@": ["../../../../../../..//C:"],
+      "@/*": ["../../../../../../..//C:/*"],
+      "~~": [".."],
+      "~~/*": ["../*"],
+      "@@": [".."],
+      "@@/*": ["../*"],
+      "assets": ["../assets"],
+      "assets/*": ["../assets/*"],
+      "public": ["../public"],
+      "public/*": ["../public/*"],
+      "#app": ["../node_modules/nuxt/dist/app"],
+      "#app/*": ["../node_modules/nuxt/dist/app/*"],
+      "vue-demi": ["../node_modules/nuxt/dist/app/compat/vue-demi"],
+      "pinia": ["../node_modules/pinia/dist/pinia"],
+      "#image": ["../node_modules/@nuxt/image/dist/runtime"],
+      "#image/*": ["../node_modules/@nuxt/image/dist/runtime/*"],
+      "#ui": ["../node_modules/@nuxt/ui/dist/runtime"],
+      "#ui/*": ["../node_modules/@nuxt/ui/dist/runtime/*"],
+      "#ui-colors": ["."],
+      "#ui-colors/*": ["./*"],
+      "#color-mode-options": ["./color-mode-options.mjs"],
+      "#tailwind-config": ["./tailwind.config"],
+      "#tailwind-config/*": ["./tailwind.config/*"],
+      "#vue-router": ["./vue-router-stub"],
+      "#imports": ["./imports"],
+      "#build": ["."],
+      "#build/*": ["./*"],
+      "#components": ["./components"]
     }
   },
   "include": [

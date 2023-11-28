@@ -1,20 +1,17 @@
-
-import { updateAppConfig } from '#app'
-import { defuFn } from 'C:/Users/mateu/Desktop/nuxt/tutorial/node_modules/defu/dist/defu.mjs'
+import { updateAppConfig } from "#app";
+import { defuFn } from "C:/Users/mateu/Desktop/nuxt/tutorial/node_modules/defu/dist/defu.mjs";
 
 const inlineConfig = {
-  "nuxt": {
-    "buildId": "test"
-  }
-}
+  nuxt: {
+    buildId: "test",
+  },
+};
 
 // Vite - webpack is handled directly in #app/config
 if (import.meta.hot) {
   import.meta.hot.accept((newModule) => {
-    updateAppConfig(newModule.default)
-  })
+    updateAppConfig(newModule.default);
+  });
 }
 
-
-
-export default /* #__PURE__ */ defuFn(inlineConfig)
+export default /* #__PURE__ */ defuFn(inlineConfig);

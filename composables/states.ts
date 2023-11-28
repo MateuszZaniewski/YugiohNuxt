@@ -20,4 +20,4 @@ export const useFiltersOpen = () =>
   useState<boolean>("filtersOpen", () => false);
 
 export const useFavs = () => useState<Boolean>("favourites", () => false);
-export const logedIn = () => useState<Boolean>('logedin', () => false)
+export const logedIn = () => useState<Boolean>("logedin", () => false);

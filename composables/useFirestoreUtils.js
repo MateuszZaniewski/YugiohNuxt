@@ -13,11 +13,11 @@ import {
   arrayUnion,
   arrayRemove,
   onSnapshot,
-  queryEqual
+  queryEqual,
 } from "firebase/firestore";
 
 export const useFirestoreUtils = () => {
-  // Functions that works 
+  // Functions that works
 
   const addUser = async (username, email) => {
     try {
@@ -34,7 +34,7 @@ export const useFirestoreUtils = () => {
           name: username,
           friends: [],
           email: email,
-          image: '/userTemplate.jpg'
+          image: "/userTemplate.jpg",
         });
         console.log("User added to DB");
       }
@@ -43,33 +43,35 @@ export const useFirestoreUtils = () => {
     }
   };
 
+  const loadCurrentUser = async () => {
+    const { $firestoreUser } = useNuxtApp();
+    const googleUser = await $firestoreUser;
+    return googleUser;
+  };
 
-const loadCurrentUser = async () => {
-  const { $firestoreUser } = useNuxtApp();
-  const googleUser = await $firestoreUser;
-    return googleUser
-};
-
-const loadCurrentUserData = async (currentUserEmail) => {
-  try {
-    const { $db } = useNuxtApp();
-    const q = query(collection($db, "users"), where("email", "==", currentUserEmail));
-    const querySnapshot = await getDocs(q);
-    let currentUserData = {}
-    querySnapshot.forEach((doc) => {
-      const user = doc.data();
-      currentUserData = {
-        name: user.name,
-        email: user.email,
-        friends: user.friends,
-        image: user.image
-      }
-    });
-    return currentUserData
-  } catch (error) {
-    console.log(error)
-  }
-}
+  const loadCurrentUserData = async (currentUserEmail) => {
+    try {
+      const { $db } = useNuxtApp();
+      const q = query(
+        collection($db, "users"),
+        where("email", "==", currentUserEmail),
+      );
+      const querySnapshot = await getDocs(q);
+      let currentUserData = {};
+      querySnapshot.forEach((doc) => {
+        const user = doc.data();
+        currentUserData = {
+          name: user.name,
+          email: user.email,
+          friends: user.friends,
+          image: user.image,
+        };
+      });
+      return currentUserData;
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   // Fetch from DB an user that you want to display in [username].vue
   const getDesiredUserData = async (email) => {
@@ -77,45 +79,44 @@ const loadCurrentUserData = async (currentUserEmail) => {
       const { $db } = useNuxtApp();
       const q = query(collection($db, "users"), where("email", "==", email));
       const querySnapshot = await getDocs(q);
-      let desiredUser = {}
+      let desiredUser = {};
       querySnapshot.forEach((doc) => {
         const user = doc.data();
         desiredUser = {
           name: user.name,
           email: user.email,
           friends: user.friends,
-          image: user.image
-        }
+          image: user.image,
+        };
       });
-      return desiredUser
+      return desiredUser;
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   };
 
   /// podziałać tutaj
-
 
   const grabUser = async (name) => {
     try {
       const { $db } = useNuxtApp();
       const q = query(collection($db, "users"), where("name", "==", name));
       const querySnapshot = await getDocs(q);
-      let desiredUser = {}
+      let desiredUser = {};
       querySnapshot.forEach((doc) => {
         const user = doc.data();
         desiredUser = {
-          name : user.name,
-          email : user.email,
-          image : user.image,
-          friends : user.friends
-        }
-});
-    return desiredUser
+          name: user.name,
+          email: user.email,
+          image: user.image,
+          friends: user.friends,
+        };
+      });
+      return desiredUser;
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   const setNewUserAvatar = async (email, newAvatar) => {
     try {
@@ -123,13 +124,12 @@ const loadCurrentUserData = async (currentUserEmail) => {
       const userRef = doc($db, "users", email);
 
       await updateDoc(userRef, {
-        image: newAvatar
+        image: newAvatar,
       });
-
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   // Fetch all users from DB
   const fetchAllUsers = async (email) => {
@@ -137,19 +137,19 @@ const loadCurrentUserData = async (currentUserEmail) => {
       const { $db } = useNuxtApp();
       const q = query(collection($db, "users"));
       const querySnapshot = await getDocs(q);
-      let allUsers = []
+      let allUsers = [];
       querySnapshot.forEach((doc) => {
         const user = doc.data();
-        if(email != user.email){
+        if (email != user.email) {
           allUsers.push({
             name: user.name,
             email: user.email,
             friends: user.friends,
-            image: user.image
-          })
+            image: user.image,
+          });
         }
       });
-      return allUsers
+      return allUsers;
     } catch (error) {
       console.log(error);
     }
@@ -158,25 +158,26 @@ const loadCurrentUserData = async (currentUserEmail) => {
   // Fetch friends array from an active user
   const fetchFriends = async (currentUserEmail) => {
     try {
-      const userData = await getDesiredUserData(currentUserEmail)
-      const displayedUser = userData
-      const friendsArray = Object.values(displayedUser.friends)
-      let result = []
-      let friendsObject = {}
+      const userData = await getDesiredUserData(currentUserEmail);
+      const displayedUser = userData;
+      const friendsArray = Object.values(displayedUser.friends);
+      let result = [];
+      let friendsObject = {};
       for (const friend of friendsArray) {
         const userFriend = await getDesiredUserData(friend.email);
-        result.push(friendsObject = {
-          name: userFriend.name,
-          email: userFriend.email,
-          image: userFriend.image
-        })
+        result.push(
+          (friendsObject = {
+            name: userFriend.name,
+            email: userFriend.email,
+            image: userFriend.image,
+          }),
+        );
       }
-      return result
+      return result;
     } catch (error) {
       console.log(error);
     }
-  }
-
+  };
 
   const addFavouriteCard = async (card, email, image) => {
     try {
@@ -226,45 +227,42 @@ const loadCurrentUserData = async (currentUserEmail) => {
   };
 
   const addFriend = async (email, friendEmail, friendName) => {
-      try {
-        const { $db } = useNuxtApp();
-  
-        const userRef = doc($db, "users", email);
-  
-  
-        await updateDoc(userRef, {
-          friends: arrayUnion({
-            name: friendName,
-            email : friendEmail
-  
-          }),
-        });
-  
-        console.log("User", friendName, " added to your friend list");
-      } catch (error) {
-        console.log(error);
-      }
-    };
-  
-    const removeFriend = async (email, friendEmail, friendName) => {
-      try {
-        const { $db } = useNuxtApp();
-  
-        const userRef = doc($db, "users", email);
-  
-        await updateDoc(userRef, {
-          friends: arrayRemove({
-            email: friendEmail,
-            name: friendName
-          }),
-        });
-  
-        console.log("User", friendName, " removed to your friend list");
-      } catch (error) {
-        console.log(error);
-      }
-    };
+    try {
+      const { $db } = useNuxtApp();
 
+      const userRef = doc($db, "users", email);
+
+      await updateDoc(userRef, {
+        friends: arrayUnion({
+          name: friendName,
+          email: friendEmail,
+        }),
+      });
+
+      console.log("User", friendName, " added to your friend list");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const removeFriend = async (email, friendEmail, friendName) => {
+    try {
+      const { $db } = useNuxtApp();
+
+      const userRef = doc($db, "users", email);
+
+      await updateDoc(userRef, {
+        friends: arrayRemove({
+          email: friendEmail,
+          name: friendName,
+        }),
+      });
+
+      console.log("User", friendName, " removed to your friend list");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return {
     loadCurrentUser,

@@ -2,17 +2,19 @@
 let clickedCard = ref();
 
 const { $firestoreUser } = useNuxtApp();
-const user = await $firestoreUser
+const user = await $firestoreUser;
 
-const page = ref(useCurrentPage())
+const page = ref(useCurrentPage());
 const cardsPerPage = ref(12);
-const pageCount = computed(() => Math.ceil(fetchedCards.value.length / cardsPerPage.value));
+const pageCount = computed(() =>
+  Math.ceil(fetchedCards.value.length / cardsPerPage.value),
+);
 let fetchedCards = ref<Card[]>([]);
-let allCardsForHints = <any>[]
-let checker = 0
+let allCardsForHints = <any>[];
+let checker = 0;
 // Wartość allCardsForHints powinna być stała, nie zmieniać się po wciśnięciu szukania np:
 // if(allCardsForHitns === undefined) {
-  // nadać jej wartość kart, a gdy już ma jakąś wartość to zostawić ją w spokoju
+// nadać jej wartość kart, a gdy już ma jakąś wartość to zostawić ją w spokoju
 //}
 
 const makeCardDetails = (card: Object) => {
@@ -26,7 +28,7 @@ interface Card {
     image_url: string;
   }[];
 }
-const { useSetAttribute, useSetCardType } = useUtils()
+const { useSetAttribute, useSetCardType } = useUtils();
 const attributes = useAttributes();
 const monsterTypes = useMonsterTypes();
 const cardRaces = useCardRaces();
@@ -36,7 +38,7 @@ const fname = useFnameParam();
 const order = useSortMethod();
 const filtersExpanded = useFiltersOpen();
 const innerWidth = ref(window.innerWidth);
-const fav = useFavs()
+const fav = useFavs();
 
 let attr = ref(attributes.value);
 
@@ -65,18 +67,16 @@ const searchForCards = async (
     );
     if (apiFetch) {
       fetchedCards.value = apiFetch;
-      
-      if(checker === 0){
-        allCardsForHints = fetchedCards.value
-        checker++
+
+      if (checker === 0) {
+        allCardsForHints = fetchedCards.value;
+        checker++;
       }
 
       if (order.value === "Descending") {
         fetchedCards.value = fetchedCards.value.reverse();
-        
       } else {
         fetchedCards.value = fetchedCards.value;
-        
       }
     } else {
       // Handle the case when no cards are found
@@ -90,7 +90,7 @@ const searchForCards = async (
 };
 
 onMounted(() => {
-    searchForCards(
+  searchForCards(
     fname.value,
     attributes.value,
     cardLevels.value,
@@ -111,10 +111,9 @@ let showHints = false;
 
 const filteredCards = computed(() => {
   return fetchedCards.value.filter((card) =>
-    card.name.toLowerCase().includes(fname.value.toLowerCase())
+    card.name.toLowerCase().includes(fname.value.toLowerCase()),
   );
 });
-
 </script>
 
 <template>
@@ -123,8 +122,6 @@ const filteredCards = computed(() => {
   <section
     class="searchBar w-[90%] mx-auto pt-5 flex items-center max-w-[730px]"
   >
-
-    
     <input
       v-model="fname"
       type="search"
@@ -136,9 +133,13 @@ const filteredCards = computed(() => {
     />
 
     <datalist v-if="showHints" id="hints">
-      <option v-for="card in allCardsForHints" :key="card.name" :value="card.name"></option>
+      <option
+        v-for="card in allCardsForHints"
+        :key="card.name"
+        :value="card.name"
+      ></option>
     </datalist>
-    
+
     <button
       @click="
         searchForCards(
@@ -148,7 +149,8 @@ const filteredCards = computed(() => {
           cardRaces,
           monsterTypes,
           sort,
-        ), filtersExpanded = false
+        ),
+          (filtersExpanded = false)
       "
       class="h-11 w-[20%] border-2 rounded-r-3xl rounded-br-3xl border-[#2D61AF] bg-[url('/glass.png')] bg-no-repeat bg-[#2D61AF] bg-center"
     ></button>
@@ -207,8 +209,19 @@ const filteredCards = computed(() => {
 
         <div class="flex justify-center items-center gap-5 pt-4">
           <div class="flex gap-4">
-                  <NuxtImg @click="fav = !fav" :src='fav ? "/fullHeart.png" : "/emptyHeart.png"' height="30px" width="30px" alt="Add to favourites"/>
-                  <NuxtImg src="/add.png" height="30px" width="30px" alt="Add to deck" />
+            <NuxtImg
+              @click="fav = !fav"
+              :src="fav ? '/fullHeart.png' : '/emptyHeart.png'"
+              height="30px"
+              width="30px"
+              alt="Add to favourites"
+            />
+            <NuxtImg
+              src="/add.png"
+              height="30px"
+              width="30px"
+              alt="Add to deck"
+            />
           </div>
           <div class="flex gap-2 items-center">
             <NuxtImg
@@ -233,7 +246,6 @@ const filteredCards = computed(() => {
             />
             <span>{{ clickedCard.race }}</span>
           </div>
-          
         </div>
 
         <div v-if="clickedCard.atk >= 0" class="pt-2">
@@ -268,7 +280,8 @@ const filteredCards = computed(() => {
         class="flex flex-wrap justify-center gap-3 mx-auto w-[90%] max-w-3xl lg:w-[50vw] px-2 py-2 border border-gray-300 rounded-xl"
       >
         <div
-          v-for="card in visibleCards" :key="card.id"
+          v-for="card in visibleCards"
+          :key="card.id"
           class="justify-center w-fit mx-auto"
           :class="innerWidth <= 1024 ? 'flex' : 'hidden'"
         >
@@ -305,16 +318,22 @@ const filteredCards = computed(() => {
         </div>
       </div>
       <div v-if="!filtersExpanded" class="flex justify-center pt-4">
-        <UPagination v-model="page" :page-count="12" :total="fetchedCards.length" show-first show-last show-firs :size="innerWidth <= 1024 ? 'xs' : 'xl'" :active-button="{ variant: 'solid' }"
-        :inactive-button="{ color: 'gray' }"
-        class="flex gap-1 lg:size='xl'">
+        <UPagination
+          v-model="page"
+          :page-count="12"
+          :total="fetchedCards.length"
+          show-first
+          show-last
+          show-firs
+          :size="innerWidth <= 1024 ? 'xs' : 'xl'"
+          :active-button="{ variant: 'solid' }"
+          :inactive-button="{ color: 'gray' }"
+          class="flex gap-1 lg:size='xl'"
+        >
         </UPagination>
       </div>
     </div>
   </div>
-
-
-
 </template>
 
 <style scoped>

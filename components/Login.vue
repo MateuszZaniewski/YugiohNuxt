@@ -12,8 +12,7 @@ const loginUser = async () => {
 };
 
 const googleSignIn = async () => {
-  const credentials = await signInWithGoogle().then((result) => {
-  });
+  const credentials = await signInWithGoogle().then((result) => {});
 };
 
 onMounted(async () => {

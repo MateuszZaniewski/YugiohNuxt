@@ -9,16 +9,13 @@ export default defineNuxtConfig({
     // ...
     "@pinia/nuxt",
     "@nuxt/image",
-    '@nuxt/ui',
-    '@nuxtjs/google-fonts',
+    "@nuxt/ui",
+    "@nuxtjs/google-fonts",
   ],
   pinia: {
-    autoImports: ['defineStore']
+    autoImports: ["defineStore"],
   },
-  css: [
-    "~/main.css",
-    "~/layouts/global.css"
-  ],
+  css: ["~/main.css", "~/layouts/global.css"],
   ssr: false,
   runtimeConfig: {
     public: {
@@ -34,15 +31,15 @@ export default defineNuxtConfig({
   googleFonts: {
     families: {
       Roboto: true,
-      'Josefin+Sans': true,
+      "Josefin+Sans": true,
       Lato: [100, 300],
       Raleway: {
         wght: [100, 400],
-        ital: [100]
+        ital: [100],
       },
-    }
+    },
   },
   imports: {
-    dirs: ['/stores']
-  }
+    dirs: ["/stores"],
+  },
 });

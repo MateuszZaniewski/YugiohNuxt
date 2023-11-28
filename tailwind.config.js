@@ -12,8 +12,8 @@ module.exports = {
   ],
   theme: {
     fontFamily: {
-      'yugioh': ['Yugioh']
-    }
+      yugioh: ["Yugioh"],
+    },
   },
   plugins: [],
 };

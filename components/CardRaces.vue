@@ -25,7 +25,7 @@ const cardRacesArray = [
   "Divine-Beast",
   "Wyrm",
   "Cyberse",
-  "Creator-God"
+  "Creator-God",
 ];
 const expanded = ref(false);
 

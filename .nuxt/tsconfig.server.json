@@ -12,75 +12,29 @@
     "jsxFactory": "h",
     "jsxFragmentFactory": "Fragment",
     "paths": {
-      "#imports": [
-        "./types/nitro-imports"
-      ],
-      "#paths": [
-        "../node_modules/nuxt/dist/core/runtime/nitro/paths"
-      ],
-      "~": [
-        "./.."
-      ],
-      "~/*": [
-        "../*"
-      ],
-      "@": [
-        "../../../../../../..//C:"
-      ],
-      "~~": [
-        "./.."
-      ],
-      "~~/*": [
-        "../*"
-      ],
-      "@@": [
-        "./.."
-      ],
-      "@@/*": [
-        "../*"
-      ],
-      "assets": [
-        "../assets"
-      ],
-      "assets/*": [
-        "../assets/*"
-      ],
-      "public": [
-        "../public"
-      ],
-      "public/*": [
-        "../public/*"
-      ],
-      "pinia": [
-        "../node_modules/pinia/dist/pinia"
-      ],
-      "#image": [
-        "../node_modules/@nuxt/image/dist/runtime"
-      ],
-      "#image/*": [
-        "../node_modules/@nuxt/image/dist/runtime/*"
-      ],
-      "#ui": [
-        "../node_modules/@nuxt/ui/dist/runtime"
-      ],
-      "#ui/*": [
-        "../node_modules/@nuxt/ui/dist/runtime/*"
-      ],
-      "#ui-colors": [
-        "./"
-      ],
-      "#ui-colors/*": [
-        "./*"
-      ],
-      "#color-mode-options": [
-        "./color-mode-options"
-      ],
-      "#tailwind-config": [
-        "./tailwind.config"
-      ],
-      "#tailwind-config/*": [
-        "./tailwind.config/*"
-      ]
+      "#imports": ["./types/nitro-imports"],
+      "#paths": ["../node_modules/nuxt/dist/core/runtime/nitro/paths"],
+      "~": ["./.."],
+      "~/*": ["../*"],
+      "@": ["../../../../../../..//C:"],
+      "~~": ["./.."],
+      "~~/*": ["../*"],
+      "@@": ["./.."],
+      "@@/*": ["../*"],
+      "assets": ["../assets"],
+      "assets/*": ["../assets/*"],
+      "public": ["../public"],
+      "public/*": ["../public/*"],
+      "pinia": ["../node_modules/pinia/dist/pinia"],
+      "#image": ["../node_modules/@nuxt/image/dist/runtime"],
+      "#image/*": ["../node_modules/@nuxt/image/dist/runtime/*"],
+      "#ui": ["../node_modules/@nuxt/ui/dist/runtime"],
+      "#ui/*": ["../node_modules/@nuxt/ui/dist/runtime/*"],
+      "#ui-colors": ["./"],
+      "#ui-colors/*": ["./*"],
+      "#color-mode-options": ["./color-mode-options"],
+      "#tailwind-config": ["./tailwind.config"],
+      "#tailwind-config/*": ["./tailwind.config/*"]
     }
   },
   "include": [
@@ -96,9 +50,5 @@
     "../**/*",
     "../server/**/*"
   ],
-  "exclude": [
-    "../node_modules",
-    "../node_modules/nuxt/node_modules",
-    "../dist"
-  ]
+  "exclude": ["../node_modules", "../node_modules/nuxt/node_modules", "../dist"]
 }

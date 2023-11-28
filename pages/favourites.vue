@@ -1,10 +1,9 @@
 <script setup>
-
 const fetchedFavouriteCards = ref([]);
 
 const { loadCurrentUser, getFavouriteCards } = useFirestoreUtils();
 
-  const user = await loadCurrentUser(); // GoogleUser credentials
+const user = await loadCurrentUser(); // GoogleUser credentials
 
 const fetchFavoriteCards = async () => {
   try {

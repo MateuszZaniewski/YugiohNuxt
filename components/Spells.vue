@@ -26,7 +26,10 @@ const addMonsterRace = () => {
 
 <template>
   <section class="pb-2 border-b-2">
-    <div @click="expanded = !expanded" class="flex pt-4 gap-5 justify-between pr-5">
+    <div
+      @click="expanded = !expanded"
+      class="flex pt-4 gap-5 justify-between pr-5"
+    >
       <span class="w-40">Spell & Trap Types</span>
       <NuxtImg
         :src="expanded ? '/upArrow.png' : '/arrowDown.png'"
