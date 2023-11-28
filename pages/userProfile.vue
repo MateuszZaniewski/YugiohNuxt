@@ -79,8 +79,8 @@ onMounted(async () => {
     </div>
 
     <div class="flex justify-between w-[90%] mx-auto">
-        <NuxtImg @click="$router.go(-1)" src="/backArrowBlack.png" height="30px" width="30px"/>
-        <UButton @click="logoutUser()" icon="i-heroicons-arrow-left-on-rectangle" class="text-xs px-2 py-0 roundex-3xl bg-[rgba(134,144,158,0.7)]">Logout</UButton>
+        <NuxtImg @click="$router.go(-1)" src="backArrowBlack.png" height="30px" width="30px"/>
+        <UButton @click="logoutUser()" icon="i-heroicons-arrow-left-on-rectangle" class="text-xs px-2 py-0 roundex-3xl bg-[rgba(134,144,158,0.7)] dark:bg-white">Logout</UButton>
     </div>
     
     
@@ -93,7 +93,7 @@ onMounted(async () => {
             <span class="text-xs italic">{{ displayedUser.email }}</span>
         </div>
         <div class="flex items-end mr-2">
-            <UButton @click="editProfile = !editProfile" class="text-xs px-1 py-1 roundex-3xl bg-[rgba(45,97,175,0.7)]">Edit profile</UButton>
+            <UButton @click="editProfile = !editProfile" class="text-xs px-1 py-1 roundex-3xl bg-[rgba(45,97,175,0.7)] dark:text-white">Edit profile</UButton>
             
         </div>
     </section>
@@ -111,18 +111,18 @@ onMounted(async () => {
 <div v-if="!editProfile">
     <section class="pt-8 w-[90%] mx-auto max-w-xl">
         <div>
-            <div class="flex justify-between w-[90%] mx-auto">
-                <div class="flex gap-1 items-center w-[90%] mx-auto">
+            <div class="flex justify-between w-[90%] mx-auto ">
+                <div class="flex gap-1 items-center w-[90%] mx-auto ">
                     <UIcon  name="i-heroicons-heart" />
-                    <UBadge :label="`Favourite cards (${fetchedFavouriteCards.length})`" class="px-0 w-full text-sm bg-transparent text-[#A25772] font-bold" />
+                    <UBadge :label="`Favourite cards (${fetchedFavouriteCards.length})`" class="px-0 w-full text-sm bg-transparent text-[#A25772] font-bold dark:text-white dark:bg-[#202020]" />
                 </div>
                 <div class="w-2/6 flex justify-end">
                     <NuxtLink :to="`/favourites`">
-                        <UButton label="Show more" class="border shadow-none border-transparent bg-transparent text-[rgba(0,0,0,0.8)] px-0 py-0 text-sm font-bold" />
+                        <UButton label="Show more" class="border shadow-none border-transparent bg-transparent text-[rgba(0,0,0,0.8)] px-0 py-0 text-sm font-bold dark:text-white dark:bg-[#202020]" />
                     </NuxtLink>
                 </div>
             </div>
-            <div v-if="fetchedFavouriteCards.length > 0" class="rounded-xl border border-blue-200 w-[90%] mx-auto flex gap-5 pl-5 pr-2 items-center overflow-scroll overflow-y-hidden bg-blue-100">
+            <div v-if="fetchedFavouriteCards.length > 0" class="rounded-xl border border-blue-200 w-[90%] mx-auto flex gap-5 pl-5 pr-2 items-center overflow-scroll overflow-y-hidden bg-blue-100 dark:text-white dark:bg-[#202020]">
                     <div  v-for="fav in fetchedFavouriteCards.slice(0,10)" :key="fav" class="w-fit py-7">
                         <NuxtLink :to="`card/${fav.card}`">
                             <NuxtImg :src="fav.image" class="rounded-sm max-w-[150px] h-[100px] w-[64px] lg:h-[160px] lg:w-[108px]"  />
@@ -133,7 +133,7 @@ onMounted(async () => {
                     </NuxtLink>
             </div>
 
-            <div v-if="fetchedFavouriteCards.length == 0" class="rounded-xl border border-blue-200 w-[90%] mx-auto min-h-[170px] flex flex-col text-[rgba(0,0,0,0.5)] gap-1 pl-5 pr-2 items-center justify-center bg-blue-100">
+            <div v-if="fetchedFavouriteCards.length == 0" class="rounded-xl border border-blue-200 w-[90%] mx-auto min-h-[170px] flex flex-col text-[rgba(0,0,0,0.5)] gap-1 pl-5 pr-2 items-center justify-center bg-blue-100 dark:text-white dark:bg-[#202020]">
                 <span>Your favorites list is currently empty.</span>
                     <span>Feel free to add some cards.</span>
             </div>
@@ -150,10 +150,10 @@ onMounted(async () => {
         <div class="flex justify-between w-[90%] mx-auto">
             <div class="flex gap-1 items-center">
                 <UIcon name="i-heroicons-users" />
-                <UBadge :label="`Friends (${friendUsers.length})`" class="px-0 text-sm bg-transparent text-[#A25772] font-bold" />
+                <UBadge :label="`Friends (${friendUsers.length})`" class="px-0 text-sm bg-transparent text-[#A25772] font-bold dark:text-white dark:bg-[#202020]" />
             </div>
             <div>
-                <UButton label="Search" @click="isOpenFriends = true" class="border shadow-none border-transparent bg-transparent text-[rgba(0,0,0,0.8)] px-0 py-0 text-sm font-bold" />
+                <UButton label="Search" @click="isOpenFriends = true" class="border shadow-none border-transparent bg-transparent text-[rgba(0,0,0,0.8)] px-0 py-0 text-sm font-bold dark:text-white dark:bg-[#202020]" />
 
                 <UModal v-model="isOpenFriends">
                     <UCommandPalette
@@ -167,7 +167,7 @@ onMounted(async () => {
 
             </div>
         </div>
-        <div v-if="friendUsers.length > 0" class="rounded-xl border border-blue-200 w-[90%] mx-auto flex items-center h-44 bg-blue-100 overflow-scroll overflow-x-hidden">
+        <div v-if="friendUsers.length > 0" class="rounded-xl border border-blue-200 w-[90%] mx-auto flex items-center h-44 bg-blue-100 overflow-scroll overflow-x-hidden dark:text-white dark:bg-[#202020]">
             <div class="w-11/12 mx-auto h-full pt-4">
                 <div v-for="friend in friendUsers" :key="friend">
                     <NuxtLink :to="`user/${friend.name}`">
@@ -181,7 +181,7 @@ onMounted(async () => {
                 </div>
             </div>
         </div>
-        <div v-if="friendUsers.length === 0" class="rounded-xl border border-blue-200 w-[90%] mx-auto flex flex-col justify-center items-center h-44 bg-blue-100 text-[rgba(0,0,0,0.5)]">
+        <div v-if="friendUsers.length === 0" class="rounded-xl border border-blue-200 w-[90%] mx-auto flex flex-col justify-center items-center h-44 bg-blue-100 text-[rgba(0,0,0,0.5)] dark:text-white dark:bg-[#202020]">
             <span class="text-center">It seems that You have no friends yet.</span>
             <span class="text-center">Let's try to find some</span>
         </div>
@@ -195,12 +195,12 @@ onMounted(async () => {
     <section class=" py-8 w-[90%] mx-auto max-w-xl">
         <div class="flex gap-1 items-center w-[90%] mx-auto">
             <UIcon name="i-heroicons-puzzle-piece" />
-            <UBadge :label="`Decks (${decks.length})`" class="px-0 text-sm bg-transparent text-[#A25772] font-bold" />
+            <UBadge :label="`Decks (${decks.length})`" class="px-0 text-sm bg-transparent text-[#A25772] font-bold dark:text-white dark:bg-[#202020]" />
         </div>
-        <div v-if="decks.length > 0" class="rounded-xl border border-blue-200 w-[90%] mx-auto flex gap-5 pl-5 pr-2 items-center h-44 bg-blue-100">
+        <div v-if="decks.length > 0" class="rounded-xl border border-blue-200 w-[90%] mx-auto flex gap-5 pl-5 pr-2 items-center h-44 bg-blue-100 dark:text-white dark:bg-[#202020] ">
             
         </div>
-        <div v-if="decks.length == 0" class="rounded-xl border border-blue-200 w-[90%] mx-auto min-h-[170px] flex flex-col text-[rgba(0,0,0,0.5)] gap-1 pl-5 pr-2 items-center justify-center bg-blue-100">
+        <div v-if="decks.length == 0" class="rounded-xl border border-blue-200 w-[90%] mx-auto min-h-[170px] flex flex-col text-[rgba(0,0,0,0.5)] gap-1 pl-5 pr-2 items-center justify-center bg-blue-100 dark:text-white dark:bg-[#202020]">
                 <span class="text-center">Meet the deck on a coffee break soon to host</span>
                     <span class="text-center">legendary cards even unicorns envy!</span>
             </div>

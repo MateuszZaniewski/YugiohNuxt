@@ -68,7 +68,7 @@ onMounted(async () => {
         <UButton @click="avatarsOpen = !avatarsOpen">Browse Avatars</UButton>
     </div>
     
-    <div v-if="avatarsOpen" class="rounded-xl border border-blue-200 w-[90%] mt-4 py-4 px-4 mx-auto flex items-center flex-wrap bg-blue-100">
+    <div v-if="avatarsOpen" class="rounded-xl border border-blue-200 w-[90%] mt-4 py-4 px-4 mx-auto flex items-center flex-wrap bg-blue-100 dark:text-white dark:bg-[#202020]">
         <div v-for="avatar in avatars" :key="avatar" class="px-2 py-1">
             <NuxtImg :src="avatar" class=" h-14 w-14 border border-white" @click="displayedUser.image = avatar" >
 

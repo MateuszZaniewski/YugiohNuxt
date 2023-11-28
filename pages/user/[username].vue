@@ -84,8 +84,8 @@ onMounted(async () => {
     </section>
     <section class="flex pt-3 gap-3 justify-start w-[90%] mx-auto max-w-xl">
       <div class="flex justify-center gap-3">
-            <UButton @click="addUserToFriend(user.email, userData.email, userData.name)" class="text-xs px-1 py-1 roundex-3xl bg-[rgba(45,97,175,0.7)]">Add to friends</UButton>
-            <UButton @click="addUserToFriend(user.email, userData.email, userData.name)" class="text-xs px-1 py-1 roundex-3xl bg-[rgba(45,97,175,0.7)]">Remove from friends</UButton>
+            <UButton @click="addUserToFriend(user.email, userData.email, userData.name)" class="text-xs px-1 py-1 roundex-3xl bg-[rgba(45,97,175,0.7)] ">Add to friends</UButton>
+            <UButton @click="removeUserFromFriends(user.email, userData.email, userData.name)" class="text-xs px-1 py-1 roundex-3xl bg-[rgba(45,97,175,0.7)]">Remove from friends</UButton>
       </div>
     </section>
 
@@ -95,10 +95,10 @@ onMounted(async () => {
             <div class="flex justify-start mx-auto">
                 <div class="flex gap-1 items-center w-[90%] mx-auto">
                     <UIcon  name="i-heroicons-heart" />
-                    <UBadge :label="`Favourite cards (${fetchedFavouriteCards.length})`" class="px-0 w-full text-sm bg-transparent text-[#A25772] font-bold" />
+                    <UBadge :label="`Favourite cards (${fetchedFavouriteCards.length})`" class="px-0 w-full text-sm bg-transparent text-[#A25772] font-bold dark:text-white dark:bg-[#202020]" />
                 </div>
             </div>
-            <div v-if="fetchedFavouriteCards.length > 0" class="rounded-xl border border-blue-200 w-[90%] mx-auto flex gap-5 pl-5 pr-2 items-center overflow-scroll overflow-y-hidden bg-blue-100">
+            <div v-if="fetchedFavouriteCards.length > 0" class="rounded-xl border border-blue-200 w-[90%] mx-auto flex gap-5 pl-5 pr-2 items-center overflow-scroll overflow-y-hidden bg-blue-100 dark:text-white dark:bg-[#202020]">
                     <div  v-for="fav in fetchedFavouriteCards" :key="fav" class="w-fit py-7">
                         <NuxtLink :to="`/card/${fav.card}`">
                             <NuxtImg :src="fav.image" class="rounded-sm max-w-[150px] h-[100px] w-[64px] lg:h-[160px] lg:w-[108px]"  />
@@ -106,7 +106,7 @@ onMounted(async () => {
                     </div>
             </div>
 
-            <div v-if="fetchedFavouriteCards.length == 0" class="rounded-xl border border-blue-200 w-[90%] mx-auto min-h-[170px] flex flex-col text-[rgba(0,0,0,0.5)] gap-1 pl-5 pr-2 items-center justify-center bg-blue-100">
+            <div v-if="fetchedFavouriteCards.length == 0" class="rounded-xl border border-blue-200 w-[90%] mx-auto min-h-[170px] flex flex-col text-[rgba(0,0,0,0.5)] gap-1 pl-5 pr-2 items-center justify-center bg-blue-100 dark:text-white dark:bg-[#202020]">
                 <span>User favorites list is currently empty.</span>
             </div>
 
@@ -118,12 +118,12 @@ onMounted(async () => {
     <section class=" py-8 w-[90%] mx-auto max-w-xl">
         <div class="flex gap-1 items-center w-[90%] mx-auto">
             <UIcon name="i-heroicons-puzzle-piece" />
-            <UBadge :label="`Decks (${decks.length})`" class="px-0 text-sm bg-transparent text-[#A25772] font-bold" />
+            <UBadge :label="`Decks (${decks.length})`" class="px-0 text-sm bg-transparent text-[#A25772] font-bold dark:text-white dark:bg-[#202020]" />
         </div>
-        <div v-if="decks.length > 0" class="rounded-xl border border-blue-200 w-[90%] mx-auto flex gap-5 pl-5 pr-2 items-center h-44 bg-blue-100">
+        <div v-if="decks.length > 0" class="rounded-xl border border-blue-200 w-[90%] mx-auto flex gap-5 pl-5 pr-2 items-center h-44 bg-blue-100 dark:text-white dark:bg-[#202020]">
             
         </div>
-        <div v-if="decks.length == 0" class="rounded-xl border border-blue-200 w-[90%] mx-auto min-h-[170px] flex flex-col text-[rgba(0,0,0,0.5)] gap-1 pl-5 pr-2 items-center justify-center bg-blue-100">
+        <div v-if="decks.length == 0" class="rounded-xl border border-blue-200 w-[90%] mx-auto min-h-[170px] flex flex-col text-[rgba(0,0,0,0.5)] gap-1 pl-5 pr-2 items-center justify-center bg-blue-100 dark:text-white dark:bg-[#202020]">
                 <span class="text-center">User has no decks build yet.</span>
             </div>
     </section>

@@ -1,7 +1,8 @@
 <script setup lang="ts">
+import type { isNull } from 'util';
+
 const isOpen = ref(false)
-const { $firestoreUser } = useNuxtApp();
-const user = await $firestoreUser
+const user = ref()
 
 const links = [
 {
@@ -41,7 +42,9 @@ const secondLinks = [
 
 onMounted(async () => {
   try {
-
+    const data = await initUser()
+    user.value = data
+    console.log(user.value)
   } catch (error) {
     console.error(error);
   }
@@ -58,7 +61,7 @@ onMounted(async () => {
       >Yu-Gi-OH
     </NuxtLink>
       <div class="flex md:justify-between md:w-fit md:gap-6">
-        <NuxtLink
+        <NuxtLink v-if="user"
           to="/userProfile"
           class="hidden md:block md:text-lg hover:text-[#9B59B6] cursor-pointer"
           >My Account</NuxtLink
@@ -98,11 +101,11 @@ onMounted(async () => {
               </template>
             </UVerticalNavigation>
             </div>
-            <div v-if="!user" class="pb-2 pl-4 mt-auto">
+            <div class="pb-2 pl-4 mt-auto">
               <UVerticalNavigation :links="secondLinks" class="flex flex-col gap-2">
               <template #default="{ link }">
                 <div>
-                  <span class="group-hover:text-primary relative font-[yugioh]">{{ link.label }}</span>
+                  <span  class="group-hover:text-primary relative font-[yugioh]">{{ link.label }}</span>
                 </div>
               </template>
             </UVerticalNavigation>
@@ -123,7 +126,7 @@ onMounted(async () => {
           to="/favourites"
           >Favourites</NuxtLink
         >
-        <NuxtLink
+        <NuxtLink v-if="!user"
           class="hidden md:block md:text-lg hover:text-[#9B59B6] cursor-pointer"
           to="/loginPage"
           >Login/SignIn</NuxtLink

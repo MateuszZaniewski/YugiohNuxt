@@ -51,6 +51,7 @@ declare global {
   const isVue2: typeof import('../../node_modules/nuxt/dist/app/compat/vue-demi')['isVue2']
   const isVue3: typeof import('../../node_modules/nuxt/dist/app/compat/vue-demi')['isVue3']
   const loadPayload: typeof import('../../node_modules/nuxt/dist/app')['loadPayload']
+  const logedIn: typeof import('../../composables/states')['logedIn']
   const logoutUser: typeof import('../../composables/useFirebase')['logoutUser']
   const markRaw: typeof import('../../node_modules/vue')['markRaw']
   const mergeModels: typeof import('../../node_modules/vue')['mergeModels']
@@ -106,7 +107,6 @@ declare global {
   const useAsyncData: typeof import('../../node_modules/nuxt/dist/app')['useAsyncData']
   const useAttributes: typeof import('../../composables/states')['useAttributes']
   const useAttrs: typeof import('../../node_modules/vue')['useAttrs']
-  const useCU: typeof import('../../composables/states')['useCU']
   const useCardLevels: typeof import('../../composables/states')['useCardLevels']
   const useCardRaces: typeof import('../../composables/states')['useCardRaces']
   const useCardSearch: typeof import('../../composables/useCardSearch')['useCardSearch']
@@ -235,6 +235,7 @@ declare module 'vue' {
     readonly isVue2: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/compat/vue-demi')['isVue2']>
     readonly isVue3: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/compat/vue-demi')['isVue3']>
     readonly loadPayload: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['loadPayload']>
+    readonly logedIn: UnwrapRef<typeof import('../../composables/states')['logedIn']>
     readonly logoutUser: UnwrapRef<typeof import('../../composables/useFirebase')['logoutUser']>
     readonly markRaw: UnwrapRef<typeof import('../../node_modules/vue')['markRaw']>
     readonly mergeModels: UnwrapRef<typeof import('../../node_modules/vue')['mergeModels']>
@@ -290,7 +291,6 @@ declare module 'vue' {
     readonly useAsyncData: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['useAsyncData']>
     readonly useAttributes: UnwrapRef<typeof import('../../composables/states')['useAttributes']>
     readonly useAttrs: UnwrapRef<typeof import('../../node_modules/vue')['useAttrs']>
-    readonly useCU: UnwrapRef<typeof import('../../composables/states')['useCU']>
     readonly useCardLevels: UnwrapRef<typeof import('../../composables/states')['useCardLevels']>
     readonly useCardRaces: UnwrapRef<typeof import('../../composables/states')['useCardRaces']>
     readonly useCardSearch: UnwrapRef<typeof import('../../composables/useCardSearch')['useCardSearch']>
@@ -411,6 +411,7 @@ declare module '@vue/runtime-core' {
     readonly isVue2: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/compat/vue-demi')['isVue2']>
     readonly isVue3: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app/compat/vue-demi')['isVue3']>
     readonly loadPayload: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['loadPayload']>
+    readonly logedIn: UnwrapRef<typeof import('../../composables/states')['logedIn']>
     readonly logoutUser: UnwrapRef<typeof import('../../composables/useFirebase')['logoutUser']>
     readonly markRaw: UnwrapRef<typeof import('../../node_modules/vue')['markRaw']>
     readonly mergeModels: UnwrapRef<typeof import('../../node_modules/vue')['mergeModels']>
@@ -466,7 +467,6 @@ declare module '@vue/runtime-core' {
     readonly useAsyncData: UnwrapRef<typeof import('../../node_modules/nuxt/dist/app')['useAsyncData']>
     readonly useAttributes: UnwrapRef<typeof import('../../composables/states')['useAttributes']>
     readonly useAttrs: UnwrapRef<typeof import('../../node_modules/vue')['useAttrs']>
-    readonly useCU: UnwrapRef<typeof import('../../composables/states')['useCU']>
     readonly useCardLevels: UnwrapRef<typeof import('../../composables/states')['useCardLevels']>
     readonly useCardRaces: UnwrapRef<typeof import('../../composables/states')['useCardRaces']>
     readonly useCardSearch: UnwrapRef<typeof import('../../composables/useCardSearch')['useCardSearch']>
